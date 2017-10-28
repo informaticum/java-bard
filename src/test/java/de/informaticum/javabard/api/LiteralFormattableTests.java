@@ -1,5 +1,6 @@
 package de.informaticum.javabard.api;
 
+import static de.informaticum.javabard.api.Formattables.literal;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import java.util.Formattable;
@@ -10,7 +11,7 @@ public class LiteralFormattableTests {
     @Test
     public void testStringifiedNull()
     throws Exception {
-        final Formattable f = new LiteralFormattable(null);
+        final Formattable f = literal(null);
         final String s = String.format("%s", f);
         assertThat(s, hasToString("null"));
 
@@ -19,7 +20,7 @@ public class LiteralFormattableTests {
     @Test
     public void testStringifiedHelloWorld()
     throws Exception {
-        final Formattable f = new LiteralFormattable("Hello world!");
+        final Formattable f = literal("Hello world!");
         final String s = String.format("%s", f);
         assertThat(s, hasToString("Hello world!"));
 
@@ -28,7 +29,7 @@ public class LiteralFormattableTests {
     @Test
     public void testStringifiedInt()
     throws Exception {
-        final Formattable f = new LiteralFormattable(14);
+        final Formattable f = literal(14);
         final String s = String.format("%s", f);
         assertThat(s, hasToString("14"));
 
