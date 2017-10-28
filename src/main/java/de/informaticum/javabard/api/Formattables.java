@@ -1,6 +1,8 @@
 package de.informaticum.javabard.api;
 
 import java.util.Formattable;
+import de.informaticum.javabard.impl.LiteralFormattable;
+import de.informaticum.javabard.impl.StringFormattable;
 
 public enum Formattables {
     ;
