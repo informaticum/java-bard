@@ -1,47 +1,43 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.api.Formattables.string;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import java.util.Formattable;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class StringFormattableTests {
 
-    @Test
-    public void testStringifiedNull()
-    throws Exception {
-        final Formattable f = string(null);
-        final String s = String.format("%s", f);
-        assertThat(s, hasToString("\"null\""));
-
+    @Parameters(name = "{0}({1})={2}")
+    public static Iterable<Object[]> data() {
+        return asList(new Object[][] { { "%s", null, "\"null\"" }, //
+                                       { "%s", "Hello world!", "\"Hello world!\"" }, //
+                                       { "%s", "6\" sandwich", "\"6\\\" sandwich\"" }, //
+                                       { "%s", (int) 14, "\"14\"" }, //
+        });
     }
 
-    @Test
-    public void testStringifiedHelloWorld()
-    throws Exception {
-        final Formattable f = string("Hello world!");
-        final String s = String.format("%s", f);
-        assertThat(s, hasToString("\"Hello world!\""));
+    @Parameter(0)
+    public String format;
 
-    }
+    @Parameter(1)
+    public Object argument;
 
-    @Test
-    public void testStringifiedInches()
-    throws Exception {
-        final Formattable f = string("6\" sandwich");
-        final String s = String.format("%s", f);
-        assertThat(s, hasToString("\"6\\\" sandwich\""));
-
-    }
+    @Parameter(2)
+    public String result;
 
     @Test
-    public void testStringifiedInt()
+    public void testStringifiedString()
     throws Exception {
-        final Formattable f = string(14);
-        final String s = String.format("%s", f);
-        assertThat(s, hasToString("\"14\""));
-
+        final Formattable f = string(this.argument);
+        final String s = String.format(this.format, f);
+        assertThat(s, hasToString(this.result));
     }
 
 }
