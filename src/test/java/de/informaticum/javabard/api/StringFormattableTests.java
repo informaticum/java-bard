@@ -14,7 +14,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class StringFormattableTests {
 
-    @Parameters(name = "{0}({1})={2}")
+    @Parameters(name = "{0}({1})")
     public static Iterable<Object[]> data() {
         return asList(new Object[][] { { "%s", null, "\"null\"" }, //
                                        { "%s", "Hello world!", "\"Hello world!\"" }, //
