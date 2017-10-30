@@ -1,6 +1,7 @@
 package de.informaticum.javabard.api;
 
-import static de.informaticum.javabard.api.Formattables.string;
+import static de.informaticum.javabard.api.FormattableEmitters.javaString;
+import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
@@ -12,7 +13,7 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class StringFormattableTests {
+public class JavaStringFormattableTests {
 
     @Parameters(name = "{0}({1})")
     public static Iterable<Object[]> data() {
@@ -30,14 +31,24 @@ public class StringFormattableTests {
     public Object argument;
 
     @Parameter(2)
-    public String result;
+    public String expected;
 
     @Test
-    public void testStringifiedString()
+    public void testFormattedJavaString()
     throws Exception {
-        final Formattable f = string(this.argument);
-        final String s = String.format(this.format, f);
-        assertThat(s, hasToString(this.result));
+        final Formattable formattable = new JavaStringFormattable() {
+            public String toString() { return valueOf(JavaStringFormattableTests.this.argument); }
+        };
+        final String actual = String.format(this.format, formattable);
+        assertThat(actual, hasToString(this.expected));
+    }
+
+    @Test
+    public void testEmittedJavaString()
+    throws Exception {
+        final Formattable emitter = javaString(this.argument);
+        final String actual = String.format(this.format, emitter);
+        assertThat(actual, hasToString(this.expected));
     }
 
 }
