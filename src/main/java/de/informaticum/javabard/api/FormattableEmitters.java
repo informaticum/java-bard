@@ -6,19 +6,10 @@ import java.util.Formattable;
 import de.informaticum.javabard.impl.ClassNameEmitter;
 import de.informaticum.javabard.impl.IndentEmitter;
 import de.informaticum.javabard.impl.JavaStringEmitter;
-import de.informaticum.javabard.impl.LiteralEmitter;
 import de.informaticum.javabard.impl.TypeNameEmitter;
 
 public enum FormattableEmitters {
     ;
-
-    public static Formattable literal(final Object anything) {
-        return (LiteralEmitter) () -> anything;
-    }
-
-    public static Formattable l(final Object anything) {
-        return literal(anything);
-    }
 
     public static Formattable javaString(final Object anything) {
         return (JavaStringEmitter) () -> anything;
