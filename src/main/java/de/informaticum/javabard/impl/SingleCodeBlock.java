@@ -7,7 +7,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map.Entry;
 import de.informaticum.javabard.api.CodeBlock;
-import de.informaticum.javabard.api.IndentEmitter;
 
 public class SingleCodeBlock
 implements CodeBlock {

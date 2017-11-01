@@ -1,4 +1,4 @@
-package de.informaticum.javabard.api;
+package de.informaticum.javabard.impl;
 
 import static java.lang.String.valueOf;
 import java.util.Formattable;

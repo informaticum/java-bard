@@ -1,4 +1,4 @@
-package de.informaticum.javabard.api;
+package de.informaticum.javabard.impl;
 
 import static de.informaticum.javabard.api.JavaStringFormattable.ESCAPED_QUOTE;
 import static de.informaticum.javabard.api.JavaStringFormattable.QUOTE;

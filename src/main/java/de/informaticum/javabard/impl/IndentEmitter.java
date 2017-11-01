@@ -1,4 +1,4 @@
-package de.informaticum.javabard.api;
+package de.informaticum.javabard.impl;
 
 import static de.informaticum.javabard.api.CodeBlock.DEFAULT_INDENT;
 import static java.lang.String.join;
