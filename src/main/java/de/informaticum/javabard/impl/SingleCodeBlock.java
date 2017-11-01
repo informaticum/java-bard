@@ -1,5 +1,6 @@
 package de.informaticum.javabard.impl;
 
+import static java.lang.Math.max;
 import static java.lang.String.format;
 import static java.lang.System.arraycopy;
 import static java.util.Arrays.copyOf;
@@ -46,18 +47,18 @@ implements CodeBlock {
 
     @Override
     public CodeBlock indent() {
-        return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), alter(this.code.getValue(), +1)));
+        return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), resetIndent(this.code.getValue(), +1)));
     }
 
     @Override
     public CodeBlock unindent() {
-        return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), alter(this.code.getValue(), -1)));
+        return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), resetIndent(this.code.getValue(), -1)));
     }
 
-    private static final Object[] alter(final Object[] args, final int diff) {
+    private static final Object[] resetIndent(final Object[] args, final int diff) {
         final Object[] copy = copyOf(args, args.length);
         final int old = ((IndentEmitter) copy[0]).getAsInt();
-        copy[0] = (IndentEmitter) () -> Math.max(0, old + diff);
+        copy[0] = (IndentEmitter) () -> max(0, old + diff);
         return copy;
     }
 
