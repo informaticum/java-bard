@@ -17,9 +17,9 @@ implements CodeBlock {
         this.codes.addAll(asList(codes));
     }
 
-    private MultiCodeBlock(final MultiCodeBlock origin, final CodeBlock... codes) {
+    private MultiCodeBlock(final MultiCodeBlock origin, final CodeBlock code) {
         this.codes.addAll(origin.codes);
-        this.codes.addAll(asList(codes));
+        this.codes.add(code);
     }
 
     @Override
