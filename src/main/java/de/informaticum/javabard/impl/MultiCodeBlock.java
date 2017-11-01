@@ -28,6 +28,16 @@ implements CodeBlock {
     }
 
     @Override
+    public CodeBlock indent() {
+        return this;
+    }
+
+    @Override
+    public CodeBlock unindent() {
+        return this;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder out = new StringBuilder();
         for (final CodeBlock code : this.codes) {

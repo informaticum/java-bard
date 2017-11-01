@@ -27,6 +27,16 @@ implements CodeBlock {
     }
 
     @Override
+    public CodeBlock indent() {
+        return this;
+    }
+
+    @Override
+    public CodeBlock unindent() {
+        return this;
+    }
+
+    @Override
     public String toString() {
         return format(this.code.getKey(), this.code.getValue());
     }
