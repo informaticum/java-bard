@@ -6,6 +6,7 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import java.util.Formattable;
+import de.informaticum.javabard.backlog.LiteralFormattable;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

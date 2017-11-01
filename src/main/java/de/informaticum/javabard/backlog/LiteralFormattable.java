@@ -1,4 +1,4 @@
-package de.informaticum.javabard.api;
+package de.informaticum.javabard.backlog;
 
 import static java.lang.String.valueOf;
 import java.util.Formattable;
