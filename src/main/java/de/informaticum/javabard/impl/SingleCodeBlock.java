@@ -14,7 +14,7 @@ implements CodeBlock {
     public SingleCodeBlock(final String format, final Object... args) {
         assert format != null;
         assert args != null;
-        this.code = new SimpleImmutableEntry<>(format, args);
+        this.code = new SimpleImmutableEntry<>(format, args.clone());
     }
 
     public static final CodeBlock of(final String format, final Object... args) {
