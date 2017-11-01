@@ -7,6 +7,7 @@ import java.util.Formattable;
 import java.util.Formatter;
 import java.util.function.Supplier;
 
+@FunctionalInterface
 public interface JavaStringEmitter
 extends Formattable, Supplier<Object> {
 

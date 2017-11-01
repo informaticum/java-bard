@@ -5,6 +5,7 @@ import java.util.Formattable;
 import java.util.Formatter;
 import java.util.function.Supplier;
 
+@FunctionalInterface
 public interface LiteralEmitter
 extends Formattable, Supplier<Object> {
 

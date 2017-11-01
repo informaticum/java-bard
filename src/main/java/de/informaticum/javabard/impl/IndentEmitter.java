@@ -7,6 +7,7 @@ import java.util.Formattable;
 import java.util.Formatter;
 import java.util.function.IntSupplier;
 
+@FunctionalInterface
 public abstract interface IndentEmitter
 extends Formattable, IntSupplier {
 
