@@ -28,6 +28,11 @@ implements CodeBlock {
     }
 
     @Override
+    public CodeBlock add(final CodeBlock code) {
+        return new MultiCodeBlock(this, code);
+    }
+
+    @Override
     public CodeBlock indent() {
         return new MultiCodeBlock(this.codes.stream().map(CodeBlock::indent).toArray(CodeBlock[]::new));
     }

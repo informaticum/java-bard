@@ -41,6 +41,11 @@ implements CodeBlock {
     }
 
     @Override
+    public CodeBlock add(final CodeBlock code) {
+        return new MultiCodeBlock(this, code);
+    }
+
+    @Override
     public CodeBlock indent() {
         return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), alter(this.code.getValue(), +1)));
     }
