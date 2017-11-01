@@ -40,4 +40,15 @@ public class CodeBlockTests {
         assertThat(code, hasToString(format("if (true) {%nfinal java.util.BitSet bs = null;%n}%n")));
     }
 
+    @Test
+    public void testName5()
+    throws Exception {
+        final CodeBlock code = SingleCodeBlock.of("final %s bs = %s;", t(BitSet.class), null);
+        assertThat(code, hasToString("final java.util.BitSet bs = null;"));
+        final CodeBlock codeIndent = code.indent();
+        assertThat(codeIndent, hasToString("    final java.util.BitSet bs = null;"));
+        final CodeBlock codeUnindent = codeIndent.unindent();
+        assertThat(codeUnindent, hasToString("final java.util.BitSet bs = null;"));
+    }
+
 }

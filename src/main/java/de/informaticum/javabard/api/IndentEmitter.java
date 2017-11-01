@@ -1,0 +1,19 @@
+package de.informaticum.javabard.api;
+
+import static de.informaticum.javabard.api.CodeBlock.DEFAULT_INDENT;
+import static java.lang.String.join;
+import static java.util.Collections.nCopies;
+import java.util.Formattable;
+import java.util.Formatter;
+import java.util.function.IntSupplier;
+
+public abstract interface IndentEmitter
+extends Formattable, IntSupplier {
+
+    @Override
+    public default void formatTo(final Formatter formatter, final int flags, final int width, final int precision) {
+        final String argument = join("", nCopies(this.getAsInt(), DEFAULT_INDENT));
+        formatter.format("%s", argument);
+    }
+
+}

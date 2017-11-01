@@ -29,12 +29,12 @@ implements CodeBlock {
 
     @Override
     public CodeBlock indent() {
-        return this;
+        return new MultiCodeBlock(this.codes.stream().map(CodeBlock::indent).toArray(CodeBlock[]::new));
     }
 
     @Override
     public CodeBlock unindent() {
-        return this;
+        return new MultiCodeBlock(this.codes.stream().map(CodeBlock::unindent).toArray(CodeBlock[]::new));
     }
 
     @Override

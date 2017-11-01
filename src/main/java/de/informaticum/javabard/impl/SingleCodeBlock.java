@@ -1,20 +1,34 @@
 package de.informaticum.javabard.impl;
 
 import static java.lang.String.format;
+import static java.lang.System.arraycopy;
+import static java.util.Arrays.copyOf;
 import static java.util.Objects.requireNonNull;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map.Entry;
 import de.informaticum.javabard.api.CodeBlock;
+import de.informaticum.javabard.api.IndentEmitter;
 
 public class SingleCodeBlock
 implements CodeBlock {
 
     private final Entry<String, Object[]> code;
 
+    private SingleCodeBlock(final Entry<String, Object[]> code) {
+        this.code = code;
+    }
+
+    private static final IndentEmitter NO_INDENT = () -> 0;
+
     public SingleCodeBlock(final String format, final Object... args) {
-        assert format != null;
-        assert args != null;
-        this.code = new SimpleImmutableEntry<>(format, args.clone());
+        this(new SimpleImmutableEntry<>("%s" + format, prepend(NO_INDENT, args)));
+    }
+
+    private static final Object[] prepend(final Object element, final Object[] from) {
+        final Object[] into = new Object[from.length + 1];
+        into[0] = element;
+        arraycopy(from, 0, into, 1, from.length);
+        return into;
     }
 
     public static final CodeBlock of(final String format, final Object... args) {
@@ -28,12 +42,19 @@ implements CodeBlock {
 
     @Override
     public CodeBlock indent() {
-        return this;
+        return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), alter(this.code.getValue(), +1)));
     }
 
     @Override
     public CodeBlock unindent() {
-        return this;
+        return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), alter(this.code.getValue(), -1)));
+    }
+
+    private static final Object[] alter(final Object[] args, final int diff) {
+        final Object[] copy = copyOf(args, args.length);
+        final int old = ((IndentEmitter) copy[0]).getAsInt();
+        copy[0] = (IndentEmitter) () -> Math.max(0, old + diff);
+        return copy;
     }
 
     @Override

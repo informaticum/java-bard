@@ -43,4 +43,20 @@ public enum FormattableEmitters {
         return typeName(type);
     }
 
+    public static Formattable indentation() {
+        return indentation(0);
+    }
+
+    public static Formattable indentation(final int times) {
+        return (IndentEmitter) () -> times;
+    }
+
+    public static Formattable i() {
+        return indentation();
+    }
+
+    public static Formattable i(final int times) {
+        return indentation(times);
+    }
+
 }
