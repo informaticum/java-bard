@@ -1,5 +1,7 @@
 package de.informaticum.javabard.api;
 
+import de.informaticum.javabard.impl.SingleCodeBlock;
+
 public abstract interface CodeBlock {
 
     public static final String DEFAULT_INDENT = "    ";
@@ -14,5 +16,13 @@ public abstract interface CodeBlock {
 
     @Override
     public abstract String toString();
+
+    public static CodeBlock of(final String format, final Object... args) {
+        return SingleCodeBlock.of(format, args);
+    }
+
+    public static CodeBlock code(final String format, final Object... args) {
+        return SingleCodeBlock.of(format, args);
+    }
 
 }
