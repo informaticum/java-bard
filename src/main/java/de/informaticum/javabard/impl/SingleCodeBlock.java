@@ -16,6 +16,10 @@ extends AbstractCodeBlock {
 
     private SingleCodeBlock(final Entry<String, Object[]> code) {
         assert code != null;
+        assert code.getKey() != null;
+        assert code.getValue() != null;
+        assert code.getValue().length >= 1;
+        assert code.getValue()[0] instanceof IndentEmitter;
         this.code = code;
     }
 
@@ -61,8 +65,6 @@ extends AbstractCodeBlock {
 
     @Override
     public int getIndent() {
-        assert this.code.getValue().length >= 1;
-        assert this.code.getValue()[0] instanceof IndentEmitter;
         return ((IndentEmitter) this.code.getValue()[0]).getAsInt();
     }
 
