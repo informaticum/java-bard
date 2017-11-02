@@ -13,7 +13,7 @@ implements CodeBlock {
 
     @Override
     public CodeBlock add(final CodeBlock code) {
-        return new MultiCodeBlock(this, code);
+        return new MultiCodeBlock(this, requireNonNull(code));
     }
 
 }
