@@ -36,14 +36,8 @@ extends AbstractCodeBlock {
 
     private static final Object[] withIndent(final Object[] src) {
         assert src != null;
-        return prependIndent(ZERO_INDENT, src);
-    }
-
-    private static final Object[] prependIndent(final Object element, final Object[] src) {
-        assert element != null;
-        assert src != null;
         final Object[] dest = new Object[src.length + 1];
-        dest[0] = element;
+        dest[0] = ZERO_INDENT;
         arraycopy(src, 0, dest, 1, src.length);
         return dest;
     }
