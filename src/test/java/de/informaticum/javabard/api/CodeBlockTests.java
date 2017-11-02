@@ -56,6 +56,10 @@ public class CodeBlockTests {
     throws Exception {
         final CodeBlock code = code("if (true) {").add(code("final java.util.BitSet bs = null;").indent()).add("}");
         assertThat(code, hasToString(format("if (true) {%n    final java.util.BitSet bs = null;%n}%n")));
+        final CodeBlock codeIndent = code.indent();
+        assertThat(codeIndent, hasToString(format("    if (true) {%n        final java.util.BitSet bs = null;%n    }%n")));
+        final CodeBlock codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("if (true) {%n    final java.util.BitSet bs = null;%n}%n")));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package de.informaticum.javabard.impl;
 
+import static java.lang.Math.max;
 import static java.lang.String.format;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,9 @@ extends AbstractCodeBlock {
 
     @Override
     public CodeBlock indent(final int diff) {
-        return new MultiCodeBlock(this.codes.stream().map(c -> c.indent(diff)).toArray(CodeBlock[]::new));
+        // negative indent (a.k.a. unindent) must be capped
+        final int d = max(diff, -this.getIndent());
+        return new MultiCodeBlock(this.codes.stream().map(c -> c.indent(d)).toArray(CodeBlock[]::new));
     }
 
     @Override
