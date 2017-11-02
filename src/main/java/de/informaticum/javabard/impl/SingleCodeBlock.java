@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import de.informaticum.javabard.api.CodeBlock;
 
 public class SingleCodeBlock
-implements CodeBlock {
+extends AbstractCodeBlock {
 
     private final Entry<String, Object[]> code;
 
@@ -33,16 +33,6 @@ implements CodeBlock {
 
     public static final CodeBlock of(final String format, final Object... args) {
         return new SingleCodeBlock(requireNonNull(format), requireNonNull(args));
-    }
-
-    @Override
-    public CodeBlock add(final String format, final Object... args) {
-        return new MultiCodeBlock(this, new SingleCodeBlock(requireNonNull(format), requireNonNull(args)));
-    }
-
-    @Override
-    public CodeBlock add(final CodeBlock code) {
-        return new MultiCodeBlock(this, code);
     }
 
     @Override
