@@ -19,10 +19,15 @@ extends AbstractCodeBlock {
         this.code = code;
     }
 
+    public SingleCodeBlock(final String format, final Object... args) {
+        this(new SimpleImmutableEntry<>("%s" + requireNonNull(format), prependIndent(requireNonNull(args).clone())));
+    }
+
     private static final IndentEmitter ZERO_INDENT = () -> 0;
 
-    public SingleCodeBlock(final String format, final Object... args) {
-        this(new SimpleImmutableEntry<>("%s" + requireNonNull(format), prependIndent(ZERO_INDENT, requireNonNull(args).clone())));
+    private static final Object[] prependIndent(final Object[] src) {
+        assert src != null;
+        return prependIndent(ZERO_INDENT, src);
     }
 
     private static final Object[] prependIndent(final Object element, final Object[] src) {
