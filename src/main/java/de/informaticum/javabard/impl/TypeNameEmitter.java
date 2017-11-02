@@ -7,7 +7,7 @@ import java.util.Formatter;
 import java.util.function.Supplier;
 
 @FunctionalInterface
-public interface TypeNameEmitter
+public abstract interface TypeNameEmitter
 extends Formattable, Supplier<Type> {
 
     @Override

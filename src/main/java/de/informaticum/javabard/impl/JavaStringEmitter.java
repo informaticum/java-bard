@@ -6,7 +6,7 @@ import java.util.Formatter;
 import java.util.function.Supplier;
 
 @FunctionalInterface
-public interface JavaStringEmitter
+public abstract interface JavaStringEmitter
 extends Formattable, Supplier<Object> {
 
     public static final String QUOTE = "\"";
