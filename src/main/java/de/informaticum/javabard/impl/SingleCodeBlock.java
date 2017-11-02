@@ -35,13 +35,8 @@ extends AbstractCodeBlock {
     }
 
     @Override
-    public CodeBlock indent() {
-        return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), resetIndent(this.code.getValue(), +1)));
-    }
-
-    @Override
-    public CodeBlock unindent() {
-        return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), resetIndent(this.code.getValue(), -1)));
+    public CodeBlock indent(final int diff) {
+        return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), resetIndent(this.code.getValue(), diff)));
     }
 
     private static final Object[] resetIndent(final Object[] args, final int diff) {
@@ -52,6 +47,13 @@ extends AbstractCodeBlock {
         final int old = ((IndentEmitter) copy[0]).getAsInt();
         copy[0] = (IndentEmitter) () -> max(0, old + diff);
         return copy;
+    }
+
+    @Override
+    public int getIndent() {
+        assert this.code.getValue().length >= 1;
+        assert this.code.getValue()[0] instanceof IndentEmitter;
+        return ((IndentEmitter) this.code.getValue()[0]).getAsInt();
     }
 
     @Override

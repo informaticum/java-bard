@@ -11,9 +11,17 @@ public abstract interface CodeBlock {
 
     public abstract CodeBlock add(final CodeBlock code);
 
-    public abstract CodeBlock indent();
+    public abstract CodeBlock indent(int diff);
 
-    public abstract CodeBlock unindent();
+    public default CodeBlock indent() {
+        return this.indent(+1);
+    }
+
+    public default CodeBlock unindent() {
+        return this.indent(-1);
+    }
+
+    public abstract int getIndent();
 
     @Override
     public abstract String toString();

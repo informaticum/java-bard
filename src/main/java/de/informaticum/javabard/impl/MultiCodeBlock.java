@@ -25,13 +25,14 @@ extends AbstractCodeBlock {
     }
 
     @Override
-    public CodeBlock indent() {
-        return new MultiCodeBlock(this.codes.stream().map(CodeBlock::indent).toArray(CodeBlock[]::new));
+    public CodeBlock indent(final int diff) {
+        return new MultiCodeBlock(this.codes.stream().map(c -> c.indent(diff)).toArray(CodeBlock[]::new));
     }
 
     @Override
-    public CodeBlock unindent() {
-        return new MultiCodeBlock(this.codes.stream().map(CodeBlock::unindent).toArray(CodeBlock[]::new));
+    public int getIndent() {
+        assert !this.codes.isEmpty();
+        return this.codes.stream().mapToInt(CodeBlock::getIndent).min().getAsInt();
     }
 
     @Override
