@@ -34,10 +34,6 @@ extends AbstractCodeBlock {
         return dest;
     }
 
-    public static final CodeBlock of(final String format, final Object... args) {
-        return new SingleCodeBlock(requireNonNull(format), requireNonNull(args));
-    }
-
     @Override
     public CodeBlock indent() {
         return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), resetIndent(this.code.getValue(), +1)));

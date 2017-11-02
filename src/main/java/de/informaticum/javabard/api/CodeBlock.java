@@ -1,5 +1,6 @@
 package de.informaticum.javabard.api;
 
+import static java.util.Objects.requireNonNull;
 import de.informaticum.javabard.impl.SingleCodeBlock;
 
 public abstract interface CodeBlock {
@@ -18,11 +19,11 @@ public abstract interface CodeBlock {
     public abstract String toString();
 
     public static CodeBlock of(final String format, final Object... args) {
-        return SingleCodeBlock.of(format, args);
+        return new SingleCodeBlock(requireNonNull(format), requireNonNull(args));
     }
 
     public static CodeBlock code(final String format, final Object... args) {
-        return SingleCodeBlock.of(format, args);
+        return new SingleCodeBlock(requireNonNull(format), requireNonNull(args));
     }
 
 }
