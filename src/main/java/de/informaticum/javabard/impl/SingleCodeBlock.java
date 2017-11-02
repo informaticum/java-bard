@@ -67,6 +67,7 @@ extends AbstractCodeBlock {
     public String toString() {
         final StringBuilder out = new StringBuilder();
         try (Scanner scanner = new Scanner(format(this.code.getKey(), this.code.getValue()))) {
+            // normalise new-line character(s)
             while (scanner.hasNextLine()) {
                 out.append(scanner.nextLine()).append(format("%n"));
             }
