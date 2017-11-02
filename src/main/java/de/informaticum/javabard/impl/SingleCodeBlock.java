@@ -52,8 +52,8 @@ extends AbstractCodeBlock {
         assert args.length >= 1;
         assert args[0] instanceof IndentEmitter;
         final Object[] copy = copyOf(args, args.length);
-        final int old = ((IndentEmitter) copy[0]).getAsInt();
-        copy[0] = (IndentEmitter) () -> max(0, old + diff);
+        final int indent = max(0, ((IndentEmitter) copy[0]).getAsInt() + diff);
+        copy[0] = (IndentEmitter) () -> indent;
         return copy;
     }
 
