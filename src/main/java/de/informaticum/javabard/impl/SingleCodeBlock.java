@@ -7,6 +7,7 @@ import static java.util.Arrays.copyOf;
 import static java.util.Objects.requireNonNull;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map.Entry;
+import java.util.Scanner;
 import de.informaticum.javabard.api.CodeBlock;
 
 public class SingleCodeBlock
@@ -64,7 +65,13 @@ extends AbstractCodeBlock {
 
     @Override
     public String toString() {
-        return format(this.code.getKey(), this.code.getValue());
+        final StringBuilder out = new StringBuilder();
+        try (Scanner scanner = new Scanner(format(this.code.getKey(), this.code.getValue()))) {
+            while (scanner.hasNextLine()) {
+                out.append(scanner.nextLine()).append(format("%n"));
+            }
+        }
+        return out.toString();
     }
 
 }

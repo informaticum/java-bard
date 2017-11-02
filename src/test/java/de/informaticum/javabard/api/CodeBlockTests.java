@@ -14,21 +14,21 @@ public class CodeBlockTests {
     public void testName1()
     throws Exception {
         final CodeBlock code = code("final java.util.BitSet bs = null;");
-        assertThat(code, hasToString("final java.util.BitSet bs = null;"));
+        assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
     public void testName2()
     throws Exception {
         final CodeBlock code = code("final %s bs = null;", t(BitSet.class));
-        assertThat(code, hasToString("final java.util.BitSet bs = null;"));
+        assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
     public void testName3()
     throws Exception {
         final CodeBlock code = code("final %s bs = %s;", t(BitSet.class), null);
-        assertThat(code, hasToString("final java.util.BitSet bs = null;"));
+        assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
@@ -44,11 +44,11 @@ public class CodeBlockTests {
     public void testName5()
     throws Exception {
         final CodeBlock code = code("final %s bs = %s;", t(BitSet.class), null);
-        assertThat(code, hasToString("final java.util.BitSet bs = null;"));
+        assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
         final CodeBlock codeIndent = code.indent();
-        assertThat(codeIndent, hasToString("    final java.util.BitSet bs = null;"));
+        assertThat(codeIndent, hasToString(format("    final java.util.BitSet bs = null;%n")));
         final CodeBlock codeUnindent = codeIndent.unindent();
-        assertThat(codeUnindent, hasToString("final java.util.BitSet bs = null;"));
+        assertThat(codeUnindent, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
