@@ -25,11 +25,11 @@ extends AbstractCodeBlock {
         this(new SimpleImmutableEntry<>("%s" + requireNonNull(format), prepend(NO_INDENT, requireNonNull(args).clone())));
     }
 
-    private static final Object[] prepend(final IndentEmitter indentor, final Object[] src) {
-        assert indentor != null;
+    private static final Object[] prepend(final Object element, final Object[] src) {
+        assert element != null;
         assert src != null;
         final Object[] dest = new Object[src.length + 1];
-        dest[0] = indentor;
+        dest[0] = element;
         arraycopy(src, 0, dest, 1, src.length);
         return dest;
     }
