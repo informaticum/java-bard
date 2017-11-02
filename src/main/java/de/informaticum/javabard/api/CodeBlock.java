@@ -5,11 +5,11 @@ import de.informaticum.javabard.impl.SingleCodeBlock;
 
 public abstract interface CodeBlock {
 
-    public static final String DEFAULT_INDENT = "    ";
-
     public abstract CodeBlock add(final String format, final Object... args);
 
     public abstract CodeBlock add(final CodeBlock code);
+
+    public static final String DEFAULT_INDENT_CHARS = "    ";
 
     public abstract CodeBlock indent(int diff);
 
