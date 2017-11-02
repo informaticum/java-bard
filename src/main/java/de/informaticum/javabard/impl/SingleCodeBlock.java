@@ -22,10 +22,10 @@ extends AbstractCodeBlock {
     private static final IndentEmitter ZERO_INDENT = () -> 0;
 
     public SingleCodeBlock(final String format, final Object... args) {
-        this(new SimpleImmutableEntry<>("%s" + requireNonNull(format), prepend(ZERO_INDENT, requireNonNull(args).clone())));
+        this(new SimpleImmutableEntry<>("%s" + requireNonNull(format), prependIndent(ZERO_INDENT, requireNonNull(args).clone())));
     }
 
-    private static final Object[] prepend(final Object element, final Object[] src) {
+    private static final Object[] prependIndent(final Object element, final Object[] src) {
         assert element != null;
         assert src != null;
         final Object[] dest = new Object[src.length + 1];
