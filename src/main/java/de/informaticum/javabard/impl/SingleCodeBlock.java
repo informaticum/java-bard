@@ -22,7 +22,7 @@ extends AbstractCodeBlock {
     private static final IndentEmitter NO_INDENT = () -> 0;
 
     public SingleCodeBlock(final String format, final Object... args) {
-        this(new SimpleImmutableEntry<>("%s" + requireNonNull(format), prepend(NO_INDENT, requireNonNull(args.clone()))));
+        this(new SimpleImmutableEntry<>("%s" + requireNonNull(format), prepend(NO_INDENT, requireNonNull(args).clone())));
     }
 
     private static final Object[] prepend(final IndentEmitter indentor, final Object[] src) {
