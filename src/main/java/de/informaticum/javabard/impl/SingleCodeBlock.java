@@ -20,7 +20,12 @@ extends AbstractCodeBlock {
     }
 
     public SingleCodeBlock(final String format, final Object... args) {
-        this(new SimpleImmutableEntry<>("%s" + requireNonNull(format), withIndent(requireNonNull(args))));
+        this(new SimpleImmutableEntry<>(withIndent(requireNonNull(format)), withIndent(requireNonNull(args))));
+    }
+
+    private static final String withIndent(final String format) {
+        assert format != null;
+        return "%s" + format;
     }
 
     private static final IndentEmitter ZERO_INDENT = () -> 0;
