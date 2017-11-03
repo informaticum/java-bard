@@ -43,6 +43,14 @@ extends AbstractCodeBlock {
         return dest;
     }
 
+    public static CodeBlock code(final String format, final Object... args) {
+        return new SingleCodeBlock(requireNonNull(format), requireNonNull(args));
+    }
+
+    public static CodeBlock of(final String format, final Object... args) {
+        return new SingleCodeBlock(requireNonNull(format), requireNonNull(args));
+    }
+
     @Override
     public CodeBlock indent(final int diff) {
         return new SingleCodeBlock(new SimpleImmutableEntry<>(this.code.getKey(), resetIndent(this.code.getValue(), diff)));
