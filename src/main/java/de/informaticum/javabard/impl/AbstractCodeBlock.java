@@ -8,7 +8,7 @@ implements CodeBlock {
 
     @Override
     public CodeBlock add(final String format, final Object... args) {
-        return new MultiCodeBlock(this, new SingleCodeBlock(requireNonNull(format), requireNonNull(args)).indent(this.getIndent()));
+        return this.add(new SingleCodeBlock(requireNonNull(format), requireNonNull(args)).indent(this.getIndent()));
     }
 
     @Override
