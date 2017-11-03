@@ -1,9 +1,11 @@
 package de.informaticum.javabard.impl;
 
 import static java.lang.Math.max;
+import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import de.informaticum.javabard.api.CodeBlock;
 
 public class MultiCodeBlock
@@ -36,8 +38,9 @@ extends AbstractCodeBlock {
     }
 
     @Override
-    public String toString() {
-        return this.codes.stream().map(CodeBlock::toString).collect(joining());
+    public String toString(final Locale locale) {
+        requireNonNull(locale);
+        return this.codes.stream().map(c -> c.toString(locale)).collect(joining());
     }
 
 }

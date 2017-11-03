@@ -1,6 +1,7 @@
 package de.informaticum.javabard.impl;
 
 import static java.util.Objects.requireNonNull;
+import java.util.Locale;
 import de.informaticum.javabard.api.CodeBlock;
 
 public abstract class AbstractCodeBlock
@@ -14,6 +15,11 @@ implements CodeBlock {
     @Override
     public CodeBlock add(final CodeBlock code) {
         return new MultiCodeBlock(this, requireNonNull(code));
+    }
+
+    @Override
+    public String toString() {
+        return this.toString(Locale.getDefault());
     }
 
 }

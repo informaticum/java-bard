@@ -1,5 +1,7 @@
 package de.informaticum.javabard.api;
 
+import java.util.Locale;
+
 public abstract interface CodeBlock {
 
     public abstract CodeBlock add(final String format, final Object... args);
@@ -22,5 +24,7 @@ public abstract interface CodeBlock {
 
     @Override
     public abstract String toString();
+
+    public abstract String toString(final Locale locale);
 
 }

@@ -6,6 +6,7 @@ import static java.lang.System.arraycopy;
 import static java.util.Arrays.copyOf;
 import static java.util.Objects.requireNonNull;
 import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import de.informaticum.javabard.api.CodeBlock;
@@ -72,12 +73,15 @@ extends AbstractCodeBlock {
     }
 
     @Override
-    public String toString() {
+    public String toString(final Locale locale) {
+        requireNonNull(locale);
         final StringBuilder out = new StringBuilder();
-        try (Scanner scanner = new Scanner(format(this.code.getKey(), this.code.getValue()))) {
-            // normalise new-line character(s)
+        final String data = format(locale, this.code.getKey(), this.code.getValue());
+        final String newline = format(locale, "%n");
+        try (Scanner scanner = new Scanner(data)) {
+            // normalise newline character(s)
             while (scanner.hasNextLine()) {
-                out.append(scanner.nextLine()).append(format("%n"));
+                out.append(scanner.nextLine()).append(newline);
             }
         }
         return out.toString();
