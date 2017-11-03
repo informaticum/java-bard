@@ -1,10 +1,9 @@
 package de.informaticum.javabard.impl;
 
 import static java.lang.Math.max;
-import static java.lang.String.format;
+import static java.util.stream.Collectors.joining;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import de.informaticum.javabard.api.CodeBlock;
 
 public class MultiCodeBlock
@@ -27,8 +26,7 @@ extends AbstractCodeBlock {
 
     @Override
     public CodeBlock indent(final int diff) {
-        // negative indent (a.k.a. unindent) must be capped
-        final int d = max(diff, -this.getIndent());
+        final int d = max(diff, -this.getIndent()); // negative indent (a.k.a. unindent) must be capped
         return new MultiCodeBlock(this.codes.stream().map(c -> c.indent(d)).toArray(CodeBlock[]::new));
     }
 
@@ -39,16 +37,7 @@ extends AbstractCodeBlock {
 
     @Override
     public String toString() {
-        final StringBuilder out = new StringBuilder();
-        for (final CodeBlock code : this.codes) {
-            try (Scanner scanner = new Scanner(code.toString())) {
-                // normalise new-line character(s)
-                while (scanner.hasNextLine()) {
-                    out.append(scanner.nextLine()).append(format("%n"));
-                }
-            }
-        }
-        return out.toString();
+        return this.codes.stream().map(CodeBlock::toString).collect(joining());
     }
 
 }
