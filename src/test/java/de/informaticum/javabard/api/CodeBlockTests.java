@@ -1,14 +1,21 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.api.FormattableEmitters.t;
+import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
 import static de.informaticum.javabard.impl.SingleCodeBlock.code;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import java.util.BitSet;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CodeBlockTests {
+
+    @Before
+    public void clearIndentProperty() {
+        System.clearProperty(INDENT_CHARS_PROPERTY);
+    }
 
     @Test
     public void testName1()
@@ -71,6 +78,16 @@ public class CodeBlockTests {
         assertThat(codeIndent, hasToString(format("    final java.util.BitSet bs = null;%n")));
         final CodeBlock codeAdded = codeIndent.add("final %s bs2 = %s;", t(BitSet.class), null);
         assertThat(codeAdded, hasToString(format("    final java.util.BitSet bs = null;%n    final java.util.BitSet bs2 = null;%n")));
+    }
+
+    @Test
+    public void testName8()
+    throws Exception {
+        final CodeBlock code = code("final %s bs = %s;", t(BitSet.class), null).indent();
+        assertThat(code, hasToString(format("    final java.util.BitSet bs = null;%n")));
+
+        System.setProperty(INDENT_CHARS_PROPERTY, "\t");
+        assertThat(code, hasToString(format("\tfinal java.util.BitSet bs = null;%n")));
     }
 
 }

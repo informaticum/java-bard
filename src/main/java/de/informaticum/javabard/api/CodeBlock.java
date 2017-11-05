@@ -8,8 +8,6 @@ public abstract interface CodeBlock {
 
     public abstract CodeBlock add(final CodeBlock code);
 
-    public static final String DEFAULT_INDENT_CHARS = "    ";
-
     public abstract CodeBlock indent(int diff);
 
     public default CodeBlock indent() {
