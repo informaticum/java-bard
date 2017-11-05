@@ -25,8 +25,8 @@ extends AbstractCodeBlock {
         this.code = code;
     }
 
-    public SingleCodeBlock(final String format, final Object... args) {
-        this(new SimpleImmutableEntry<>(withIndent(requireNonNull(format)), withIndent(requireNonNull(args))));
+    SingleCodeBlock(final String format, final Object... args) {
+        this(new SimpleImmutableEntry<>(withIndent(format), withIndent(args)));
     }
 
     private static final String withIndent(final String format) {
