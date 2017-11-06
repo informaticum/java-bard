@@ -1,6 +1,7 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.api.FormattableEmitters.javaString;
+import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasToString;
@@ -40,7 +41,7 @@ public class JavaStringFormattableTests {
         final Formattable formattable = new JavaStringFormattable() {
             public String toString() { return valueOf(JavaStringFormattableTests.this.argument); }
         };
-        final String actual = String.format(this.format, formattable);
+        final String actual = format(this.format, formattable);
         assertThat(actual, hasToString(this.expected));
     }
 
@@ -48,7 +49,7 @@ public class JavaStringFormattableTests {
     public void testEmittedJavaString()
     throws Exception {
         final Formattable emitter = javaString(this.argument);
-        final String actual = String.format(this.format, emitter);
+        final String actual = format(this.format, emitter);
         assertThat(actual, hasToString(this.expected));
     }
 

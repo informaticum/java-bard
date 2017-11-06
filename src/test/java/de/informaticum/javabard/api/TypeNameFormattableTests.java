@@ -1,6 +1,7 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.api.FormattableEmitters.typeName;
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
@@ -58,7 +59,7 @@ public class TypeNameFormattableTests {
     public void testStringifiedClass()
     throws Exception {
         final Formattable f = typeName(this.argument);
-        final String s = String.format(this.format, f);
+        final String s = format(this.format, f);
         assertThat(s, hasToString(this.result));
     }
 
