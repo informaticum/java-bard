@@ -7,6 +7,7 @@ import static java.lang.String.format;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import java.util.BitSet;
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -88,6 +89,20 @@ public class CodeBlockTests {
 
         System.setProperty(INDENT_CHARS_PROPERTY, "\t");
         assertThat(code, hasToString(format("\tfinal java.util.BitSet bs = null;%n")));
+    }
+
+    @Test
+    public void testName9()
+    throws Exception {
+        final CodeBlock code = code("final %s o = (n==null) ?%n%s.of(n) :%n%s.empty();", t(Optional.class), t(Optional.class), t(Optional.class)).indent();
+        assertThat(code, hasToString(format("    final java.util.Optional o = (n==null) ?%n    java.util.Optional.of(n) :%n    java.util.Optional.empty();%n")));
+    }
+
+    @Test
+    public void testName10()
+    throws Exception {
+        final CodeBlock code = code("final %1$s o = (n==null) ? %1$s.of(n) : %1$s.empty();", t(Optional.class));
+        assertThat(code, hasToString(format("final java.util.Optional o = (n==null) ? java.util.Optional.of(n) : java.util.Optional.empty();%n")));
     }
 
 }
