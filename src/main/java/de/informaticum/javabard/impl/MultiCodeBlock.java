@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.joining;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import de.informaticum.javabard.api.AbstractCodeBlock;
 import de.informaticum.javabard.api.CodeBlock;
 
 public class MultiCodeBlock
@@ -13,9 +14,8 @@ extends AbstractCodeBlock {
 
     private final List<CodeBlock> codes = new ArrayList<>();
 
-    MultiCodeBlock(final CodeBlock... codes) {
-        assert codes != null;
-        assert codes.length != 0;
+    public MultiCodeBlock(final CodeBlock... codes) {
+        requireNonNull(codes);
         for (final CodeBlock code : codes) {
             assert code != null;
             if (code instanceof MultiCodeBlock) {

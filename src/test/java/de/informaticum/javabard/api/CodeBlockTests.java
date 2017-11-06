@@ -1,8 +1,8 @@
 package de.informaticum.javabard.api;
 
+import static de.informaticum.javabard.api.AbstractCodeBlock.code;
 import static de.informaticum.javabard.api.FormattableEmitters.t;
 import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
-import static de.informaticum.javabard.impl.SingleCodeBlock.code;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;

@@ -9,6 +9,7 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import de.informaticum.javabard.api.AbstractCodeBlock;
 import de.informaticum.javabard.api.CodeBlock;
 
 public class SingleCodeBlock
@@ -25,8 +26,8 @@ extends AbstractCodeBlock {
         this.code = code;
     }
 
-    SingleCodeBlock(final String format, final Object... args) {
-        this(new SimpleImmutableEntry<>(withIndent(format), withIndent(args)));
+    public SingleCodeBlock(final String format, final Object... args) {
+        this(new SimpleImmutableEntry<>(withIndent(requireNonNull(format)), withIndent(requireNonNull(args))));
     }
 
     private static final String withIndent(final String format) {
@@ -42,14 +43,6 @@ extends AbstractCodeBlock {
         dest[0] = ZERO_INDENT;
         arraycopy(src, 0, dest, 1, src.length);
         return dest;
-    }
-
-    public static CodeBlock code(final String format, final Object... args) {
-        return new SingleCodeBlock(requireNonNull(format), requireNonNull(args));
-    }
-
-    public static CodeBlock of(final String format, final Object... args) {
-        return new SingleCodeBlock(requireNonNull(format), requireNonNull(args));
     }
 
     @Override
