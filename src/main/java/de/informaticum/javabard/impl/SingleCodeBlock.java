@@ -18,22 +18,21 @@ extends AbstractCodeBlock {
 
     private final int indent;
 
-    private SingleCodeBlock(final int indent, final Entry<String, Object[]> code) {
-        assert code != null;
-        assert code.getKey() != null;
-        assert code.getValue() != null;
+    private SingleCodeBlock(final int indent, final String format, final Object[] arguments) {
         assert indent >= 0;
-        this.code = code;
+        assert format != null;
+        assert arguments != null;
+        this.code = new SimpleImmutableEntry<>(format, arguments.clone());
         this.indent = indent;
     }
 
     public SingleCodeBlock(final String format, final Object... args) {
-        this(0, new SimpleImmutableEntry<>(requireNonNull(format), requireNonNull(args)));
+        this(0, requireNonNull(format), requireNonNull(args));
     }
 
     @Override
     public CodeBlock indent(final int diff) {
-        return new SingleCodeBlock(max(0, this.indent + diff), new SimpleImmutableEntry<>(this.code.getKey(), this.code.getValue()));
+        return new SingleCodeBlock(max(0, this.indent + diff), this.code.getKey(), this.code.getValue());
     }
 
     @Override
