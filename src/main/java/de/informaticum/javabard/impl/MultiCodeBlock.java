@@ -34,7 +34,7 @@ extends AbstractCodeBlock {
 
     @Override
     public int getIndent() {
-        return this.codes.stream().mapToInt(CodeBlock::getIndent).min().getAsInt();
+        return this.codes.stream().mapToInt(CodeBlock::getIndent).min().orElse(0);
     }
 
     @Override

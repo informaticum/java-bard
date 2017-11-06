@@ -5,9 +5,11 @@ import static de.informaticum.javabard.api.FormattableEmitters.t;
 import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.hasToString;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import java.util.BitSet;
 import java.util.Optional;
+import de.informaticum.javabard.impl.MultiCodeBlock;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -103,6 +105,13 @@ public class CodeBlockTests {
     throws Exception {
         final CodeBlock code = code("final %1$s o = (n==null) ? %1$s.of(n) : %1$s.empty();", t(Optional.class));
         assertThat(code, hasToString(format("final java.util.Optional o = (n==null) ? java.util.Optional.of(n) : java.util.Optional.empty();%n")));
+    }
+
+    @Test
+    public void testName11()
+    throws Exception {
+        final MultiCodeBlock codeBlock = new MultiCodeBlock();
+        assertEquals(0, codeBlock.getIndent());
     }
 
 }
