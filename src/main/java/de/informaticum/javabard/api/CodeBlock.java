@@ -8,7 +8,7 @@ public abstract interface CodeBlock {
 
     public abstract CodeBlock add(final CodeBlock code);
 
-    public abstract CodeBlock indent(int diff);
+    public abstract CodeBlock indent(final int diff);
 
     public default CodeBlock indent() {
         return this.indent(+1);

@@ -46,8 +46,7 @@ extends AbstractCodeBlock {
         requireNonNull(locale);
         final StringBuilder out = new StringBuilder();
         final String data = format(locale, this.code.getKey(), this.code.getValue());
-        try (Scanner scanner = new Scanner(data)) {
-            // normalise newline character(s)
+        try (final Scanner scanner = new Scanner(data)) {
             while (scanner.hasNextLine()) {
                 out.append(String.format("%s%s%n", indentation(this.indent), scanner.nextLine()));
             }
