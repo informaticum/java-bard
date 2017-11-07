@@ -21,48 +21,48 @@ public class CodeTests {
     }
 
     @Test
-    public void testName1()
+    public void testPlainFormatStringWithoutArguments()
     throws Exception {
         final Code code = code("final java.util.BitSet bs = null;");
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
-    public void testName2()
+    public void testFormatStringWithFormattedType()
     throws Exception {
         final Code code = code("final %s bs = null;", t(BitSet.class));
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
-    public void testName3()
+    public void testFormatStringWithFormattedArguments()
     throws Exception {
         final Code code = code("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
-    public void testName4()
+    public void testMultilineCode()
     throws Exception {
-        final Code code = code("if (true) {") //
-                                                   .add("final java.util.BitSet bs = null;") //
-                                                   .add("}");
+        final Code code = AbstractCode.of("if (true) {") //
+                                      .add("final java.util.BitSet bs = null;") //
+                                      .add("}");
         assertThat(code, hasToString(format("if (true) {%nfinal java.util.BitSet bs = null;%n}%n")));
     }
 
     @Test
-    public void testName5()
+    public void testIndentationAndUnindentation()
     throws Exception {
         final Code code = code("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
         final Code codeIndent = code.indent();
         assertThat(codeIndent, hasToString(format("    final java.util.BitSet bs = null;%n")));
         final Code codeUnindent = codeIndent.unindent();
-        assertThat(codeUnindent, hasToString(format("final java.util.BitSet bs = null;%n")));
+        assertThat(codeUnindent, hasToString(code.toString()));
     }
 
     @Test
-    public void testName6()
+    public void testIndentedSubCode()
     throws Exception {
         final Code code = code("if (true) {").add(code("final java.util.BitSet bs = null;").indent()).add("}");
         assertThat(code, hasToString(format("if (true) {%n    final java.util.BitSet bs = null;%n}%n")));
@@ -73,7 +73,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testName7()
+    public void testIndentationOfAppendedCode()
     throws Exception {
         final Code code = code("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
@@ -84,7 +84,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testName8()
+    public void testAlternativeIndentationCharacter()
     throws Exception {
         final Code code = code("final %s bs = %s;", t(BitSet.class), null).indent();
         assertThat(code, hasToString(format("    final java.util.BitSet bs = null;%n")));
@@ -94,21 +94,22 @@ public class CodeTests {
     }
 
     @Test
-    public void testName9()
+    public void testMultilineIndentation()
     throws Exception {
         final Code code = code("final %s o = (n==null) ?%n%s.of(n) :%n%s.empty();", t(Optional.class), t(Optional.class), t(Optional.class)).indent();
-        assertThat(code, hasToString(format("    final java.util.Optional o = (n==null) ?%n    java.util.Optional.of(n) :%n    java.util.Optional.empty();%n")));
+        assertThat(code,
+                   hasToString(format("    final java.util.Optional o = (n==null) ?%n    java.util.Optional.of(n) :%n    java.util.Optional.empty();%n")));
     }
 
     @Test
-    public void testName10()
+    public void testIndexedArguments()
     throws Exception {
         final Code code = code("final %1$s o = (n==null) ? %1$s.of(n) : %1$s.empty();", t(Optional.class));
         assertThat(code, hasToString(format("final java.util.Optional o = (n==null) ? java.util.Optional.of(n) : java.util.Optional.empty();%n")));
     }
 
     @Test
-    public void testName11()
+    public void testIndentationOfEmptyMultiCode()
     throws Exception {
         final MultiCode codeBlock = new MultiCode();
         assertEquals(0, codeBlock.getIndent());
