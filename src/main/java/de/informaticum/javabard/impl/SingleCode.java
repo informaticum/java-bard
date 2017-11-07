@@ -8,17 +8,17 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Scanner;
-import de.informaticum.javabard.api.AbstractCodeBlock;
-import de.informaticum.javabard.api.CodeBlock;
+import de.informaticum.javabard.api.AbstractCode;
+import de.informaticum.javabard.api.Code;
 
-public class SingleCodeBlock
-extends AbstractCodeBlock {
+public class SingleCode
+extends AbstractCode {
 
     private final Entry<String, Object[]> code;
 
     private final int indent;
 
-    private SingleCodeBlock(final int indent, final String format, final Object[] arguments) {
+    private SingleCode(final int indent, final String format, final Object[] arguments) {
         assert indent >= 0;
         assert format != null;
         assert arguments != null;
@@ -26,13 +26,13 @@ extends AbstractCodeBlock {
         this.indent = indent;
     }
 
-    public SingleCodeBlock(final String format, final Object... args) {
+    public SingleCode(final String format, final Object... args) {
         this(0, requireNonNull(format), requireNonNull(args));
     }
 
     @Override
-    public CodeBlock indent(final int diff) {
-        return new SingleCodeBlock(max(0, this.indent + diff), this.code.getKey(), this.code.getValue());
+    public Code indent(final int diff) {
+        return new SingleCode(max(0, this.indent + diff), this.code.getKey(), this.code.getValue());
     }
 
     @Override

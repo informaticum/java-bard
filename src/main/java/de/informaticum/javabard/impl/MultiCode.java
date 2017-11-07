@@ -6,20 +6,20 @@ import static java.util.stream.Collectors.joining;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import de.informaticum.javabard.api.AbstractCodeBlock;
-import de.informaticum.javabard.api.CodeBlock;
+import de.informaticum.javabard.api.AbstractCode;
+import de.informaticum.javabard.api.Code;
 
-public class MultiCodeBlock
-extends AbstractCodeBlock {
+public class MultiCode
+extends AbstractCode {
 
-    private final List<CodeBlock> codes = new ArrayList<>();
+    private final List<Code> codes = new ArrayList<>();
 
-    public MultiCodeBlock(final CodeBlock... codes) {
+    public MultiCode(final Code... codes) {
         requireNonNull(codes);
-        for (final CodeBlock code : codes) {
+        for (final Code code : codes) {
             assert code != null;
-            if (code instanceof MultiCodeBlock) {
-                this.codes.addAll(((MultiCodeBlock) code).codes);
+            if (code instanceof MultiCode) {
+                this.codes.addAll(((MultiCode) code).codes);
             } else {
                 this.codes.add(code);
             }
@@ -27,14 +27,14 @@ extends AbstractCodeBlock {
     }
 
     @Override
-    public CodeBlock indent(final int diff) {
+    public Code indent(final int diff) {
         final int d = max(diff, -this.getIndent()); // negative indent (a.k.a. unindent) must be capped
-        return new MultiCodeBlock(this.codes.stream().map(c -> c.indent(d)).toArray(CodeBlock[]::new));
+        return new MultiCode(this.codes.stream().map(c -> c.indent(d)).toArray(Code[]::new));
     }
 
     @Override
     public int getIndent() {
-        return this.codes.stream().mapToInt(CodeBlock::getIndent).min().orElse(0);
+        return this.codes.stream().mapToInt(Code::getIndent).min().orElse(0);
     }
 
     @Override
