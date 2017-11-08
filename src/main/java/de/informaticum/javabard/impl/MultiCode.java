@@ -1,11 +1,14 @@
 package de.informaticum.javabard.impl;
 
 import static java.lang.Math.max;
+import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Supplier;
 import de.informaticum.javabard.api.Code;
 
 public class MultiCode
@@ -13,6 +16,9 @@ extends AbstractLocalisableToString
 implements Code {
 
     private final List<Code> codes = new ArrayList<>();
+
+    public MultiCode() {
+    }
 
     public MultiCode(final Code... codes) {
         requireNonNull(codes);
@@ -24,6 +30,10 @@ implements Code {
                 this.codes.add(code);
             }
         }
+    }
+
+    public MultiCode(final Supplier<? extends Code>... codes) {
+        this(stream(requireNonNull(codes)).map(Objects::requireNonNull).map(Supplier::get).map(Objects::requireNonNull).toArray(Code[]::new));
     }
 
     @Override

@@ -1,7 +1,10 @@
 package de.informaticum.javabard.api;
 
+import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Stream.concat;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 import de.informaticum.javabard.impl.MultiCode;
 import de.informaticum.javabard.impl.SingleCode;
 
@@ -17,12 +20,12 @@ extends Indentable<Code>, LocalisableToString {
         return this.add(code);
     }
 
-    public default Code add(final Code code) {
-        return new MultiCode(this, requireNonNull(code));
+    public default Code add(final Code... codes) {
+        return new MultiCode(concat(Stream.of(this), stream(requireNonNull(codes))).toArray(Code[]::new));
     }
 
-    public default Code add(final Supplier<? extends Code> code) {
-        return new MultiCode(this, requireNonNull(requireNonNull(code).get()));
+    public default Code add(final Supplier<? extends Code>... codes) {
+        return this.add(stream(codes).map(Supplier::get).toArray(Code[]::new));
     }
 
 }
