@@ -5,6 +5,7 @@ import static de.informaticum.javabard.api.Util.nonNull;
 import static java.lang.Math.max;
 import static java.lang.String.format;
 import java.util.Formattable;
+import java.util.IllegalFormatException;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.function.Supplier;
@@ -64,11 +65,10 @@ implements Code {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    throws IllegalFormatException {
         final StringBuilder out = new StringBuilder();
-        final String data = this.code.get();
-        assert data != null; // To prevent Formattable's side-effects, we cannot assert earlier!
-        try (final Scanner scanner = new Scanner(data)) {
+        try (final Scanner scanner = new Scanner(this.code.get())) {
             final Formattable indentation = indentation(this.indent);
             while (scanner.hasNextLine()) {
                 out.append(format("%s%s%n", indentation, scanner.nextLine()));
