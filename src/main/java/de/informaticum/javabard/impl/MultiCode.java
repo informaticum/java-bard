@@ -9,7 +9,8 @@ import java.util.Locale;
 import de.informaticum.javabard.api.Code;
 
 public class MultiCode
-extends AbstractCode {
+extends AbstractLocalisableToString
+implements Code {
 
     private final List<Code> codes = new ArrayList<>();
 

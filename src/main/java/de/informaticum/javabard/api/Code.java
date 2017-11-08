@@ -1,13 +1,12 @@
 package de.informaticum.javabard.api;
 
 import static java.util.Objects.requireNonNull;
-import java.util.Locale;
 import java.util.function.Supplier;
 import de.informaticum.javabard.impl.MultiCode;
 import de.informaticum.javabard.impl.SingleCode;
 
 public abstract interface Code
-extends Indentable<Code> {
+extends Indentable<Code>, LocalisableToString {
 
     public static Code code(final String format, final Object... args) {
         return new SingleCode(requireNonNull(format), requireNonNull(args));
@@ -25,10 +24,5 @@ extends Indentable<Code> {
     public default Code add(final Supplier<? extends Code> code) {
         return new MultiCode(this, requireNonNull(requireNonNull(code).get()));
     }
-
-    @Override
-    public abstract String toString();
-
-    public abstract String toString(final Locale locale);
 
 }

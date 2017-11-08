@@ -12,7 +12,8 @@ import java.util.Scanner;
 import de.informaticum.javabard.api.Code;
 
 public class SingleCode
-extends AbstractCode {
+extends AbstractLocalisableToString
+implements Code {
 
     private final Entry<String, Object[]> code;
 

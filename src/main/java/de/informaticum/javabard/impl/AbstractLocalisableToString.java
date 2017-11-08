@@ -1,10 +1,10 @@
 package de.informaticum.javabard.impl;
 
 import java.util.Locale;
-import de.informaticum.javabard.api.Code;
+import de.informaticum.javabard.api.LocalisableToString;
 
-public abstract class AbstractCode
-implements Code {
+public abstract class AbstractLocalisableToString
+implements LocalisableToString {
 
     @Override
     public String toString() {
