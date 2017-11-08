@@ -8,7 +8,6 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Scanner;
-import de.informaticum.javabard.api.AbstractCode;
 import de.informaticum.javabard.api.Code;
 
 public class SingleCode

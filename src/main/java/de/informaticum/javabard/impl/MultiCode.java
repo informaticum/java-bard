@@ -6,7 +6,6 @@ import static java.util.stream.Collectors.joining;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import de.informaticum.javabard.api.AbstractCode;
 import de.informaticum.javabard.api.Code;
 
 public class MultiCode

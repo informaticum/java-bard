@@ -1,6 +1,7 @@
-package de.informaticum.javabard.api;
+package de.informaticum.javabard.impl;
 
 import java.util.Locale;
+import de.informaticum.javabard.api.Code;
 
 public abstract class AbstractCode
 implements Code {
