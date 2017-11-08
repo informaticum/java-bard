@@ -16,7 +16,7 @@ extends AbstractCode {
     public MultiCode(final Code... codes) {
         requireNonNull(codes);
         for (final Code code : codes) {
-            assert code != null;
+            requireNonNull(code);
             if (code instanceof MultiCode) {
                 this.codes.addAll(((MultiCode) code).codes);
             } else {
