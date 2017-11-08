@@ -1,6 +1,6 @@
 package de.informaticum.javabard.api;
 
-import static de.informaticum.javabard.api.AbstractCode.code;
+import static de.informaticum.javabard.api.Code.code;
 import static de.informaticum.javabard.api.FormattableEmitters.t;
 import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
 import static java.lang.String.format;
@@ -44,9 +44,9 @@ public class CodeTests {
     @Test
     public void testMultilineCode()
     throws Exception {
-        final Code code = AbstractCode.code("if (true) {") //
-                                      .add("final java.util.BitSet bs = null;") //
-                                      .add("}");
+        final Code code = Code.code("if (true) {") //
+                              .add("final java.util.BitSet bs = null;") //
+                              .add("}");
         assertThat(code, hasToString(format("if (true) {%nfinal java.util.BitSet bs = null;%n}%n")));
     }
 

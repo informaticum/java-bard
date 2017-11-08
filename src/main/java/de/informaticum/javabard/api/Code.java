@@ -1,12 +1,23 @@
 package de.informaticum.javabard.api;
 
+import static java.util.Objects.requireNonNull;
 import java.util.Locale;
+import de.informaticum.javabard.impl.MultiCode;
+import de.informaticum.javabard.impl.SingleCode;
 
 public abstract interface Code {
 
-    public abstract Code add(final String format, final Object... args);
+    public static Code code(final String format, final Object... args) {
+        return new SingleCode(requireNonNull(format), requireNonNull(args));
+    }
 
-    public abstract Code add(final Code code);
+    public default Code add(final String format, final Object... args) {
+        return this.add(code(requireNonNull(format), requireNonNull(args)).indent(this.getIndent()));
+    }
+
+    public default Code add(final Code code) {
+        return new MultiCode(this, requireNonNull(code));
+    }
 
     public abstract Code indent(final int diff);
 
