@@ -1,5 +1,6 @@
-package de.informaticum.javabard.api;
+package de.informaticum.javabard.api.deprecated;
 
+@Deprecated(/* Resolve at the end, to keep the API clean! */)
 public abstract interface Indentable<T> {
 
     public abstract T indent(final int diff);

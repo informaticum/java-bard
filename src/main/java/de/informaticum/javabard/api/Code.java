@@ -5,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Stream.concat;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+import de.informaticum.javabard.api.deprecated.Indentable;
+import de.informaticum.javabard.api.deprecated.LocalisableToString;
 import de.informaticum.javabard.impl.MultiCode;
 import de.informaticum.javabard.impl.SingleCode;
 
