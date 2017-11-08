@@ -1,9 +1,9 @@
 package de.informaticum.javabard.impl;
 
 import static de.informaticum.javabard.api.FormattableEmitters.indentation;
+import static de.informaticum.javabard.api.Util.nonNull;
 import static java.lang.Math.max;
 import static java.lang.String.format;
-import static java.util.Objects.requireNonNull;
 import java.util.Formattable;
 import java.util.Locale;
 import java.util.Scanner;
@@ -43,12 +43,14 @@ implements Code {
         this.code = () -> format(locale, format, args);
     }
 
-    public SingleCode(final String format, final Object... args) {
-        this(0, requireNonNull(format), requireNonNull(args));
+    public SingleCode(final String format, final Object... args)
+    throws IllegalArgumentException {
+        this(0, nonNull(format), nonNull(args));
     }
 
-    public SingleCode(final Locale locale, final String format, final Object... args) {
-        this(0, requireNonNull(locale), requireNonNull(format), requireNonNull(args));
+    public SingleCode(final Locale locale, final String format, final Object... args)
+    throws IllegalArgumentException {
+        this(0, nonNull(locale), nonNull(format), nonNull(args));
     }
 
     @Override
