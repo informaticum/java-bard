@@ -44,7 +44,7 @@ public class CodeTests {
     @Test
     public void testMultilineCode()
     throws Exception {
-        final Code code = AbstractCode.of("if (true) {") //
+        final Code code = AbstractCode.code("if (true) {") //
                                       .add("final java.util.BitSet bs = null;") //
                                       .add("}");
         assertThat(code, hasToString(format("if (true) {%nfinal java.util.BitSet bs = null;%n}%n")));

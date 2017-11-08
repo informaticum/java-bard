@@ -8,10 +8,6 @@ import de.informaticum.javabard.impl.SingleCode;
 public abstract class AbstractCode
 implements Code {
 
-    public static Code of(final String format, final Object... args) {
-        return new SingleCode(requireNonNull(format), requireNonNull(args));
-    }
-
     public static Code code(final String format, final Object... args) {
         return new SingleCode(requireNonNull(format), requireNonNull(args));
     }
