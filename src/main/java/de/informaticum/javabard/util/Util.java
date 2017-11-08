@@ -1,4 +1,4 @@
-package de.informaticum.javabard.api;
+package de.informaticum.javabard.util;
 
 import static java.util.Arrays.stream;
 import java.util.function.Supplier;

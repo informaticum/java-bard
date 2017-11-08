@@ -1,7 +1,7 @@
 package de.informaticum.javabard.impl;
 
 import static de.informaticum.javabard.api.FormattableEmitters.indentation;
-import static de.informaticum.javabard.api.Util.nonNull;
+import static de.informaticum.javabard.util.Util.nonNull;
 import static java.lang.Math.max;
 import static java.lang.String.format;
 import java.util.Formattable;

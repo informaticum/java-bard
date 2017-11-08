@@ -1,8 +1,8 @@
 package de.informaticum.javabard.api;
 
-import static de.informaticum.javabard.api.Util.allNonNull;
-import static de.informaticum.javabard.api.Util.allNonNullSupply;
-import static de.informaticum.javabard.api.Util.nonNull;
+import static de.informaticum.javabard.util.Util.allNonNull;
+import static de.informaticum.javabard.util.Util.allNonNullSupply;
+import static de.informaticum.javabard.util.Util.nonNull;
 import static java.util.Arrays.stream;
 import static java.util.stream.Stream.concat;
 import java.util.function.Supplier;

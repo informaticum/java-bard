@@ -1,7 +1,7 @@
 package de.informaticum.javabard.impl;
 
-import static de.informaticum.javabard.api.Util.allNonNull;
-import static de.informaticum.javabard.api.Util.allNonNullSupply;
+import static de.informaticum.javabard.util.Util.allNonNull;
+import static de.informaticum.javabard.util.Util.allNonNullSupply;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
