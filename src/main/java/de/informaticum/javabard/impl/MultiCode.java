@@ -6,13 +6,11 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Supplier;
 import de.informaticum.javabard.api.Code;
 
 public class MultiCode
-extends AbstractLocalisableToString
 implements Code {
 
     private final List<Code> codes = new ArrayList<>();
@@ -48,9 +46,8 @@ implements Code {
     }
 
     @Override
-    public String toString(final Locale locale) {
-        requireNonNull(locale);
-        return this.codes.stream().map(c -> c.toString(locale)).collect(joining());
+    public String toString() {
+        return this.codes.stream().map(Code::toString).collect(joining());
     }
 
 }

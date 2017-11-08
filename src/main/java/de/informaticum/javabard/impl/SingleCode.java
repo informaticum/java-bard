@@ -4,36 +4,56 @@ import static de.informaticum.javabard.api.FormattableEmitters.indentation;
 import static java.lang.Math.max;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
-import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Formattable;
 import java.util.Locale;
-import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.function.Supplier;
 import de.informaticum.javabard.api.Code;
 
 public class SingleCode
-extends AbstractLocalisableToString
 implements Code {
 
-    private final Entry<String, Object[]> code;
-
     private final int indent;
+
+    private final Supplier<String> code;
+
+    private SingleCode(final int indent, final SingleCode blueprint) {
+        assert indent >= 0;
+        assert blueprint != null;
+        this.indent = indent;
+        this.code = blueprint.code;
+    }
 
     private SingleCode(final int indent, final String format, final Object[] arguments) {
         assert indent >= 0;
         assert format != null;
         assert arguments != null;
-        this.code = new SimpleImmutableEntry<>(format, arguments.clone());
         this.indent = indent;
+        final Object[] args = arguments.clone();
+        this.code = () -> format(format, args);
+    }
+
+    private SingleCode(final int indent, final Locale locale, final String format, final Object[] arguments) {
+        assert indent >= 0;
+        assert locale != null;
+        assert format != null;
+        assert arguments != null;
+        this.indent = indent;
+        final Object[] args = arguments.clone();
+        this.code = () -> format(locale, format, args);
     }
 
     public SingleCode(final String format, final Object... args) {
         this(0, requireNonNull(format), requireNonNull(args));
     }
 
+    public SingleCode(final Locale locale, final String format, final Object... args) {
+        this(0, requireNonNull(locale), requireNonNull(format), requireNonNull(args));
+    }
+
     @Override
     public Code indent(final int diff) {
-        return new SingleCode(max(0, this.indent + diff), this.code.getKey(), this.code.getValue());
+        return new SingleCode(max(0, this.indent + diff), this);
     }
 
     @Override
@@ -42,10 +62,10 @@ implements Code {
     }
 
     @Override
-    public String toString(final Locale locale) {
-        requireNonNull(locale);
+    public String toString() {
         final StringBuilder out = new StringBuilder();
-        final String data = format(locale, this.code.getKey(), this.code.getValue());
+        final String data = this.code.get();
+        assert data != null; // To prevent Formattable's side-effects, we cannot assert earlier!
         try (final Scanner scanner = new Scanner(data)) {
             final Formattable indentation = indentation(this.indent);
             while (scanner.hasNextLine()) {
