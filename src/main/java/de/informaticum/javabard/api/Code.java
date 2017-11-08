@@ -6,7 +6,8 @@ import java.util.function.Supplier;
 import de.informaticum.javabard.impl.MultiCode;
 import de.informaticum.javabard.impl.SingleCode;
 
-public abstract interface Code {
+public abstract interface Code
+extends Indentable<Code> {
 
     public static Code code(final String format, final Object... args) {
         return new SingleCode(requireNonNull(format), requireNonNull(args));
@@ -24,18 +25,6 @@ public abstract interface Code {
     public default Code add(final Supplier<? extends Code> code) {
         return new MultiCode(this, requireNonNull(requireNonNull(code).get()));
     }
-
-    public abstract Code indent(final int diff);
-
-    public default Code indent() {
-        return this.indent(+1);
-    }
-
-    public default Code unindent() {
-        return this.indent(-1);
-    }
-
-    public abstract int getIndent();
 
     @Override
     public abstract String toString();
