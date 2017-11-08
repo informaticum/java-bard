@@ -12,7 +12,8 @@ public abstract interface Code {
     }
 
     public default Code add(final String format, final Object... args) {
-        return this.add(code(requireNonNull(format), requireNonNull(args)).indent(this.getIndent()));
+        final Code code = code(requireNonNull(format), requireNonNull(args)).indent(this.getIndent());
+        return this.add(code);
     }
 
     public default Code add(final Code code) {
