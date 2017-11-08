@@ -1,5 +1,7 @@
 package de.informaticum.javabard.api;
 
+import static de.informaticum.javabard.api.Util.allNonNull;
+import static de.informaticum.javabard.api.Util.allNonNullSupply;
 import static de.informaticum.javabard.api.Util.nonNull;
 import static java.util.Arrays.stream;
 import static java.util.stream.Stream.concat;
@@ -19,7 +21,7 @@ extends Indentable<Code> {
         return new SingleCode(nonNull(format), nonNull(args));
     }
 
-    // instance's methods
+    // instance behaviour
 
     public default Code add(final String format, final Object... args)
     throws IllegalArgumentException {
@@ -29,13 +31,13 @@ extends Indentable<Code> {
 
     public default Code add(final Code... codes)
     throws IllegalArgumentException {
-        final Code[] combined = concat(Stream.of(this), stream(nonNull(codes)).map(Util::nonNull)).toArray(Code[]::new);
+        final Code[] combined = concat(Stream.of(this), stream(allNonNull(codes))).toArray(Code[]::new);
         return new MultiCode(combined);
     }
 
     public default Code add(final Supplier<? extends Code>... codes)
     throws IllegalArgumentException {
-        final Code[] resolved = stream(nonNull(codes)).map(Util::nonNull).map(Supplier::get).map(Util::nonNull).toArray(Code[]::new);
+        final Code[] resolved = stream(allNonNullSupply(codes)).map(Supplier::get).toArray(Code[]::new);
         return this.add(resolved);
     }
 

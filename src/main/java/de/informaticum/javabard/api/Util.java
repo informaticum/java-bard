@@ -1,5 +1,8 @@
 package de.informaticum.javabard.api;
 
+import static java.util.Arrays.stream;
+import java.util.function.Supplier;
+
 public enum Util {
     ;
 
@@ -9,6 +12,35 @@ public enum Util {
             throw new IllegalArgumentException();
         } else {
             return arg;
+        }
+    }
+
+    @SafeVarargs
+    public static final <T> T[] allNonNull(final T... args)
+    throws IllegalArgumentException {
+        if ((args == null) || stream(args).anyMatch(a -> a == null)) {
+            throw new IllegalArgumentException();
+        } else {
+            return args;
+        }
+    }
+
+    public static final <S extends Supplier<?>> S nonNullSupply(final S arg)
+    throws IllegalArgumentException {
+        if ((arg == null) || (arg.get() == null)) {
+            throw new IllegalArgumentException();
+        } else {
+            return arg;
+        }
+    }
+
+    @SafeVarargs
+    public static final <S extends Supplier<?>> S[] allNonNullSupply(final S... args)
+    throws IllegalArgumentException {
+        if ((args == null) || stream(args).anyMatch(a -> a == null) || stream(args).anyMatch(a -> a.get() == null)) {
+            throw new IllegalArgumentException();
+        } else {
+            return args;
         }
     }
 

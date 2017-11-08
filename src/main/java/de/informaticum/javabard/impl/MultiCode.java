@@ -1,6 +1,7 @@
 package de.informaticum.javabard.impl;
 
-import static de.informaticum.javabard.api.Util.nonNull;
+import static de.informaticum.javabard.api.Util.allNonNull;
+import static de.informaticum.javabard.api.Util.allNonNullSupply;
 import static java.lang.Math.max;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
@@ -8,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import de.informaticum.javabard.api.Code;
-import de.informaticum.javabard.api.Util;
 
 public class MultiCode
 implements Code {
@@ -20,9 +20,8 @@ implements Code {
 
     public MultiCode(final Code... codes)
     throws IllegalArgumentException {
-        nonNull(codes);
+        allNonNull(codes);
         for (final Code code : codes) {
-            nonNull(code);
             if (code instanceof MultiCode) {
                 this.codes.addAll(((MultiCode) code).codes);
             } else {
@@ -33,7 +32,7 @@ implements Code {
 
     public MultiCode(final Supplier<? extends Code>... codes)
     throws IllegalArgumentException {
-        this(stream(nonNull(codes)).map(Util::nonNull).map(Supplier::get).map(Util::nonNull).toArray(Code[]::new));
+        this(stream(allNonNullSupply(codes)).map(Supplier::get).toArray(Code[]::new));
     }
 
     @Override
