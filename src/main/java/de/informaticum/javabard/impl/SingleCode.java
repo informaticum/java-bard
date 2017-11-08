@@ -5,6 +5,7 @@ import static java.lang.Math.max;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.Formattable;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -45,8 +46,9 @@ extends AbstractCode {
         final StringBuilder out = new StringBuilder();
         final String data = format(locale, this.code.getKey(), this.code.getValue());
         try (final Scanner scanner = new Scanner(data)) {
+            final Formattable indentation = indentation(this.indent);
             while (scanner.hasNextLine()) {
-                out.append(format("%s%s%n", indentation(this.indent), scanner.nextLine()));
+                out.append(format("%s%s%n", indentation, scanner.nextLine()));
             }
         }
         return out.toString();
