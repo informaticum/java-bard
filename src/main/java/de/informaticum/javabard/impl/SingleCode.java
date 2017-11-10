@@ -25,33 +25,22 @@ implements Code {
         this.code = blueprint.code;
     }
 
-    private SingleCode(final int indent, final String format, final Object[] arguments) {
-        assert indent >= 0;
-        assert format != null;
-        assert arguments != null;
-        this.indent = indent;
-        final Object[] args = arguments.clone();
-        this.code = () -> format(format, args);
-    }
-
-    private SingleCode(final int indent, final Locale locale, final String format, final Object[] arguments) {
-        assert indent >= 0;
-        assert locale != null;
-        assert format != null;
-        assert arguments != null;
-        this.indent = indent;
-        final Object[] args = arguments.clone();
-        this.code = () -> format(locale, format, args);
-    }
-
     public SingleCode(final String format, final Object... args)
     throws IllegalArgumentException {
-        this(0, nonNull(format), nonNull(args));
+        nonNull(format);
+        nonNull(args);
+        this.indent = 0;
+        final Object[] defensiveCopy = args.clone();
+        this.code = () -> format(format, defensiveCopy);
     }
 
-    public SingleCode(final Locale locale, final String format, final Object... args)
-    throws IllegalArgumentException {
-        this(0, nonNull(locale), nonNull(format), nonNull(args));
+    public SingleCode(final Locale locale, final String format, final Object... args) {
+        nonNull(locale);
+        nonNull(format);
+        nonNull(args);
+        this.indent = 0;
+        final Object[] defensiveCopy = args.clone();
+        this.code = () -> format(locale, format, defensiveCopy);
     }
 
     @Override

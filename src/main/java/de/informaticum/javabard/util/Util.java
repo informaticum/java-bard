@@ -1,6 +1,7 @@
 package de.informaticum.javabard.util;
 
 import static java.util.Arrays.stream;
+import java.util.List;
 import java.util.function.Supplier;
 
 public enum Util {
@@ -19,6 +20,15 @@ public enum Util {
     public static final <T> T[] allNonNull(final T... args)
     throws IllegalArgumentException {
         if ((args == null) || stream(args).anyMatch(a -> a == null)) {
+            throw new IllegalArgumentException();
+        } else {
+            return args;
+        }
+    }
+
+    public static final <T, C extends Collection<T>> C allNonNull(final C args)
+    throws IllegalArgumentException {
+        if ((args == null) || args.stream().anyMatch(a -> a == null)) {
             throw new IllegalArgumentException();
         } else {
             return args;
