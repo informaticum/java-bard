@@ -7,6 +7,7 @@ import static java.lang.String.format;
 import java.util.Formattable;
 import java.util.IllegalFormatException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Supplier;
 import de.informaticum.javabard.api.Code;
@@ -18,34 +19,16 @@ implements Code {
 
     private final Supplier<String> code;
 
-    private SingleCode(final int indent, final SingleCode blueprint) {
+    private SingleCode(final int indent, final Supplier<String> code) {
         assert indent >= 0;
-        assert blueprint != null;
+        assert code != null;
         this.indent = indent;
-        this.code = blueprint.code;
-    }
-
-    public SingleCode(final String format, final Object... args)
-    throws IllegalArgumentException {
-        nonNull(format);
-        nonNull(args);
-        this.indent = 0;
-        final Object[] defensiveCopy = args.clone();
-        this.code = () -> format(format, defensiveCopy);
-    }
-
-    public SingleCode(final Locale locale, final String format, final Object... args) {
-        nonNull(locale);
-        nonNull(format);
-        nonNull(args);
-        this.indent = 0;
-        final Object[] defensiveCopy = args.clone();
-        this.code = () -> format(locale, format, defensiveCopy);
+        this.code = code;
     }
 
     @Override
     public Code indent(final int diff) {
-        return new SingleCode(max(0, this.indent + diff), this);
+        return new SingleCode(max(0, this.indent + diff), this.code);
     }
 
     @Override
@@ -64,6 +47,50 @@ implements Code {
             }
         }
         return out.toString();
+    }
+
+    public static final class Builder {
+
+        private Locale locale = null;
+
+        private final String format;
+
+        private final Object[] args;
+
+        public Builder(final String format, final Object... args)
+        throws IllegalArgumentException {
+            this.format = nonNull(format);
+            this.args = nonNull(args);
+        }
+
+        public final Builder setLocale(final Locale locale)
+        throws IllegalArgumentException {
+            this.locale = nonNull(locale);
+            return this;
+        }
+
+        public final Builder setLocale(final Optional<? extends Locale> locale)
+        throws IllegalArgumentException {
+            this.locale = nonNull(locale).orElseGet(null);
+            return this;
+        }
+
+        public final SingleCode build() {
+            final Object[] defCopy = this.args.clone();
+            final Supplier<String> code = this.locale == null ? () -> format(this.format, defCopy) : () -> format(this.locale, this.format, defCopy);
+            return new SingleCode(0, code);
+        }
+
+        public static final SingleCode code(final String format, final Object... args)
+        throws IllegalArgumentException {
+            return new Builder(format, args).build();
+        }
+
+        public static final SingleCode code(final Locale locale, final String format, final Object... args)
+        throws IllegalArgumentException {
+            return new Builder(format, args).setLocale(locale).build();
+        }
+
     }
 
 }

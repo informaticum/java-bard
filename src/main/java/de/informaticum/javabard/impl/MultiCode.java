@@ -1,12 +1,12 @@
 package de.informaticum.javabard.impl;
 
-import static de.informaticum.javabard.util.Util.allNonNull;
+import static de.informaticum.javabard.util.Util.nonNull;
 import static java.lang.Math.max;
-import static java.util.Arrays.stream;
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,19 +20,8 @@ implements Code {
     private MultiCode(final Stream<? extends Code> codes)
     throws IllegalArgumentException {
         assert codes != null;
-        allNonNull(codes);
         this.codes = codes.flatMap(c -> (c instanceof MultiCode) ? ((MultiCode) c).codes.stream() : Stream.of(c)) //
                           .collect(collectingAndThen(toList(), Collections::unmodifiableList));
-    }
-
-    public MultiCode(final Collection<? extends Code> codes)
-    throws IllegalArgumentException {
-        this(allNonNull(codes).stream());
-    }
-
-    public MultiCode(final Code... codes)
-    throws IllegalArgumentException {
-        this(stream(allNonNull(codes)));
     }
 
     @Override
@@ -49,6 +38,62 @@ implements Code {
     @Override
     public String toString() {
         return this.codes.stream().map(Code::toString).collect(joining());
+    }
+
+    public static final class Builder {
+
+        private final List<Code> codes;
+
+        public Builder() {
+            this.codes = new ArrayList<>();
+        }
+
+        public final Builder add(final Code code)
+        throws IllegalArgumentException {
+            nonNull(code);
+            if (code instanceof MultiCode) {
+                return this.add(((MultiCode) code).codes);
+            } else {
+                this.codes.add(code);
+                return this;
+            }
+        }
+
+        public final Builder add(final Iterable<? extends Code> codes)
+        throws IllegalArgumentException {
+            codes.forEach(this::add);
+            return this;
+        }
+
+        public final Builder add(final Code... codes)
+        throws IllegalArgumentException {
+            return this.add(asList(codes));
+        }
+
+        public final MultiCode build() {
+            return new MultiCode(this.codes.stream());
+        }
+
+        public static final MultiCode combine(final Iterable<? extends Code> codes)
+        throws IllegalArgumentException {
+            return new Builder().add(codes).build();
+        }
+
+        public static final MultiCode combine(final Code... codes)
+        throws IllegalArgumentException {
+            return new Builder().add(codes).build();
+        }
+
+        public static final MultiCode combine(final Code code, final Iterable<? extends Code> codes)
+        throws IllegalArgumentException {
+            return new Builder().add(code).add(codes).build();
+        }
+
+        public static final MultiCode combine(final Code code, final Code... codes)
+        throws IllegalArgumentException {
+            return new Builder().add(code).add(codes).build();
+        }
+
     }
 
 }
