@@ -28,13 +28,19 @@ extends Indentable<Code> {
         return this.add(code);
     }
 
-    public default Code add(final Collection<? extends Code> codes)
+    public default Code add(final Code code)
+    throws IllegalArgumentException {
+        nonNull(code);
+        return combine(this, code);
+    }
+
+    public default Code addAll(final Collection<? extends Code> codes)
     throws IllegalArgumentException {
         allNonNull(codes);
         return combine(this, codes);
     }
 
-    public default Code add(final Code... codes)
+    public default Code addAll(final Code... codes)
     throws IllegalArgumentException {
         allNonNull(codes);
         return combine(this, codes);
