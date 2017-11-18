@@ -20,8 +20,8 @@ implements Code {
     private MultiCode(final Stream<? extends Code> codes)
     throws IllegalArgumentException {
         assert codes != null;
-        this.codes = codes.flatMap(c -> (c instanceof MultiCode) ? ((MultiCode) c).codes.stream() : Stream.of(c)) //
-                          .collect(collectingAndThen(toList(), Collections::unmodifiableList));
+        this.codes = codes.collect(collectingAndThen(toList(), Collections::unmodifiableList));
+        assert this.codes.stream().noneMatch(MultiCode.class::isInstance);
     }
 
     @Override
