@@ -1,5 +1,6 @@
 package de.informaticum.javabard.api;
 
+import static de.informaticum.javabard.api.FormattableEmitters.i;
 import static de.informaticum.javabard.api.FormattableEmitters.t;
 import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
 import static de.informaticum.javabard.impl.SingleCode.Builder.code;
@@ -76,6 +77,28 @@ public class CodeTests {
         assertThat(codeIndent, hasToString(format("    if (true) {%n        final java.util.BitSet bs = null;%n    }%n")));
         final Code codeUnindent = code.unindent();
         assertThat(codeUnindent, hasToString(format("if (true) {%n    final java.util.BitSet bs = null;%n}%n")));
+    }
+
+    @Test
+    public void testDirectIndentation()
+    throws Exception {
+        final Code code = code("if (true) {").add(code("%sfinal java.util.BitSet bs = null;", i())).add("}");
+        assertThat(code, hasToString(format("if (true) {%n    final java.util.BitSet bs = null;%n}%n")));
+        final Code codeIndent = code.indent();
+        assertThat(codeIndent, hasToString(format("    if (true) {%n        final java.util.BitSet bs = null;%n    }%n")));
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("if (true) {%n    final java.util.BitSet bs = null;%n}%n")));
+    }
+
+    @Test
+    public void testSpecificIndentation()
+    throws Exception {
+        final Code code = code("if (true) {").add(code("%sfinal java.util.BitSet bs = null;", i(2))).add("}");
+        assertThat(code, hasToString(format("if (true) {%n        final java.util.BitSet bs = null;%n}%n")));
+        final Code codeIndent = code.indent();
+        assertThat(codeIndent, hasToString(format("    if (true) {%n            final java.util.BitSet bs = null;%n    }%n")));
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("if (true) {%n        final java.util.BitSet bs = null;%n}%n")));
     }
 
     @Test
