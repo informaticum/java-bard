@@ -42,7 +42,7 @@ extends Indentable<Code> {
 
     public default Code addAll(final Code... codes)
     throws IllegalArgumentException {
-        allNonNull(codes);
+        nonNull(codes);
         return combine(this, codes);
     }
 
