@@ -89,7 +89,7 @@ implements Code {
             return new Builder().add(code).add(codes).build();
         }
 
-        public static final MultiCode combine(final Code code, final Code... codes)
+        public static final MultiCode combine(final Code code, final Code[] codes)
         throws IllegalArgumentException {
             return new Builder().add(code).add(codes).build();
         }
