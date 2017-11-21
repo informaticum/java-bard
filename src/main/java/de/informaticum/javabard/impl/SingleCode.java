@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 import de.informaticum.javabard.api.Code;
 
 public class SingleCode
-implements Code {
+extends AbstractCode {
 
     private final int indent;
 

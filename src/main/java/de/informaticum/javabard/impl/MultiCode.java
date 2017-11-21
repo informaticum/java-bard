@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import de.informaticum.javabard.api.Code;
 
 public class MultiCode
-implements Code {
+extends AbstractCode {
 
     private final List<Code> codes;
 

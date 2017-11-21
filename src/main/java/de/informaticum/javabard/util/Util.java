@@ -18,7 +18,7 @@ public enum Util {
         }
     }
 
-    public static final <T> T[] allNonNull(final T[] args)
+    public static final <T> T[] allNonNull(final T... args)
     throws IllegalArgumentException {
         if ((args == null) || stream(args).anyMatch(a -> a == null)) {
             throw new IllegalArgumentException();
