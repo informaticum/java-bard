@@ -74,26 +74,6 @@ implements Code {
             return new MultiCode(this.codes.stream());
         }
 
-        public static final MultiCode combine(final Iterable<? extends Code> codes)
-        throws IllegalArgumentException {
-            return new Builder().add(codes).build();
-        }
-
-        public static final MultiCode combine(final Code... codes)
-        throws IllegalArgumentException {
-            return new Builder().add(codes).build();
-        }
-
-        public static final MultiCode combine(final Code code, final Iterable<? extends Code> codes)
-        throws IllegalArgumentException {
-            return new Builder().add(code).add(codes).build();
-        }
-
-        public static final MultiCode combine(final Code code, final Code[] codes)
-        throws IllegalArgumentException {
-            return new Builder().add(code).add(codes).build();
-        }
-
     }
 
 }

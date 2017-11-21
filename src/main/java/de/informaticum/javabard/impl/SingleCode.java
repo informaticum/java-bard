@@ -81,21 +81,6 @@ implements Code {
             return new SingleCode(0, code);
         }
 
-        public static final SingleCode code(final String format, final Object... args)
-        throws IllegalArgumentException {
-            nonNull(format);
-            nonNull(args);
-            return new Builder(format, args).build();
-        }
-
-        public static final SingleCode code(final Locale locale, final String format, final Object... args)
-        throws IllegalArgumentException {
-            nonNull(locale);
-            nonNull(format);
-            nonNull(args);
-            return new Builder(format, args).setLocale(locale).build();
-        }
-
     }
 
 }
