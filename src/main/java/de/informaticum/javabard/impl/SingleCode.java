@@ -17,9 +17,9 @@ extends AbstractCode {
 
     private final int indent;
 
-    private final Supplier<String> code;
+    private final Supplier<? extends String> code;
 
-    private SingleCode(final int indent, final Supplier<String> code) {
+    private SingleCode(final int indent, final Supplier<? extends String> code) {
         assert indent >= 0;
         assert code != null;
         this.indent = indent;
