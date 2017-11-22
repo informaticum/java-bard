@@ -12,10 +12,6 @@ public abstract interface Code {
         return this.indent(indent - this.getIndent());
     }
 
-    public default Code clearIndent() {
-        return this.indent(-this.getIndent());
-    }
-
     public abstract Code indent(final int diff);
 
     public default Code indent() {
