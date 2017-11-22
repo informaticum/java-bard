@@ -3,18 +3,22 @@ package de.informaticum.javabard.api;
 import static de.informaticum.javabard.api.FormattableEmitters.i;
 import static de.informaticum.javabard.api.FormattableEmitters.t;
 import static de.informaticum.javabard.impl.AbstractCode.code;
+import static de.informaticum.javabard.impl.AbstractCode.combine;
 import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import java.util.BitSet;
 import java.util.Formattable;
+import java.util.List;
 import java.util.Optional;
 import javax.xml.ws.Holder;
 import de.informaticum.javabard.impl.MultiCode;
+import de.informaticum.javabard.impl.SingleCode;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,6 +70,79 @@ public class CodeTests {
         assertThat(codeIndent, hasToString(format("    final java.util.BitSet bs = null;%n")));
         final Code codeUnindent = codeIndent.unindent();
         assertThat(codeUnindent, hasToString(code.toString()));
+    }
+
+    @Test
+    public void testAddAfterIndent_addStringFormat()
+    throws Exception {
+        final Code code = code("Object o1 = null;").indent().add("Object o2 = null;");
+        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n")));
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%n")));
+    }
+
+    @Test
+    public void testAddAfterIndent_addCode_SingleCode()
+    throws Exception {
+        final SingleCode first = code("Object o1 = null;");
+        final Code code = first.indent().add(code("Object o2 = null;"));
+        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n")));
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%n")));
+    }
+
+    @Test
+    public void testAddAfterIndent_addCollectionOfCode_SingleCode()
+    throws Exception {
+        final SingleCode first = code("Object o1 = null;");
+        final List<SingleCode> codes = asList(code("Object o2 = null;"), code("Object o3 = null;"));
+        final Code code = first.indent().addAll(codes);
+        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n    Object o3 = null;%n")));
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%nObject o3 = null;%n")));
+    }
+
+    @Test
+    public void testAddAfterIndent_addArrayOfCode_SingleCode()
+    throws Exception {
+        final SingleCode first = code("Object o1 = null;");
+        final Code[] codes = new Code[] { code("Object o2 = null;"), code("Object o3 = null;") };
+        final Code code = first.indent().addAll(codes);
+        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n    Object o3 = null;%n")));
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%nObject o3 = null;%n")));
+    }
+
+    @Test
+    public void testAddAfterIndent_addCode_MultiCode()
+    throws Exception {
+        final MultiCode first = combine(code("Object o1 = null;"));
+        final Code code = first.indent().add(code("Object o2 = null;"));
+        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n")));
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%n")));
+    }
+
+    @Test
+    public void testAddAfterIndent_addCollectionOfCode_MultiCode()
+    throws Exception {
+        final MultiCode first = combine(code("Object o1 = null;"));
+        final List<SingleCode> codes = asList(code("Object o2 = null;"), code("Object o3 = null;"));
+        final Code code = first.indent().addAll(codes);
+        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n    Object o3 = null;%n")));
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%nObject o3 = null;%n")));
+    }
+
+    @Test
+    public void testAddAfterIndent_addArrayOfCode_MultiCode()
+    throws Exception {
+        final MultiCode first = combine(code("Object o1 = null;"));
+        final Code[] codes = new Code[] { code("Object o2 = null;"), code("Object o3 = null;") };
+        final Code code = first.indent().addAll(codes);
+        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n    Object o3 = null;%n")));
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%nObject o3 = null;%n")));
     }
 
     @Test

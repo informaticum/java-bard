@@ -1,8 +1,6 @@
 package de.informaticum.javabard.impl;
 
-import static de.informaticum.javabard.util.Util.allNonNull;
 import static de.informaticum.javabard.util.Util.nonNull;
-import java.util.Collection;
 import java.util.Locale;
 import de.informaticum.javabard.api.Code;
 
@@ -14,7 +12,7 @@ implements Code {
     throws IllegalArgumentException {
         nonNull(format);
         nonNull(args);
-        final Code code = new SingleCode.Builder(format, args).setIndent(this.getIndent()).build();
+        final SingleCode code = new SingleCode.Builder(format, args).build();
         return this.add(code);
     }
 
@@ -24,7 +22,7 @@ implements Code {
         nonNull(locale);
         nonNull(format);
         nonNull(args);
-        final Code code = new SingleCode.Builder(format, args).setLocale(locale).setIndent(this.getIndent()).build();
+        final SingleCode code = new SingleCode.Builder(format, args).setLocale(locale).build();
         return this.add(code);
     }
 
@@ -32,21 +30,8 @@ implements Code {
     public Code add(final Code code)
     throws IllegalArgumentException {
         nonNull(code);
-        return new MultiCode.Builder().add(this).add(code).build();
-    }
-
-    @Override
-    public Code addAll(final Collection<? extends Code> codes)
-    throws IllegalArgumentException {
-        allNonNull(codes);
-        return new MultiCode.Builder().add(this).add(codes).build();
-    }
-
-    @Override
-    public Code addAll(final Code... codes)
-    throws IllegalArgumentException {
-        allNonNull(codes);
-        return new MultiCode.Builder().add(this).add(codes).build();
+        final int indent = this.getIndent();
+        return new MultiCode.Builder().add(this).add(code.indent(indent)).build();
     }
 
     /* Fabric methods */
