@@ -14,7 +14,7 @@ implements Code {
     throws IllegalArgumentException {
         nonNull(format);
         nonNull(args);
-        final Code code = new SingleCode.Builder(format, args).build().indent(this.getIndent());
+        final Code code = new SingleCode.Builder(format, args).setIndent(this.getIndent()).build();
         return this.add(code);
     }
 
@@ -24,7 +24,7 @@ implements Code {
         nonNull(locale);
         nonNull(format);
         nonNull(args);
-        final Code code = new SingleCode.Builder(format, args).setLocale(locale).build().indent(this.getIndent());
+        final Code code = new SingleCode.Builder(format, args).setLocale(locale).setIndent(this.getIndent()).build();
         return this.add(code);
     }
 
