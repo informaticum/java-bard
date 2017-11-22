@@ -9,6 +9,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -58,6 +59,42 @@ public class CodeTests {
     throws Exception {
         final Code code = this.make("final java.util.BitSet bs = null;");
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
+    }
+
+    @Test
+    public void testNoNegativeIndent_relative()
+    throws Exception {
+        final Code code = this.make("final java.util.BitSet bs = null;");
+        final Code codeUnindent = code.unindent();
+        assertThat(codeUnindent.getIndent(), equalTo(0));
+        assertThat(codeUnindent, hasToString(format("final java.util.BitSet bs = null;%n")));
+    }
+
+    @Test
+    public void testNoNegativeIndent_absolute()
+    throws Exception {
+        final Code code = this.make("final java.util.BitSet bs = null;");
+        final Code codeUnindent = code.setIndent(-1);
+        assertThat(codeUnindent.getIndent(), equalTo(0));
+        assertThat(codeUnindent, hasToString(format("final java.util.BitSet bs = null;%n")));
+    }
+
+    @Test
+    public void testIndentUnindent()
+    throws Exception {
+        final Code code = this.make("final java.util.BitSet bs = null;");
+        final Code code2 = code.indent().unindent();
+        assertThat(code2.getIndent(), equalTo(0));
+        assertThat(code2, hasToString(format("final java.util.BitSet bs = null;%n")));
+    }
+
+    @Test
+    public void testUnindentIndent()
+    throws Exception {
+        final Code code = this.make("final java.util.BitSet bs = null;");
+        final Code code2 = code.unindent().indent();
+        assertThat(code2.getIndent(), equalTo(1));
+        assertThat(code2, hasToString(format("    final java.util.BitSet bs = null;%n")));
     }
 
     @Test
