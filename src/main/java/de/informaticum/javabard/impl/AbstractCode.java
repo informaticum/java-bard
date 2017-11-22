@@ -58,17 +58,17 @@ implements Code {
 
     public static MultiCode combine(final Code... codes)
     throws IllegalArgumentException {
-        return new MultiCode.Builder().add(codes).build();
+        return new MultiCode.Builder(codes).build();
     }
 
     public static MultiCode combine(final Code code, final Iterable<? extends Code> codes)
     throws IllegalArgumentException {
-        return new MultiCode.Builder().add(code).add(codes).build();
+        return new MultiCode.Builder(code).add(codes).build();
     }
 
     public static MultiCode combine(final Code code, final Code[] codes)
     throws IllegalArgumentException {
-        return new MultiCode.Builder().add(code).add(codes).build();
+        return new MultiCode.Builder(code).add(codes).build();
     }
 
 }

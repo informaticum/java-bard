@@ -36,7 +36,7 @@ public class CodeTests {
         final BiFunction<String, Object[], Code> scf = (s, a) -> code(s, a);
         final BiFunction<String, Object[], Code> scb = (s, a) -> new SingleCode.Builder(s, a).build();
         final BiFunction<String, Object[], Code> mcf = (s, a) -> combine(code(s, a));
-        final BiFunction<String, Object[], Code> mcb = (s, a) -> new MultiCode.Builder().add(code(s, a)).build();
+        final BiFunction<String, Object[], Code> mcb = (s, a) -> new MultiCode.Builder(code(s, a)).build();
         return asList(scf, scb, mcf, mcb);
     }
 

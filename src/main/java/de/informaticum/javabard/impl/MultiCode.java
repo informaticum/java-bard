@@ -1,5 +1,6 @@
 package de.informaticum.javabard.impl;
 
+import static de.informaticum.javabard.util.Util.allNonNull;
 import static de.informaticum.javabard.util.Util.nonNull;
 import static java.lang.Math.max;
 import static java.util.Arrays.asList;
@@ -44,8 +45,9 @@ extends AbstractCode {
 
         private final List<Code> codes;
 
-        public Builder() {
-            this.codes = new ArrayList<>();
+        public Builder(final Code... codes) {
+            allNonNull(codes);
+            this.codes = new ArrayList<>(asList(codes));
         }
 
         public final Builder add(final Code code)
