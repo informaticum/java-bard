@@ -16,14 +16,36 @@ import java.util.BitSet;
 import java.util.Formattable;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import javax.xml.ws.Holder;
 import de.informaticum.javabard.impl.MultiCode;
 import de.informaticum.javabard.impl.SingleCode;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class CodeTests {
+
+    @Parameters
+    public static Iterable<BiFunction<String, Object[], Code>> data() {
+        final BiFunction<String, Object[], Code> scf = (s, a) -> code(s, a);
+        final BiFunction<String, Object[], Code> scb = (s, a) -> new SingleCode.Builder(s, a).build();
+        final BiFunction<String, Object[], Code> mcf = (s, a) -> combine(code(s, a));
+        final BiFunction<String, Object[], Code> mcb = (s, a) -> new MultiCode.Builder().add(code(s, a)).build();
+        return asList(scf, scb, mcf, mcb);
+    }
+
+    @Parameter(0)
+    public BiFunction<String, Object[], Code> factory;
+
+    private Code make(final String format, final Object... args) {
+        return this.factory.apply(format, args);
+    }
 
     @Before
     @After
@@ -34,37 +56,37 @@ public class CodeTests {
     @Test
     public void testPlainFormatStringWithoutArguments()
     throws Exception {
-        final Code code = code("final java.util.BitSet bs = null;");
+        final Code code = this.make("final java.util.BitSet bs = null;");
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
     public void testFormatStringWithFormattedType()
     throws Exception {
-        final Code code = code("final %s bs = null;", t(BitSet.class));
+        final Code code = this.make("final %s bs = null;", t(BitSet.class));
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
     public void testFormatStringWithFormattedArguments()
     throws Exception {
-        final Code code = code("final %s bs = %s;", t(BitSet.class), null);
+        final Code code = this.make("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
     }
 
     @Test
     public void testMultilineCode()
     throws Exception {
-        final Code code = code("if (true) {") //
-                                              .add("final java.util.BitSet bs = null;") //
-                                              .add("}");
+        final Code code = this.make("if (true) {") //
+                              .add("final java.util.BitSet bs = null;") //
+                              .add("}");
         assertThat(code, hasToString(format("if (true) {%nfinal java.util.BitSet bs = null;%n}%n")));
     }
 
     @Test
     public void testIndentationAndUnindentation()
     throws Exception {
-        final Code code = code("final %s bs = %s;", t(BitSet.class), null);
+        final Code code = this.make("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
         final Code codeIndent = code.indent();
         assertThat(codeIndent, hasToString(format("    final java.util.BitSet bs = null;%n")));
@@ -75,27 +97,27 @@ public class CodeTests {
     @Test
     public void testAddAfterIndent_addStringFormat()
     throws Exception {
-        final Code code = code("Object o1 = null;").indent().add("Object o2 = null;");
+        final Code code = this.make("Object o1 = null;").indent().add("Object o2 = null;");
         assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n")));
         final Code codeUnindent = code.unindent();
         assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%n")));
     }
 
     @Test
-    public void testAddAfterIndent_addCode_SingleCode()
+    public void testAddAfterIndent_addCode()
     throws Exception {
-        final SingleCode first = code("Object o1 = null;");
-        final Code code = first.indent().add(code("Object o2 = null;"));
+        final Code first = this.make("Object o1 = null;");
+        final Code code = first.indent().add(this.make("Object o2 = null;"));
         assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n")));
         final Code codeUnindent = code.unindent();
         assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%n")));
     }
 
     @Test
-    public void testAddAfterIndent_addCollectionOfCode_SingleCode()
+    public void testAddAfterIndent_addCollectionOfCode()
     throws Exception {
-        final SingleCode first = code("Object o1 = null;");
-        final List<SingleCode> codes = asList(code("Object o2 = null;"), code("Object o3 = null;"));
+        final Code first = this.make("Object o1 = null;");
+        final List<Code> codes = asList(this.make("Object o2 = null;"), this.make("Object o3 = null;"));
         final Code code = first.indent().addAll(codes);
         assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n    Object o3 = null;%n")));
         final Code codeUnindent = code.unindent();
@@ -103,42 +125,10 @@ public class CodeTests {
     }
 
     @Test
-    public void testAddAfterIndent_addArrayOfCode_SingleCode()
+    public void testAddAfterIndent_addArrayOfCode()
     throws Exception {
-        final SingleCode first = code("Object o1 = null;");
-        final Code[] codes = new Code[] { code("Object o2 = null;"), code("Object o3 = null;") };
-        final Code code = first.indent().addAll(codes);
-        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n    Object o3 = null;%n")));
-        final Code codeUnindent = code.unindent();
-        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%nObject o3 = null;%n")));
-    }
-
-    @Test
-    public void testAddAfterIndent_addCode_MultiCode()
-    throws Exception {
-        final MultiCode first = combine(code("Object o1 = null;"));
-        final Code code = first.indent().add(code("Object o2 = null;"));
-        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n")));
-        final Code codeUnindent = code.unindent();
-        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%n")));
-    }
-
-    @Test
-    public void testAddAfterIndent_addCollectionOfCode_MultiCode()
-    throws Exception {
-        final MultiCode first = combine(code("Object o1 = null;"));
-        final List<SingleCode> codes = asList(code("Object o2 = null;"), code("Object o3 = null;"));
-        final Code code = first.indent().addAll(codes);
-        assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n    Object o3 = null;%n")));
-        final Code codeUnindent = code.unindent();
-        assertThat(codeUnindent, hasToString(format("Object o1 = null;%nObject o2 = null;%nObject o3 = null;%n")));
-    }
-
-    @Test
-    public void testAddAfterIndent_addArrayOfCode_MultiCode()
-    throws Exception {
-        final MultiCode first = combine(code("Object o1 = null;"));
-        final Code[] codes = new Code[] { code("Object o2 = null;"), code("Object o3 = null;") };
+        final Code first = this.make("Object o1 = null;");
+        final Code[] codes = new Code[] { this.make("Object o2 = null;"), this.make("Object o3 = null;") };
         final Code code = first.indent().addAll(codes);
         assertThat(code, hasToString(format("    Object o1 = null;%n    Object o2 = null;%n    Object o3 = null;%n")));
         final Code codeUnindent = code.unindent();
@@ -148,7 +138,7 @@ public class CodeTests {
     @Test
     public void testIndentedSubCode()
     throws Exception {
-        final Code code = code("if (true) {").add(code("final java.util.BitSet bs = null;").indent()).add("}");
+        final Code code = this.make("if (true) {").add(this.make("final java.util.BitSet bs = null;").indent()).add("}");
         assertThat(code, hasToString(format("if (true) {%n    final java.util.BitSet bs = null;%n}%n")));
         final Code codeIndent = code.indent();
         assertThat(codeIndent, hasToString(format("    if (true) {%n        final java.util.BitSet bs = null;%n    }%n")));
@@ -159,7 +149,7 @@ public class CodeTests {
     @Test
     public void testDirectIndentation()
     throws Exception {
-        final Code code = code("if (true) {").add(code("%sfinal java.util.BitSet bs = null;", i())).add("}");
+        final Code code = this.make("if (true) {").add(this.make("%sfinal java.util.BitSet bs = null;", i())).add("}");
         assertThat(code, hasToString(format("if (true) {%n    final java.util.BitSet bs = null;%n}%n")));
         final Code codeIndent = code.indent();
         assertThat(codeIndent, hasToString(format("    if (true) {%n        final java.util.BitSet bs = null;%n    }%n")));
@@ -170,7 +160,7 @@ public class CodeTests {
     @Test
     public void testSpecificIndentation()
     throws Exception {
-        final Code code = code("if (true) {").add(code("%sfinal java.util.BitSet bs = null;", i(2))).add("}");
+        final Code code = this.make("if (true) {").add(this.make("%sfinal java.util.BitSet bs = null;", i(2))).add("}");
         assertThat(code, hasToString(format("if (true) {%n        final java.util.BitSet bs = null;%n}%n")));
         final Code codeIndent = code.indent();
         assertThat(codeIndent, hasToString(format("    if (true) {%n            final java.util.BitSet bs = null;%n    }%n")));
@@ -181,7 +171,7 @@ public class CodeTests {
     @Test
     public void testIndentationOfAppendedCode()
     throws Exception {
-        final Code code = code("final %s bs = %s;", t(BitSet.class), null);
+        final Code code = this.make("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
         final Code codeIndent = code.indent();
         assertThat(codeIndent, hasToString(format("    final java.util.BitSet bs = null;%n")));
@@ -192,7 +182,7 @@ public class CodeTests {
     @Test
     public void testAlternativeIndentationCharacter()
     throws Exception {
-        final Code code = code("final %s bs = %s;", t(BitSet.class), null).indent();
+        final Code code = this.make("final %s bs = %s;", t(BitSet.class), null).indent();
         assertThat(code, hasToString(format("    final java.util.BitSet bs = null;%n")));
 
         System.setProperty(INDENT_CHARS_PROPERTY, "\t");
@@ -202,7 +192,7 @@ public class CodeTests {
     @Test
     public void testMultilineIndentation()
     throws Exception {
-        final Code code = code("final %s o = (n==null) ?%n%s.of(n) :%n%s.empty();", t(Optional.class), t(Optional.class), t(Optional.class)).indent();
+        final Code code = this.make("final %s o = (n==null) ?%n%s.of(n) :%n%s.empty();", t(Optional.class), t(Optional.class), t(Optional.class)).indent();
         assertThat(code,
                    hasToString(format("    final java.util.Optional o = (n==null) ?%n    java.util.Optional.of(n) :%n    java.util.Optional.empty();%n")));
     }
@@ -210,7 +200,7 @@ public class CodeTests {
     @Test
     public void testIndexedArguments()
     throws Exception {
-        final Code code = code("final %1$s o = (n==null) ? %1$s.of(n) : %1$s.empty();", t(Optional.class));
+        final Code code = this.make("final %1$s o = (n==null) ? %1$s.of(n) : %1$s.empty();", t(Optional.class));
         assertThat(code, hasToString(format("final java.util.Optional o = (n==null) ? java.util.Optional.of(n) : java.util.Optional.empty();%n")));
     }
 
@@ -225,7 +215,7 @@ public class CodeTests {
     public void testDeferredFormatting()
     throws Exception {
         final Holder<Boolean> hasBeenUsed = new Holder<>(FALSE);
-        final Code code = code("%s", (Formattable) (formatter, flags, width, precision) -> {
+        final Code code = this.make("%s", (Formattable) (formatter, flags, width, precision) -> {
             hasBeenUsed.value = TRUE;
             formatter.format("Hello world!");
         });
