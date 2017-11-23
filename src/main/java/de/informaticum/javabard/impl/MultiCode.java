@@ -47,7 +47,8 @@ extends AbstractCode {
 
         public Builder(final Code... codes) {
             allNonNull(codes);
-            this.codes = new ArrayList<>(asList(codes));
+            this.codes = new ArrayList<>();
+            this.add(codes);
         }
 
         public final Builder add(final Code code)
