@@ -31,7 +31,7 @@ implements Code {
     throws IllegalArgumentException {
         nonNull(code);
         final int indent = this.getIndent();
-        return new MultiCode.Builder().add(this).add(code.indent(indent)).build();
+        return new MultiCode.Builder(this).add(code.indent(indent)).build();
     }
 
     /* Fabric methods */
