@@ -12,8 +12,7 @@ implements Code {
     throws IllegalArgumentException {
         nonNull(format);
         nonNull(args);
-        final SingleCode code = new SingleCode.Builder(format, args).build();
-        return this.add(code);
+        return this.add(code(format, args));
     }
 
     @Override
@@ -22,16 +21,14 @@ implements Code {
         nonNull(locale);
         nonNull(format);
         nonNull(args);
-        final SingleCode code = new SingleCode.Builder(format, args).setLocale(locale).build();
-        return this.add(code);
+        return this.add(code(locale, format, args));
     }
 
     @Override
     public Code add(final Code code)
     throws IllegalArgumentException {
         nonNull(code);
-        final int indent = this.getIndent();
-        return new MultiCode.Builder(this).add(code.indent(indent)).build();
+        return combine(this, code.indent(this.getIndent()));
     }
 
     /* Fabric methods */
