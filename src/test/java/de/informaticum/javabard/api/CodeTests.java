@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.Formattable;
 import java.util.List;
 import java.util.Optional;
@@ -259,6 +260,85 @@ public class CodeTests {
         assertEquals(FALSE, hasBeenUsed.value);
         code.toString();
         assertEquals(TRUE, hasBeenUsed.value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectNullFormat()
+    throws Exception {
+        final String format = null;
+        this.make(format);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectNullFormatWithValidArgs()
+    throws Exception {
+        final String format = null;
+        this.make(format, code("foo"), code("bar"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectNullArgs()
+    throws Exception {
+        final String format = "// whatever";
+        final Object[] args = null;
+        this.make(format, args);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectAddNullFormat()
+    throws Exception {
+        final Code code = this.make("//whatever");
+        final String format = null;
+        code.add(format);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectAddNullFormatWithValidArgs()
+    throws Exception {
+        final Code code = this.make("//whatever");
+        final String format = null;
+        code.add(format, code("foo"), code("bar"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectAddNullArgs()
+    throws Exception {
+        final Code code = this.make("//whatever");
+        final String format = "// whatever";
+        final Object[] args = null;
+        code.add(format, args);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectAddAllNullWithinArray()
+    throws Exception {
+        final Code code = this.make("//whatever");
+        final Code c = null;
+        code.addAll(c);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectAddAllNullArray()
+    throws Exception {
+        final Code code = this.make("//whatever");
+        final Code[] cs = null;
+        code.addAll(cs);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectAddAllNullWithinCollection()
+    throws Exception {
+        final Code code = this.make("//whatever");
+        final Code c = null;
+        code.addAll(asList(c));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectAddAllNullCollection()
+    throws Exception {
+        final Code code = this.make("//whatever");
+        final Collection<Code> cs = null;
+        code.addAll(cs);
     }
 
 }
