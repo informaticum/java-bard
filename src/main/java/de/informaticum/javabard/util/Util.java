@@ -36,6 +36,7 @@ public enum Util {
         }
     }
 
+    @Deprecated
     public static final <T> T[] collect(final T first, final T[] others, final IntFunction<T[]> generator) {
         return concat(Stream.of(first), stream(others)).toArray(generator);
     }
