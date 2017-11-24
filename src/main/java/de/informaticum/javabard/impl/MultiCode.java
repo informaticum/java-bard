@@ -55,11 +55,11 @@ extends AbstractCode {
         throws IllegalArgumentException {
             nonNull(code);
             if (code instanceof MultiCode) {
-                return this.add(((MultiCode) code).codes);
+                (((MultiCode) code).codes).forEach(this::add);
             } else {
                 this.codes.add(code);
-                return this;
             }
+            return this;
         }
 
         public final Builder add(final Iterable<? extends Code> codes)
