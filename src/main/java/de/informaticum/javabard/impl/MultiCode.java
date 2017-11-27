@@ -22,6 +22,7 @@ extends AbstractCode {
     throws IllegalArgumentException {
         assert codes != null;
         this.codes = codes.collect(collectingAndThen(toList(), Collections::unmodifiableList));
+        assert this.codes.size() > 0;
         assert this.codes.stream().noneMatch(MultiCode.class::isInstance);
     }
 
@@ -33,7 +34,7 @@ extends AbstractCode {
 
     @Override
     public int getIndent() {
-        return this.codes.stream().mapToInt(Code::getIndent).min().orElse(0);
+        return this.codes.stream().mapToInt(Code::getIndent).min().getAsInt();
     }
 
     @Override
@@ -73,8 +74,32 @@ extends AbstractCode {
             return this.add(asList(codes));
         }
 
-        public final MultiCode build() {
+        public final Code build() {
+            if (this.codes.isEmpty()) {
+                this.codes.add(new EmptyCodeIndentMemory(0));
+            }
             return new MultiCode(this.codes.stream());
+        }
+
+    }
+
+    private static final class EmptyCodeIndentMemory
+    extends SingleCode {
+
+        private EmptyCodeIndentMemory(final int indent) {
+            super(indent, ""::toString);
+        }
+
+        @Override
+        public Code indent(final int diff) {
+            return new EmptyCodeIndentMemory(max(0, this.getIndent() + diff));
+        }
+
+        @Override
+        public Code add(final Code code)
+        throws IllegalArgumentException {
+            nonNull(code);
+            return code.indent(this.getIndent());
         }
 
     }

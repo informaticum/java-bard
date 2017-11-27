@@ -48,22 +48,22 @@ implements Code {
         return new SingleCode.Builder(format, args).setLocale(locale).build();
     }
 
-    public static MultiCode combine(final Iterable<? extends Code> codes)
+    public static Code combine(final Iterable<? extends Code> codes)
     throws IllegalArgumentException {
         return new MultiCode.Builder().add(codes).build();
     }
 
-    public static MultiCode combine(final Code... codes)
+    public static Code combine(final Code... codes)
     throws IllegalArgumentException {
         return new MultiCode.Builder(codes).build();
     }
 
-    public static MultiCode combine(final Code code, final Iterable<? extends Code> codes)
+    public static Code combine(final Code code, final Iterable<? extends Code> codes)
     throws IllegalArgumentException {
         return new MultiCode.Builder(code).add(codes).build();
     }
 
-    public static MultiCode combine(final Code code, final Code[] codes)
+    public static Code combine(final Code code, final Code[] codes)
     throws IllegalArgumentException {
         return new MultiCode.Builder(code).add(codes).build();
     }
