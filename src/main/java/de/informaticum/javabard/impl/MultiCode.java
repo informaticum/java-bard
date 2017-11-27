@@ -2,14 +2,18 @@ package de.informaticum.javabard.impl;
 
 import static de.informaticum.javabard.util.Util.allNonNull;
 import static de.informaticum.javabard.util.Util.nonNull;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.lang.Math.max;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import de.informaticum.javabard.api.Code;
 
@@ -75,10 +79,11 @@ extends AbstractCode {
         }
 
         public final Code build() {
-            if (this.codes.isEmpty()) {
-                this.codes.add(new EmptyCodeIndentMemory(0));
+            final Map<Boolean, List<Code>> sifted = this.codes.stream().collect(partitioningBy(EmptyCodeIndentMemory.class::isInstance));
+            if (sifted.get(FALSE).isEmpty()) {
+                return new MultiCode(Stream.of(new EmptyCodeIndentMemory(sifted.get(TRUE).stream().mapToInt(Code::getIndent).min().orElse(0))));
             }
-            return new MultiCode(this.codes.stream());
+            return new MultiCode(sifted.get(FALSE).stream());
         }
 
     }
