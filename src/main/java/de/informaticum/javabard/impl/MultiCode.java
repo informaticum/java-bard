@@ -80,10 +80,13 @@ extends AbstractCode {
 
         public final Code build() {
             final Map<Boolean, List<Code>> sifted = this.codes.stream().collect(partitioningBy(EmptyCodeIndentMemory.class::isInstance));
-            if (sifted.get(FALSE).isEmpty()) {
-                return new MultiCode(Stream.of(new EmptyCodeIndentMemory(sifted.get(TRUE).stream().mapToInt(Code::getIndent).min().orElse(0))));
+            final List<Code> codes = sifted.get(FALSE);
+            if (codes.isEmpty()) {
+                final List<Code> markers = sifted.get(TRUE);
+                final int indent = markers.stream().mapToInt(Code::getIndent).min().orElse(0);
+                return new MultiCode(Stream.of(new EmptyCodeIndentMemory(indent)));
             }
-            return new MultiCode(sifted.get(FALSE).stream());
+            return new MultiCode(codes.stream());
         }
 
     }
