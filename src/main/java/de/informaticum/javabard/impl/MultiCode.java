@@ -2,18 +2,14 @@ package de.informaticum.javabard.impl;
 
 import static de.informaticum.javabard.util.Util.allNonNull;
 import static de.informaticum.javabard.util.Util.nonNull;
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 import static java.lang.Math.max;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 import de.informaticum.javabard.api.Code;
 
@@ -80,36 +76,20 @@ extends AbstractCode {
             return this.add(asList(codes));
         }
 
+        private static enum InitializationOnDemandHolderIdiom {
+            ;
+
+            private static final Code ZERO_INDENT_MARKER_CODE = SingleCode.code("");
+        }
+
         public final Code build() {
-            final Map<Boolean, List<Code>> sifted = this.codes.stream().collect(partitioningBy(EmptyCodeIndentMemory.class::isInstance));
-            final List<Code> codes = sifted.get(FALSE);
-            if (codes.isEmpty()) {
-                final List<Code> markers = sifted.get(TRUE);
-                final int indent = markers.stream().mapToInt(Code::getIndent).min().orElse(0);
-                return new MultiCode(Stream.of(new EmptyCodeIndentMemory(indent)));
+            if (this.codes.isEmpty()) {
+                return InitializationOnDemandHolderIdiom.ZERO_INDENT_MARKER_CODE;
+            } else if (this.codes.size() == 1) {
+                return this.codes.get(0);
+            } else {
+                return new MultiCode(this.codes.stream());
             }
-            return new MultiCode(codes.stream());
-        }
-
-    }
-
-    private static final class EmptyCodeIndentMemory
-    extends SingleCode {
-
-        private EmptyCodeIndentMemory(final int indent) {
-            super(indent, ""::toString);
-        }
-
-        @Override
-        public Code indent(final int diff) {
-            return new EmptyCodeIndentMemory(max(0, this.getIndent() + diff));
-        }
-
-        @Override
-        public Code add(final Code code)
-        throws IllegalArgumentException {
-            nonNull(code);
-            return code.indent(this.getIndent());
         }
 
     }
