@@ -2,7 +2,7 @@ package de.informaticum.javabard.util;
 
 import static java.util.Arrays.stream;
 import static java.util.stream.Stream.concat;
-import java.util.Collection;
+import static java.util.stream.StreamSupport.stream;
 import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
@@ -27,9 +27,9 @@ public enum Util {
         }
     }
 
-    public static final <T, C extends Collection<T>> C allNonNull(final C args)
+    public static final <T, I extends Iterable<T>> I allNonNull(final I args)
     throws IllegalArgumentException {
-        if ((args == null) || args.stream().anyMatch(a -> a == null)) {
+        if ((args == null) || stream(args.spliterator(), false).anyMatch(a -> a == null)) {
             throw new IllegalArgumentException();
         } else {
             return args;

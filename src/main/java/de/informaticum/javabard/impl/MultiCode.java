@@ -69,12 +69,14 @@ extends AbstractCode {
 
         public final Builder add(final Iterable<? extends Code> codes)
         throws IllegalArgumentException {
+            allNonNull(codes);
             codes.forEach(this::add);
             return this;
         }
 
         public final Builder add(final Code... codes)
         throws IllegalArgumentException {
+            allNonNull(codes);
             return this.add(asList(codes));
         }
 
