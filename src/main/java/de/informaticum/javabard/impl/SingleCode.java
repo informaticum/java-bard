@@ -1,6 +1,5 @@
 package de.informaticum.javabard.impl;
 
-import static de.informaticum.javabard.api.FormattableEmitters.indentation;
 import static de.informaticum.javabard.util.Util.nonNull;
 import static java.lang.Math.max;
 import static java.lang.String.format;
@@ -11,6 +10,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Supplier;
 import de.informaticum.javabard.api.Code;
+import de.informaticum.javabard.api.FormattableEmitters;
 
 public class SingleCode
 extends AbstractCode {
@@ -41,9 +41,9 @@ extends AbstractCode {
     throws IllegalFormatException {
         final StringBuilder out = new StringBuilder();
         try (final Scanner scanner = new Scanner(this.code.get())) {
-            final Formattable indentation = indentation(this.indent);
+            final Formattable i = FormattableEmitters.indent(this.indent);
             while (scanner.hasNextLine()) {
-                out.append(format("%s%s%n", indentation, scanner.nextLine()));
+                out.append(format("%s%s%n", i, scanner.nextLine()));
             }
         }
         return out.toString();

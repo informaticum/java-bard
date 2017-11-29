@@ -128,7 +128,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testIndentationAndUnindentation()
+    public void testIndentAndUnindentation()
     throws Exception {
         final Code code = this.make("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code.getIndent(), equalTo(0));
@@ -213,7 +213,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testDirectIndentation()
+    public void testDirectIndent()
     throws Exception {
         final Code additional = this.make("%sfinal java.util.BitSet bs = null;", i());
         final Code code = this.make("if (true) {").add(additional).add("}");
@@ -230,7 +230,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testSpecificIndentation()
+    public void testSpecificIndent()
     throws Exception {
         final Code additional = this.make("%sfinal java.util.BitSet bs = null;", i(2));
         final Code code = this.make("if (true) {").add(additional).add("}");
@@ -247,7 +247,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testIndentationOfAppendedCode()
+    public void testIndentOfAppendedCode()
     throws Exception {
         final Code code = this.make("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code.getIndent(), equalTo(0));
@@ -263,7 +263,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testAlternativeIndentationCharacter()
+    public void testAlternativeIndentCharacter()
     throws Exception {
         final Code code = this.make("final %s bs = %s;", t(BitSet.class), null).indent();
         assertThat(code.getIndent(), equalTo(1));
@@ -275,7 +275,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testMultilineIndentation()
+    public void testMultilineIndent()
     throws Exception {
         final Code code = this.make("final %s o = (n==null) ?%n%s.of(n) :%n%s.empty();", t(Optional.class), t(Optional.class), t(Optional.class)).indent();
         assertThat(code.getIndent(), equalTo(1));
@@ -292,7 +292,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testIndentationOfEmptyMultiCode()
+    public void testIndentOfEmptyMultiCode()
     throws Exception {
         final Code empty = combine();
         assertEquals(0, empty.getIndent());

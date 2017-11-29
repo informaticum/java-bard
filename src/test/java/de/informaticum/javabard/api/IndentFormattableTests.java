@@ -1,6 +1,6 @@
 package de.informaticum.javabard.api;
 
-import static de.informaticum.javabard.api.FormattableEmitters.indentation;
+import static de.informaticum.javabard.api.FormattableEmitters.indent;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasToString;
@@ -36,7 +36,7 @@ public class IndentFormattableTests {
     @Test
     public void testStringifiedIndent()
     throws Exception {
-        final Formattable emitter = indentation(this.depth);
+        final Formattable emitter = indent(this.depth);
         final String actual = format(this.format, emitter);
         assertThat(actual, hasToString(this.expected));
     }
