@@ -10,6 +10,7 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 import de.informaticum.javabard.api.Code;
 
@@ -45,30 +46,31 @@ extends AbstractCode {
     public static final Code combine(final Iterable<? extends Code> codes)
     throws IllegalArgumentException {
         allNonNull(codes);
-        return new MultiCode.Builder().add(codes).build();
+        return new MultiCode.Builder().add(codes).get();
     }
 
     public static final Code combine(final Code... codes)
     throws IllegalArgumentException {
         allNonNull(codes);
-        return new MultiCode.Builder(codes).build();
+        return new MultiCode.Builder(codes).get();
     }
 
     public static final Code combine(final Code code, final Iterable<? extends Code> codes)
     throws IllegalArgumentException {
         nonNull(code);
         allNonNull(codes);
-        return new MultiCode.Builder(code).add(codes).build();
+        return new MultiCode.Builder(code).add(codes).get();
     }
 
     public static final Code combine(final Code code, final Code[] codes)
     throws IllegalArgumentException {
         nonNull(code);
         allNonNull(codes);
-        return new MultiCode.Builder(code).add(codes).build();
+        return new MultiCode.Builder(code).add(codes).get();
     }
 
-    public static final class Builder {
+    public static final class Builder
+    implements Supplier<Code> {
 
         private final List<Code> codes;
 
@@ -108,7 +110,8 @@ extends AbstractCode {
             private static final Code ZERO_INDENT_MARKER_CODE = SingleCode.code("");
         }
 
-        public final Code build() {
+        @Override
+        public final Code get() {
             if (this.codes.isEmpty()) {
                 return InitializationOnDemandHolderIdiom.ZERO_INDENT_MARKER_CODE;
             } else if (this.codes.size() == 1) {

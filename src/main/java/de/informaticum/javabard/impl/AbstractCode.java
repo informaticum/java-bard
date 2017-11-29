@@ -12,7 +12,7 @@ implements Code {
     throws IllegalArgumentException {
         nonNull(format);
         nonNull(args);
-        return this.add(new SingleCode.Builder(format, args).build());
+        return this.add(new SingleCode.Builder(format, args).get());
     }
 
     @Override
@@ -21,14 +21,14 @@ implements Code {
         nonNull(locale);
         nonNull(format);
         nonNull(args);
-        return this.add(new SingleCode.Builder(format, args).setLocale(locale).build());
+        return this.add(new SingleCode.Builder(format, args).setLocale(locale).get());
     }
 
     @Override
     public Code add(final Code code)
     throws IllegalArgumentException {
         nonNull(code);
-        return new MultiCode.Builder(this, code.indent(this.getIndent())).build();
+        return new MultiCode.Builder(this, code.indent(this.getIndent())).get();
     }
 
 }

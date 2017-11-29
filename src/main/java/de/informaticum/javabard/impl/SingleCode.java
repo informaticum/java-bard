@@ -54,7 +54,7 @@ extends AbstractCode {
     throws IllegalArgumentException {
         nonNull(format);
         nonNull(args);
-        return new SingleCode.Builder(format, args).build();
+        return new SingleCode.Builder(format, args).get();
     }
 
     public static final Code code(final Locale locale, final String format, final Object... args)
@@ -62,10 +62,11 @@ extends AbstractCode {
         nonNull(locale);
         nonNull(format);
         nonNull(args);
-        return new SingleCode.Builder(format, args).setLocale(locale).build();
+        return new SingleCode.Builder(format, args).setLocale(locale).get();
     }
 
-    public static final class Builder {
+    public static final class Builder
+    implements Supplier<Code> {
 
         private int indent = 0;
 
@@ -98,7 +99,8 @@ extends AbstractCode {
             return this;
         }
 
-        public final Code build() {
+        @Override
+        public final Code get() {
             final Object[] defCopy = this.args.clone();
             final Supplier<String> code = this.locale == null ? () -> format(this.format, defCopy) : () -> format(this.locale, this.format, defCopy);
             return new SingleCode(this.indent, code);

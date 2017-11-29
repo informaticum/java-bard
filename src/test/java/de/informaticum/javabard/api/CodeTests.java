@@ -38,11 +38,11 @@ public class CodeTests {
     @Parameters
     public static Iterable<BiFunction<String, Object[], Code>> codeFactories() {
         final BiFunction<String, Object[], Code> scf = (s, a) -> code(s, a);
-        final BiFunction<String, Object[], Code> scb = (s, a) -> new SingleCode.Builder(s, a).build();
-        final BiFunction<String, Object[], Code> sca = (s, a) -> new SingleCode.Builder("").build().add(s, a);
+        final BiFunction<String, Object[], Code> scb = (s, a) -> new SingleCode.Builder(s, a).get();
+        final BiFunction<String, Object[], Code> sca = (s, a) -> new SingleCode.Builder("").get().add(s, a);
         final BiFunction<String, Object[], Code> mcf = (s, a) -> combine(code(s, a));
-        final BiFunction<String, Object[], Code> mcb = (s, a) -> new MultiCode.Builder(code(s, a)).build();
-        final BiFunction<String, Object[], Code> mca = (s, a) -> new MultiCode.Builder().build().add(s, a);
+        final BiFunction<String, Object[], Code> mcb = (s, a) -> new MultiCode.Builder(code(s, a)).get();
+        final BiFunction<String, Object[], Code> mca = (s, a) -> new MultiCode.Builder().get().add(s, a);
         return asList(scf, scb, sca, mcf, mcb, mca);
     }
 
