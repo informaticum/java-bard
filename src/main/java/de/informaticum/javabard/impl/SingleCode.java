@@ -98,7 +98,7 @@ extends AbstractCode {
             return this;
         }
 
-        public final SingleCode build() {
+        public final Code build() {
             final Object[] defCopy = this.args.clone();
             final Supplier<String> code = this.locale == null ? () -> format(this.format, defCopy) : () -> format(this.locale, this.format, defCopy);
             return new SingleCode(this.indent, code);
