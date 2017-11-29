@@ -42,6 +42,32 @@ extends AbstractCode {
         return this.codes.stream().map(Code::toString).collect(joining());
     }
 
+    public static final Code combine(final Iterable<? extends Code> codes)
+    throws IllegalArgumentException {
+        allNonNull(codes);
+        return new MultiCode.Builder().add(codes).build();
+    }
+
+    public static final Code combine(final Code... codes)
+    throws IllegalArgumentException {
+        allNonNull(codes);
+        return new MultiCode.Builder(codes).build();
+    }
+
+    public static final Code combine(final Code code, final Iterable<? extends Code> codes)
+    throws IllegalArgumentException {
+        nonNull(code);
+        allNonNull(codes);
+        return new MultiCode.Builder(code).add(codes).build();
+    }
+
+    public static final Code combine(final Code code, final Code[] codes)
+    throws IllegalArgumentException {
+        nonNull(code);
+        allNonNull(codes);
+        return new MultiCode.Builder(code).add(codes).build();
+    }
+
     public static final class Builder {
 
         private final List<Code> codes;

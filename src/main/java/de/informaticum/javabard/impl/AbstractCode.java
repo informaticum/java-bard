@@ -31,41 +31,4 @@ implements Code {
         return new MultiCode.Builder(this, code.indent(this.getIndent())).build();
     }
 
-    /* Fabric methods */
-
-    public static SingleCode code(final String format, final Object... args)
-    throws IllegalArgumentException {
-        nonNull(format);
-        nonNull(args);
-        return new SingleCode.Builder(format, args).build();
-    }
-
-    public static SingleCode code(final Locale locale, final String format, final Object... args)
-    throws IllegalArgumentException {
-        nonNull(locale);
-        nonNull(format);
-        nonNull(args);
-        return new SingleCode.Builder(format, args).setLocale(locale).build();
-    }
-
-    public static Code combine(final Iterable<? extends Code> codes)
-    throws IllegalArgumentException {
-        return new MultiCode.Builder().add(codes).build();
-    }
-
-    public static Code combine(final Code... codes)
-    throws IllegalArgumentException {
-        return new MultiCode.Builder(codes).build();
-    }
-
-    public static Code combine(final Code code, final Iterable<? extends Code> codes)
-    throws IllegalArgumentException {
-        return new MultiCode.Builder(code).add(codes).build();
-    }
-
-    public static Code combine(final Code code, final Code[] codes)
-    throws IllegalArgumentException {
-        return new MultiCode.Builder(code).add(codes).build();
-    }
-
 }

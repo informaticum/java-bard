@@ -2,9 +2,9 @@ package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.api.FormattableEmitters.i;
 import static de.informaticum.javabard.api.FormattableEmitters.t;
-import static de.informaticum.javabard.impl.AbstractCode.code;
-import static de.informaticum.javabard.impl.AbstractCode.combine;
 import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
+import static de.informaticum.javabard.impl.MultiCode.combine;
+import static de.informaticum.javabard.impl.SingleCode.code;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
