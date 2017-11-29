@@ -28,7 +28,8 @@ extends AbstractCode {
 
     @Override
     public Code indent(final int diff) {
-        return new SingleCode(max(0, this.indent + diff), this.code);
+        final int i = max(0, this.indent + diff); // negative indent (a.k.a. unindent) must be capped
+        return new SingleCode(i, this.code);
     }
 
     @Override
