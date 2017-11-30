@@ -22,6 +22,16 @@ public abstract interface Code {
         return this.indent(-1);
     }
 
+    public abstract Code indentNext(final int diff);
+
+    public default Code indentNext() {
+        return this.indentNext(+1);
+    }
+
+    public default Code unindentNext() {
+        return this.indentNext(-1);
+    }
+
     public abstract Code add(final String format, final Object... args)
     throws IllegalArgumentException;
 

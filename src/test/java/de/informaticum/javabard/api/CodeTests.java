@@ -512,4 +512,11 @@ public class CodeTests {
         this.testAppendIndented(4);
     }
 
+    @Test
+    public void testCodeBlock()
+    throws Exception {
+        final Code code = this.make("if (true) {").indentNext().add("final java.util.BitSet bs = null;").unindentNext().add("}");
+        assertThat(code, hasToString(format("if (true) {%n    final java.util.BitSet bs = null;%n}%n")));
+    }
+
 }
