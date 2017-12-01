@@ -15,9 +15,14 @@ import java.util.stream.Stream;
 import de.informaticum.javabard.api.Code;
 
 public class MultiCode
-extends AbstractCode {
+extends CodeSequence {
 
     private final List<Code> codes;
+
+    @Override
+    public List<? extends Code> getCodes() {
+        return this.codes;
+    }
 
     private MultiCode(final Stream<? extends Code> codes)
     throws IllegalArgumentException {
@@ -83,8 +88,8 @@ extends AbstractCode {
         public final Builder add(final Code code)
         throws IllegalArgumentException {
             nonNull(code);
-            if (code instanceof MultiCode) {
-                (((MultiCode) code).codes).forEach(this::add);
+            if (code instanceof CodeSequence) {
+                ((CodeSequence) code).getCodes().forEach(this::add);
             } else {
                 this.codes.add(code);
             }

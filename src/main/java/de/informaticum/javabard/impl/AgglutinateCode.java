@@ -4,15 +4,22 @@ import static de.informaticum.javabard.impl.MultiCode.combine;
 import static de.informaticum.javabard.util.Util.nonNull;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static java.util.Arrays.asList;
+import java.util.List;
 import java.util.function.Supplier;
 import de.informaticum.javabard.api.Code;
 
 public class AgglutinateCode
-extends AbstractCode {
+extends CodeSequence {
 
     private final Code before;
 
     private final Code current;
+
+    @Override
+    public List<? extends Code> getCodes() {
+        return asList(this.before, this.current);
+    }
 
     public AgglutinateCode(final Code before, final Code current) {
         assert before != null;
