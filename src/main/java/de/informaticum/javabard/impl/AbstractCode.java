@@ -13,7 +13,7 @@ implements Code {
         final int d = max(diff, -this.getIndent());
         final Code current = (d < diff) ? this.indent(diff - d) : this;
         final int nextIndent = current.getIndent() + diff;
-        return new AgglutinateCode.Builder(current, nextIndent).get();
+        return new StackCode.Builder(current, nextIndent).get();
     }
 
     @Override
