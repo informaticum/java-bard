@@ -2,6 +2,7 @@ package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.util.Util.allNonNull;
 import java.util.Collection;
+import static java.util.Arrays.asList;
 import java.util.Locale;
 
 public abstract interface Code {
@@ -43,12 +44,7 @@ public abstract interface Code {
 
     public default Code addAll(final Code... codes)
     throws IllegalArgumentException {
-        allNonNull(codes);
-        Code code = this;
-        for (final Code c : codes) {
-            code = code.add(c);
-        }
-        return code;
+        return this.addAll(asList(allNonNull(codes)));
     }
 
 }
