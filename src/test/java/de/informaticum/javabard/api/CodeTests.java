@@ -300,7 +300,7 @@ public class CodeTests {
         assertEquals(0, empty.getIndent());
         assertThat(empty, hasToString(""));
 
-        final Code indented = empty.indent(2);
+        final Code indented = empty.indentBy(2);
         assertEquals(2, indented.getIndent());
         assertThat(indented, hasToString(""));
 
@@ -404,7 +404,7 @@ public class CodeTests {
 
     private void testAddToIndented(final int i)
     throws Exception {
-        final Code indented = combine().indent(i);
+        final Code indented = combine().indentBy(i);
         assert indented.getIndent() == i;
         assert indented.toString().equals("");
 
@@ -424,7 +424,7 @@ public class CodeTests {
 
     private void testAddToIndentedCascade(final int i)
     throws Exception {
-        final Code indented = combine().indent(i);
+        final Code indented = combine().indentBy(i);
         assert indented.getIndent() == i;
         assert indented.toString().equals("");
 
@@ -448,7 +448,7 @@ public class CodeTests {
 
     private void testCombineWithIndented(final int i)
     throws Exception {
-        final Code indented = combine().indent(i);
+        final Code indented = combine().indentBy(i);
         assert indented.getIndent() == i;
         assert indented.toString().equals("");
 
@@ -468,7 +468,7 @@ public class CodeTests {
 
     private void testCombineWithIndentedCascade(final int i)
     throws Exception {
-        final Code indented = combine().indent(i);
+        final Code indented = combine().indentBy(i);
         assert indented.getIndent() == i;
         assert indented.toString().equals("");
 
@@ -496,7 +496,7 @@ public class CodeTests {
         assertEquals(0, code.getIndent());
         assertThat(code, hasToString(format("//whatever%n")));
 
-        final Code indented = combine().indent(i);
+        final Code indented = combine().indentBy(i);
 
         final Code added = code.add(indented);
         assertEquals(0, added.getIndent());

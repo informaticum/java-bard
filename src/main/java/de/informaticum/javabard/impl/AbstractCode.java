@@ -28,7 +28,7 @@ implements Code {
     public Code add(final Code code)
     throws IllegalArgumentException {
         nonNull(code);
-        return new MultiCode.Builder(this, code.indent(this.getIndent())).get();
+        return new MultiCode.Builder(this, code.indentBy(this.getIndent())).get();
     }
 
 }

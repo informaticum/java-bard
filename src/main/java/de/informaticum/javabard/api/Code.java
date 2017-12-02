@@ -9,17 +9,17 @@ public abstract interface Code {
     public abstract int getIndent();
 
     public default Code setIndent(final int indent) {
-        return this.indent(indent - this.getIndent());
+        return this.indentBy(indent - this.getIndent());
     }
 
-    public abstract Code indent(final int diff);
+    public abstract Code indentBy(final int diff);
 
     public default Code indent() {
-        return this.indent(+1);
+        return this.indentBy(+1);
     }
 
     public default Code unindent() {
-        return this.indent(-1);
+        return this.indentBy(-1);
     }
 
     public abstract Code add(final String format, final Object... args)

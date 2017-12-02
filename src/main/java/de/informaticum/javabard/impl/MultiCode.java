@@ -33,9 +33,9 @@ extends CodeSequence {
     }
 
     @Override
-    public Code indent(final int diff) {
+    public Code indentBy(final int diff) {
         final int d = max(diff, -this.getIndent()); // negative indent (a.k.a. unindent) must be capped
-        return new MultiCode(this.codes.stream().map(c -> c.indent(d)));
+        return new MultiCode(this.codes.stream().map(c -> c.indentBy(d)));
     }
 
     @Override
