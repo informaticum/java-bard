@@ -31,7 +31,7 @@ public abstract interface Code {
     public abstract Code add(final Code code)
     throws IllegalArgumentException;
 
-    public default Code addAll(final Collection<? extends Code> codes)
+    public default Code addAll(final Iterable<? extends Code> codes)
     throws IllegalArgumentException {
         allNonNull(codes);
         Code code = this;
