@@ -1,7 +1,7 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.util.Util.allNonNull;
-import java.util.Collection;
+import static java.lang.Math.max;
 import static java.util.Arrays.asList;
 import java.util.Locale;
 
@@ -10,7 +10,7 @@ public abstract interface Code {
     public abstract int getIndent();
 
     public default Code setIndent(final int indent) {
-        return this.indentBy(indent - this.getIndent());
+        return this.indentBy(max(0, indent) - this.getIndent());
     }
 
     public abstract Code indentBy(final int diff);
