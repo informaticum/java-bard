@@ -1,6 +1,6 @@
 package de.informaticum.javabard.api;
 
-import static de.informaticum.javabard.impl.SimpleTypeDeclaration.declare;
+import static de.informaticum.javabard.api.TypeDeclaration.declare;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
@@ -35,7 +35,6 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import java.util.List;
 import java.util.function.Function;
-import de.informaticum.javabard.impl.SimpleTypeDeclaration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -48,8 +47,8 @@ public class TypeDeclarationTests {
     @Parameters
     public static List<Function<String, TypeDeclaration>> codeFactories() {
         final Function<String, TypeDeclaration> dec = (n) -> declare(n);
-        final Function<String, TypeDeclaration> con = (n) -> new SimpleTypeDeclaration(n);
-        final Function<String, TypeDeclaration> set = (n) -> new SimpleTypeDeclaration(n).setName(n);
+        final Function<String, TypeDeclaration> con = (n) -> new TypeDeclaration(n);
+        final Function<String, TypeDeclaration> set = (n) -> new TypeDeclaration(n).setName(n);
         return asList(dec, con, set);
     }
 
