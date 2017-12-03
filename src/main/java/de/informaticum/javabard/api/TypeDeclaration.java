@@ -9,6 +9,12 @@ implements Supplier<Code> {
 
     private String name = null;
 
+    public TypeDeclaration setName(final String name)
+    throws IllegalArgumentException {
+        this.name = nonEmptyIdentifier(name);
+        return this;
+    }
+
     public TypeDeclaration(final String name)
     throws IllegalArgumentException {
         this.setName(name);
@@ -18,12 +24,6 @@ implements Supplier<Code> {
     public Code get() {
         return SingleCode.code("class %s {", this.name) //
                          .add("}");
-    }
-
-    public TypeDeclaration setName(final String name)
-    throws IllegalArgumentException {
-        this.name = nonEmptyIdentifier(name);
-        return this;
     }
 
     @Override
