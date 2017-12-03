@@ -75,6 +75,18 @@ public class ElementTests {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void declineNameStartingWithAt()
+    throws Exception {
+        this.make("@Foobar");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineNameStartingWithNumber()
+    throws Exception {
+        this.make("0Foobar");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_abstract()
     throws Exception {
         this.make(ABSTRACT);
