@@ -39,4 +39,340 @@ public class TypeDeclarationTests {
         assertThat(def, hasToString(format("class FooBar {%n}%n")));
     }
 
+    @Test
+    public void acceptNameStartingWithUnderline()
+    throws Exception {
+        this.make("_Foobar");
+    }
+
+    @Test
+    public void acceptNameStartingWithDollar()
+    throws Exception {
+        this.make("$Foobar");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_abstract()
+    throws Exception {
+        this.make("abstract");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_assert()
+    throws Exception {
+        this.make("assert");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_boolean()
+    throws Exception {
+        this.make("boolean");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_break()
+    throws Exception {
+        this.make("break");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_byte()
+    throws Exception {
+        this.make("byte");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_case()
+    throws Exception {
+        this.make("case");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_catch()
+    throws Exception {
+        this.make("catch");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_char()
+    throws Exception {
+        this.make("char");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_class()
+    throws Exception {
+        this.make("class");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_const()
+    throws Exception {
+        this.make("const");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_continue()
+    throws Exception {
+        this.make("continue");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_default()
+    throws Exception {
+        this.make("default");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_do()
+    throws Exception {
+        this.make("do");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_double()
+    throws Exception {
+        this.make("double");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_else()
+    throws Exception {
+        this.make("else");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_enum()
+    throws Exception {
+        this.make("enum");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_extends()
+    throws Exception {
+        this.make("extends");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_final()
+    throws Exception {
+        this.make("final");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_finally()
+    throws Exception {
+        this.make("finally");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_float()
+    throws Exception {
+        this.make("float");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_for()
+    throws Exception {
+        this.make("for");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_goto()
+    throws Exception {
+        this.make("goto");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_if()
+    throws Exception {
+        this.make("if");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_implements()
+    throws Exception {
+        this.make("implements");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_import()
+    throws Exception {
+        this.make("import");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_instanceof()
+    throws Exception {
+        this.make("instanceof");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_int()
+    throws Exception {
+        this.make("int");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_interface()
+    throws Exception {
+        this.make("interface");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_long()
+    throws Exception {
+        this.make("long");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_native()
+    throws Exception {
+        this.make("native");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_new()
+    throws Exception {
+        this.make("new");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_package()
+    throws Exception {
+        this.make("package");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_private()
+    throws Exception {
+        this.make("private");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_protected()
+    throws Exception {
+        this.make("protected");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_public()
+    throws Exception {
+        this.make("public");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_return()
+    throws Exception {
+        this.make("return");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_short()
+    throws Exception {
+        this.make("short");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_static()
+    throws Exception {
+        this.make("static");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_strictfp()
+    throws Exception {
+        this.make("strictfp");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_super()
+    throws Exception {
+        this.make("super");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_switch()
+    throws Exception {
+        this.make("switch");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_synchronized()
+    throws Exception {
+        this.make("synchronized");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_this()
+    throws Exception {
+        this.make("this");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_throw()
+    throws Exception {
+        this.make("throw");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_throws()
+    throws Exception {
+        this.make("throws");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_transient()
+    throws Exception {
+        this.make("transient");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_try()
+    throws Exception {
+        this.make("try");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_void()
+    throws Exception {
+        this.make("void");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_volatile()
+    throws Exception {
+        this.make("volatile");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineKeyword_while()
+    throws Exception {
+        this.make("while");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineLiteral_false()
+    throws Exception {
+        this.make("false");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineLiteral_null()
+    throws Exception {
+        this.make("null");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineLiteral_true()
+    throws Exception {
+        this.make("true");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void declineEnclosedName()
+    throws Exception {
+        this.make("Foo.Bar");
+    }
+
 }
