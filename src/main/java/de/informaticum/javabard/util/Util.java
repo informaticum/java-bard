@@ -1,10 +1,7 @@
 package de.informaticum.javabard.util;
 
 import static java.util.Arrays.stream;
-import static java.util.stream.Stream.concat;
 import static java.util.stream.StreamSupport.stream;
-import java.util.function.IntFunction;
-import java.util.stream.Stream;
 
 public enum Util {
     ;
@@ -34,11 +31,6 @@ public enum Util {
         } else {
             return args;
         }
-    }
-
-    @Deprecated
-    public static final <T> T[] collect(final T first, final T[] others, final IntFunction<T[]> generator) {
-        return concat(Stream.of(first), stream(others)).toArray(generator);
     }
 
 }
