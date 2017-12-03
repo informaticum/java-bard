@@ -44,6 +44,7 @@ public abstract interface Code {
 
     public default Code addAll(final Code... codes)
     throws IllegalArgumentException {
+        allNonNull(codes);
         return this.addAll(asList(allNonNull(codes)));
     }
 
