@@ -7,7 +7,12 @@ import de.informaticum.javabard.api.TypeDeclaration;
 public class SimpleTypeDeclaration
 implements TypeDeclaration {
 
-    private String name;
+    private String name = null;
+
+    public SimpleTypeDeclaration(final String name)
+    throws IllegalArgumentException {
+        this.setName(name);
+    }
 
     @Override
     public Code get() {
@@ -16,7 +21,8 @@ implements TypeDeclaration {
     }
 
     @Override
-    public TypeDeclaration setName(final String name) {
+    public TypeDeclaration setName(final String name)
+    throws IllegalArgumentException {
         this.name = nonEmptyIdentifier(name);
         return this;
     }
@@ -26,8 +32,9 @@ implements TypeDeclaration {
         return this.get().toString();
     }
 
-    public static final TypeDeclaration declare(final String name) {
-        return new SimpleTypeDeclaration().setName(name);
+    public static final TypeDeclaration declare(final String name)
+    throws IllegalArgumentException {
+        return new SimpleTypeDeclaration(name);
     }
 
 }
