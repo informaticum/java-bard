@@ -48,4 +48,7 @@ public abstract interface Code {
         return this.addAll(asList(allNonNull(codes)));
     }
 
+    @Override
+    public abstract String toString();
+
 }
