@@ -1,6 +1,7 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.util.Util.nonEmptyIdentifier;
+import static de.informaticum.javabard.util.Util.nonNull;
 import java.util.Locale;
 import java.util.function.Supplier;
 import javax.lang.model.element.ElementKind;
@@ -38,6 +39,13 @@ implements Supplier<Code> {
 
     }
 
+    private Kind kind = null;
+
+    public TypeDeclaration setKind(final Kind kind) {
+        this.kind = nonNull(kind);
+        return this;
+    }
+
     private String name = null;
 
     public TypeDeclaration setName(final String name)
@@ -46,8 +54,9 @@ implements Supplier<Code> {
         return this;
     }
 
-    public TypeDeclaration(final String name)
+    public TypeDeclaration(final Kind kind, final String name)
     throws IllegalArgumentException {
+        this.setKind(kind);
         this.setName(name);
     }
 
@@ -62,9 +71,9 @@ implements Supplier<Code> {
         return this.get().toString();
     }
 
-    public static final TypeDeclaration declare(final String name)
+    public static final TypeDeclaration declare(final Kind kind, final String name)
     throws IllegalArgumentException {
-        return new TypeDeclaration(name);
+        return new TypeDeclaration(kind, name);
     }
 
 }
