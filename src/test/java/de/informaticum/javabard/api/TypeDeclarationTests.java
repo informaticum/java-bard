@@ -1,6 +1,8 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.impl.SimpleTypeDeclaration.declare;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static javax.lang.model.element.Modifier.ABSTRACT;
@@ -366,7 +368,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineLiteral_false()
     throws Exception {
-        this.make("false");
+        this.make(FALSE.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -378,7 +380,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineLiteral_true()
     throws Exception {
-        this.make("true");
+        this.make(TRUE.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
