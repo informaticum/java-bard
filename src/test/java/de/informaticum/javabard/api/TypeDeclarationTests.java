@@ -1,9 +1,10 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.api.TypeDeclaration.declare;
+import static de.informaticum.javabard.api.TypeDeclaration.Kind.ANNOTATION;
 import static de.informaticum.javabard.api.TypeDeclaration.Kind.CLASS;
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
+import static de.informaticum.javabard.api.TypeDeclaration.Kind.ENUM;
+import static de.informaticum.javabard.api.TypeDeclaration.Kind.INTERFACE;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasToString;
@@ -36,10 +37,31 @@ public class TypeDeclarationTests {
     }
 
     @Test
+    public void testSimpleAnnotationDeclaration()
+    throws Exception {
+        final TypeDeclaration def = this.make(ANNOTATION, "FooBar");
+        assertThat(def, hasToString(format("@interface FooBar {%n}%n")));
+    }
+
+    @Test
+    public void testSimpleInterfaceDeclaration()
+    throws Exception {
+        final TypeDeclaration def = this.make(INTERFACE, "FooBar");
+        assertThat(def, hasToString(format("interface FooBar {%n}%n")));
+    }
+
+    @Test
     public void testSimpleClassDeclaration()
     throws Exception {
         final TypeDeclaration def = this.make(CLASS, "FooBar");
         assertThat(def, hasToString(format("class FooBar {%n}%n")));
+    }
+
+    @Test
+    public void testSimpleEnumDeclaration()
+    throws Exception {
+        final TypeDeclaration def = this.make(ENUM, "FooBar");
+        assertThat(def, hasToString(format("enum FooBar {%n}%n")));
     }
 
 }
