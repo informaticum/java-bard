@@ -1,11 +1,42 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.util.Util.nonEmptyIdentifier;
+import java.util.Locale;
 import java.util.function.Supplier;
+import javax.lang.model.element.ElementKind;
 import de.informaticum.javabard.impl.SingleCode;
 
 public class TypeDeclaration
 implements Supplier<Code> {
+
+    public static enum Kind {
+
+        ANNOTATION(ElementKind.ANNOTATION_TYPE, "@interface"),
+
+        INTERFACE(ElementKind.INTERFACE),
+
+        CLASS(ElementKind.CLASS),
+
+        ENUM(ElementKind.ENUM),
+
+        ;
+
+        private String name;
+
+        private Kind(final ElementKind kind) {
+            this(kind, kind.name().toLowerCase(Locale.US));
+        }
+
+        private Kind(final ElementKind kind, final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
+        }
+
+    }
 
     private String name = null;
 
