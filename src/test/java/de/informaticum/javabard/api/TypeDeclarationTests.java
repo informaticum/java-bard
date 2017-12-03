@@ -78,7 +78,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_boolean()
     throws Exception {
-        this.make("boolean");
+        this.make(boolean.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -90,7 +90,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_byte()
     throws Exception {
-        this.make("byte");
+        this.make(byte.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -108,7 +108,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_char()
     throws Exception {
-        this.make("char");
+        this.make(char.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -144,7 +144,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_double()
     throws Exception {
-        this.make("double");
+        this.make(double.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -180,7 +180,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_float()
     throws Exception {
-        this.make("float");
+        this.make(float.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -222,7 +222,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_int()
     throws Exception {
-        this.make("int");
+        this.make(int.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -234,7 +234,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_long()
     throws Exception {
-        this.make("long");
+        this.make(long.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -282,7 +282,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_short()
     throws Exception {
-        this.make("short");
+        this.make(short.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -348,7 +348,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_void()
     throws Exception {
-        this.make("void");
+        this.make(void.class.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
