@@ -21,7 +21,16 @@ import static javax.lang.model.element.Modifier.STRICTFP;
 import static javax.lang.model.element.Modifier.SYNCHRONIZED;
 import static javax.lang.model.element.Modifier.TRANSIENT;
 import static javax.lang.model.element.Modifier.VOLATILE;
+import static javax.lang.model.type.TypeKind.BOOLEAN;
+import static javax.lang.model.type.TypeKind.BYTE;
+import static javax.lang.model.type.TypeKind.CHAR;
+import static javax.lang.model.type.TypeKind.DOUBLE;
+import static javax.lang.model.type.TypeKind.FLOAT;
+import static javax.lang.model.type.TypeKind.INT;
+import static javax.lang.model.type.TypeKind.LONG;
 import static javax.lang.model.type.TypeKind.NULL;
+import static javax.lang.model.type.TypeKind.SHORT;
+import static javax.lang.model.type.TypeKind.VOID;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import java.util.List;
@@ -89,7 +98,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_boolean()
     throws Exception {
-        this.make(boolean.class.getName());
+        this.make(BOOLEAN);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -101,7 +110,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_byte()
     throws Exception {
-        this.make(byte.class.getName());
+        this.make(BYTE);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -119,7 +128,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_char()
     throws Exception {
-        this.make(char.class.getName());
+        this.make(CHAR);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -155,7 +164,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_double()
     throws Exception {
-        this.make(double.class.getName());
+        this.make(DOUBLE);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -191,7 +200,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_float()
     throws Exception {
-        this.make(float.class.getName());
+        this.make(FLOAT);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -233,7 +242,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_int()
     throws Exception {
-        this.make(int.class.getName());
+        this.make(INT);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -245,7 +254,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_long()
     throws Exception {
-        this.make(long.class.getName());
+        this.make(LONG);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -293,7 +302,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_short()
     throws Exception {
-        this.make(short.class.getName());
+        this.make(SHORT);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -359,7 +368,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_void()
     throws Exception {
-        this.make(void.class.getName());
+        this.make(VOID);
     }
 
     @Test(expected = IllegalArgumentException.class)
