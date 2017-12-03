@@ -1,10 +1,10 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.api.TypeDeclaration.declare;
-import static de.informaticum.javabard.api.TypeDeclaration.Kind.CLASS;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static javax.lang.model.element.ElementKind.CLASS;
 import static javax.lang.model.element.ElementKind.ENUM;
 import static javax.lang.model.element.ElementKind.INTERFACE;
 import static javax.lang.model.element.ElementKind.PACKAGE;
