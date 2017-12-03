@@ -20,8 +20,9 @@ public class TypeDeclarationTests {
     @Parameters
     public static List<Function<String, TypeDeclaration>> codeFactories() {
         final Function<String, TypeDeclaration> dec = (n) -> declare(n);
-        final Function<String, TypeDeclaration> std = (n) -> new SimpleTypeDeclaration().setName(n);
-        return asList(dec, std);
+        final Function<String, TypeDeclaration> con = (n) -> new SimpleTypeDeclaration(n);
+        final Function<String, TypeDeclaration> set = (n) -> new SimpleTypeDeclaration(n).setName(n);
+        return asList(dec, con, set);
     }
 
     @Parameter(0)
