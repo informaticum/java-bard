@@ -62,7 +62,7 @@ implements Supplier<Code> {
 
     @Override
     public Code get() {
-        return SingleCode.code("class %s {", this.name) //
+        return SingleCode.code("%s %s {", this.kind, this.name) //
                          .add("}");
     }
 
