@@ -5,7 +5,6 @@ import static de.informaticum.javabard.util.Util.nonNull;
 import static java.lang.Math.max;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +14,7 @@ import java.util.stream.Stream;
 import de.informaticum.javabard.api.Code;
 
 public class MultiCode
-extends CodeSequence {
+extends AbstractCodeSequence {
 
     private final List<Code> codes;
 
@@ -36,16 +35,6 @@ extends CodeSequence {
     public Code indentBy(final int diff) {
         final int d = max(diff, -this.getIndent()); // negative indent (a.k.a. unindent) must be capped
         return new MultiCode(this.codes.stream().map(c -> c.indentBy(d)));
-    }
-
-    @Override
-    public int getIndent() {
-        return this.codes.stream().mapToInt(Code::getIndent).min().getAsInt();
-    }
-
-    @Override
-    public String toString() {
-        return this.codes.stream().map(Code::toString).collect(joining());
     }
 
     public static final Code combine(final Iterable<? extends Code> codes)
