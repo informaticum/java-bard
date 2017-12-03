@@ -1,6 +1,7 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.api.FormattableEmitters.i;
+import static de.informaticum.javabard.api.FormattableEmitters.indent;
 import static de.informaticum.javabard.api.FormattableEmitters.t;
 import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
 import static de.informaticum.javabard.impl.MultiCode.combine;
@@ -8,9 +9,7 @@ import static de.informaticum.javabard.impl.SingleCode.code;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
-import static java.lang.String.join;
 import static java.util.Arrays.asList;
-import static java.util.Collections.nCopies;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertEquals;
@@ -402,114 +401,114 @@ public class CodeTests {
         code.addAll(cs);
     }
 
-    private void testAddToIndented(final int i)
+    private void testAddToEmptyIndented(final int i)
     throws Exception {
-        final Code indented = combine().indentBy(i);
-        assert indented.getIndent() == i;
-        assert indented.toString().equals("");
+        final Code emptyIndented = combine().indentBy(i);
+        assert emptyIndented.getIndent() == i;
+        assert emptyIndented.toString().equals("");
 
-        final Code code = indented.add(this.make("//whatever"));
-        assertEquals(i, code.getIndent());
-        assertThat(code, hasToString(format("%s//whatever%n", join("", nCopies(i, "    ")))));
+        final Code added = emptyIndented.add(this.make("//whatever"));
+        assertEquals(i, added.getIndent());
+        assertThat(added, hasToString(format("%s//whatever%n", indent(i))));
     }
 
     @Test
-    public void testAddToIndented_0_1_2_4()
+    public void testAddToEmptyIndented_0_1_2_4()
     throws Exception {
-        this.testAddToIndented(0);
-        this.testAddToIndented(1);
-        this.testAddToIndented(2);
-        this.testAddToIndented(4);
+        this.testAddToEmptyIndented(0);
+        this.testAddToEmptyIndented(1);
+        this.testAddToEmptyIndented(2);
+        this.testAddToEmptyIndented(4);
     }
 
-    private void testAddToIndentedCascade(final int i)
+    private void testAddToEmptyIndentedCascade(final int i)
     throws Exception {
-        final Code indented = combine().indentBy(i);
-        assert indented.getIndent() == i;
-        assert indented.toString().equals("");
+        final Code emptyIndented = combine().indentBy(i);
+        assert emptyIndented.getIndent() == i;
+        assert emptyIndented.toString().equals("");
 
-        final Code cascade = indented.add(indented);
-        assert cascade.getIndent() == i;
-        assert cascade.toString().equals("");
+        final Code emptyCascade = emptyIndented.add(emptyIndented);
+        assert emptyCascade.getIndent() == i;
+        assert emptyCascade.toString().equals("");
 
-        final Code code = cascade.add(this.make("//whatever"));
-        assertEquals(i, code.getIndent());
-        assertThat(code, hasToString(format("%s//whatever%n", join("", nCopies(i, "    ")))));
+        final Code added = emptyCascade.add(this.make("//whatever"));
+        assertEquals(i, added.getIndent());
+        assertThat(added, hasToString(format("%s//whatever%n", indent(i))));
     }
 
     @Test
-    public void testAddToIndentedCascade_0_1_2_4()
+    public void testAddToEmptyIndentedCascade_0_1_2_4()
     throws Exception {
-        this.testAddToIndentedCascade(0);
-        this.testAddToIndentedCascade(1);
-        this.testAddToIndentedCascade(2);
-        this.testAddToIndentedCascade(4);
+        this.testAddToEmptyIndentedCascade(0);
+        this.testAddToEmptyIndentedCascade(1);
+        this.testAddToEmptyIndentedCascade(2);
+        this.testAddToEmptyIndentedCascade(4);
     }
 
-    private void testCombineWithIndented(final int i)
+    private void testCombineWithEmptyIndented(final int i)
     throws Exception {
-        final Code indented = combine().indentBy(i);
-        assert indented.getIndent() == i;
-        assert indented.toString().equals("");
+        final Code emptyIndented = combine().indentBy(i);
+        assert emptyIndented.getIndent() == i;
+        assert emptyIndented.toString().equals("");
 
-        final Code code = combine(indented, this.make("//whatever"));
-        assertEquals(0, code.getIndent());
-        assertThat(code, hasToString(format("//whatever%n")));
+        final Code combined = combine(emptyIndented, this.make("//whatever"));
+        assertEquals(0, combined.getIndent());
+        assertThat(combined, hasToString(format("//whatever%n")));
     }
 
     @Test
     public void testCombineWithIndented_0_1_2_4()
     throws Exception {
-        this.testCombineWithIndented(0);
-        this.testCombineWithIndented(1);
-        this.testCombineWithIndented(2);
-        this.testCombineWithIndented(4);
+        this.testCombineWithEmptyIndented(0);
+        this.testCombineWithEmptyIndented(1);
+        this.testCombineWithEmptyIndented(2);
+        this.testCombineWithEmptyIndented(4);
     }
 
-    private void testCombineWithIndentedCascade(final int i)
+    private void testCombineWithEmptyIndentedCascade(final int i)
     throws Exception {
-        final Code indented = combine().indentBy(i);
-        assert indented.getIndent() == i;
-        assert indented.toString().equals("");
+        final Code emptyIndented = combine().indentBy(i);
+        assert emptyIndented.getIndent() == i;
+        assert emptyIndented.toString().equals("");
 
-        final Code cascade = indented.add(indented);
-        assert cascade.getIndent() == i;
-        assert cascade.toString().equals("");
+        final Code emptyCascade = emptyIndented.add(emptyIndented);
+        assert emptyCascade.getIndent() == i;
+        assert emptyCascade.toString().equals("");
 
-        final Code code = combine(cascade, this.make("//whatever"));
-        assertEquals(0, code.getIndent());
-        assertThat(code, hasToString(format("//whatever%n")));
+        final Code combined = combine(emptyCascade, this.make("//whatever"));
+        assertEquals(0, combined.getIndent());
+        assertThat(combined, hasToString(format("//whatever%n")));
     }
 
     @Test
-    public void testCombineWithIndentedCascade_0_1_2_4()
+    public void testCombineWithEmptyIndentedCascade_0_1_2_4()
     throws Exception {
-        this.testCombineWithIndentedCascade(0);
-        this.testCombineWithIndentedCascade(1);
-        this.testCombineWithIndentedCascade(2);
-        this.testCombineWithIndentedCascade(4);
+        this.testCombineWithEmptyIndentedCascade(0);
+        this.testCombineWithEmptyIndentedCascade(1);
+        this.testCombineWithEmptyIndentedCascade(2);
+        this.testCombineWithEmptyIndentedCascade(4);
     }
 
-    private void testAppendIndented(final int i)
+    private void testAddWithEmptyIndented(final int i)
     throws Exception {
         final Code code = this.make("//whatever");
         assertEquals(0, code.getIndent());
         assertThat(code, hasToString(format("//whatever%n")));
 
-        final Code indented = combine().indentBy(i);
+        final Code emptyIndented = combine().indentBy(i);
 
-        final Code added = code.add(indented);
+        final Code added = code.add(emptyIndented);
         assertEquals(0, added.getIndent());
         assertThat(added, hasToString(format("//whatever%n")));
     }
 
     @Test
-    public void testAppendIndented_0_1_2_4()
+    public void testAddWithEmptyIndented_0_1_2_4()
     throws Exception {
-        this.testAppendIndented(0);
-        this.testAppendIndented(1);
-        this.testAppendIndented(2);
-        this.testAppendIndented(4);
+        this.testAddWithEmptyIndented(0);
+        this.testAddWithEmptyIndented(1);
+        this.testAddWithEmptyIndented(2);
+        this.testAddWithEmptyIndented(4);
     }
 
 }
