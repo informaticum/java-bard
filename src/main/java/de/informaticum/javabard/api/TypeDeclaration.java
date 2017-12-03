@@ -29,6 +29,8 @@ implements Supplier<Code> {
         }
 
         private Kind(final ElementKind kind, final String name) {
+            assert kind != null;
+            assert name != null;
             this.name = name;
         }
 
