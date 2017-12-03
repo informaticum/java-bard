@@ -3,6 +3,18 @@ package de.informaticum.javabard.api;
 import static de.informaticum.javabard.impl.SimpleTypeDeclaration.declare;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static javax.lang.model.element.Modifier.ABSTRACT;
+import static javax.lang.model.element.Modifier.DEFAULT;
+import static javax.lang.model.element.Modifier.FINAL;
+import static javax.lang.model.element.Modifier.NATIVE;
+import static javax.lang.model.element.Modifier.PRIVATE;
+import static javax.lang.model.element.Modifier.PROTECTED;
+import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
+import static javax.lang.model.element.Modifier.STRICTFP;
+import static javax.lang.model.element.Modifier.SYNCHRONIZED;
+import static javax.lang.model.element.Modifier.TRANSIENT;
+import static javax.lang.model.element.Modifier.VOLATILE;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import java.util.List;
@@ -54,7 +66,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_abstract()
     throws Exception {
-        this.make("abstract");
+        this.make(ABSTRACT.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -120,7 +132,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_default()
     throws Exception {
-        this.make("default");
+        this.make(DEFAULT.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -156,7 +168,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_final()
     throws Exception {
-        this.make("final");
+        this.make(FINAL.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -228,7 +240,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_native()
     throws Exception {
-        this.make("native");
+        this.make(NATIVE.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -246,19 +258,19 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_private()
     throws Exception {
-        this.make("private");
+        this.make(PRIVATE.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_protected()
     throws Exception {
-        this.make("protected");
+        this.make(PROTECTED.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_public()
     throws Exception {
-        this.make("public");
+        this.make(PUBLIC.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -276,13 +288,13 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_static()
     throws Exception {
-        this.make("static");
+        this.make(STATIC.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_strictfp()
     throws Exception {
-        this.make("strictfp");
+        this.make(STRICTFP.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -300,7 +312,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_synchronized()
     throws Exception {
-        this.make("synchronized");
+        this.make(SYNCHRONIZED.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -324,7 +336,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_transient()
     throws Exception {
-        this.make("transient");
+        this.make(TRANSIENT.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -342,7 +354,7 @@ public class TypeDeclarationTests {
     @Test(expected = IllegalArgumentException.class)
     public void declineKeyword_volatile()
     throws Exception {
-        this.make("volatile");
+        this.make(VOLATILE.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
