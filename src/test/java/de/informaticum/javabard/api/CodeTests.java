@@ -130,7 +130,7 @@ public class CodeTests {
     }
 
     @Test
-    public void testIndentAndUnindentation()
+    public void testIndentAndUnindent()
     throws Exception {
         final Code code = this.make("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code.getIndent(), equalTo(0));
