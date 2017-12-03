@@ -15,8 +15,9 @@ extends Formattable, Supplier<Object> {
 
     @Override
     public default void formatTo(final Formatter formatter, final int flags, final int width, final int precision) {
-        final String argument = valueOf(this.get()).replace(JavaStringEmitter.QUOTE, JavaStringEmitter.ESCAPED_QUOTE);
-        formatter.format("%s%s%s", JavaStringEmitter.QUOTE, argument, JavaStringEmitter.QUOTE);
+        final String format = "%s%s%s";
+        final String argument = valueOf(this.get()).replace(QUOTE, ESCAPED_QUOTE);
+        formatter.format(format, QUOTE, argument, QUOTE);
     }
 
 }
