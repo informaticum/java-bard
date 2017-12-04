@@ -2,13 +2,23 @@ package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.util.Util.nonEmptyIdentifier;
 import static de.informaticum.javabard.util.Util.nonNull;
+import static java.util.stream.Collectors.joining;
+import java.util.EnumSet;
 import java.util.Locale;
 import java.util.function.Supplier;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
 import de.informaticum.javabard.impl.SingleCode;
 
 public class TypeDeclaration
 implements Supplier<Code> {
+
+    private final EnumSet<Modifier> modifiers = EnumSet.noneOf(Modifier.class);
+
+    public TypeDeclaration addModifier(final Modifier... modifiers) {
+        this.modifiers.addAll(asList(modifiers));
+        return this;
+    }
 
     public static enum Kind {
 
@@ -64,7 +74,9 @@ implements Supplier<Code> {
 
     @Override
     public Code get() {
-        return SingleCode.code("%s %s {", this.kind, this.name) //
+        String mods = this.modifiers.stream().map(Modifier::toString).collect(joining(" "));
+        mods += mods.isEmpty() ? "" : " ";
+        return SingleCode.code("%s%s %s {", mods, this.kind, this.name) //
                          .add("}");
     }
 
