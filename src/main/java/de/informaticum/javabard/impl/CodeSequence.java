@@ -13,4 +13,7 @@ extends Code {
         return this.getCodes().stream().mapToInt(Code::getIndent).min().orElse(0);
     }
 
+    @Override
+    public abstract String toString();
+
 }
