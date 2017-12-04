@@ -40,11 +40,10 @@ extends AbstractCodeSequence {
     public static final class Builder
     implements Supplier<Code> {
 
-        private final List<Code> codes;
+        private final List<Code> codes = new ArrayList<>();
 
         public Builder(final Code... codes) {
             allNonNull(codes);
-            this.codes = new ArrayList<>();
             this.add(codes);
         }
 
