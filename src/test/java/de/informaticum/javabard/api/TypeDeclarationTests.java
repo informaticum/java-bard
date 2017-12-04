@@ -7,6 +7,11 @@ import static de.informaticum.javabard.api.TypeDeclaration.Kind.ENUM;
 import static de.informaticum.javabard.api.TypeDeclaration.Kind.INTERFACE;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static javax.lang.model.element.Modifier.ABSTRACT;
+import static javax.lang.model.element.Modifier.PRIVATE;
+import static javax.lang.model.element.Modifier.PROTECTED;
+import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import java.util.List;
@@ -39,29 +44,29 @@ public class TypeDeclarationTests {
     @Test
     public void testSimpleAnnotationDeclaration()
     throws Exception {
-        final TypeDeclaration def = this.make(ANNOTATION, "FooBar");
-        assertThat(def, hasToString(format("@interface FooBar {%n}%n")));
+        final TypeDeclaration def = this.make(ANNOTATION, "FooBar").addModifier(PUBLIC);
+        assertThat(def, hasToString(format("public @interface FooBar {%n}%n")));
     }
 
     @Test
     public void testSimpleInterfaceDeclaration()
     throws Exception {
-        final TypeDeclaration def = this.make(INTERFACE, "FooBar");
-        assertThat(def, hasToString(format("interface FooBar {%n}%n")));
+        final TypeDeclaration def = this.make(INTERFACE, "FooBar").addModifier(PROTECTED, STATIC, ABSTRACT);
+        assertThat(def, hasToString(format("protected abstract static interface FooBar {%n}%n")));
     }
 
     @Test
     public void testSimpleClassDeclaration()
     throws Exception {
-        final TypeDeclaration def = this.make(CLASS, "FooBar");
-        assertThat(def, hasToString(format("class FooBar {%n}%n")));
+        final TypeDeclaration def = this.make(CLASS, "FooBar").addModifier(PRIVATE, ABSTRACT);
+        assertThat(def, hasToString(format("private abstract class FooBar {%n}%n")));
     }
 
     @Test
     public void testSimpleEnumDeclaration()
     throws Exception {
-        final TypeDeclaration def = this.make(ENUM, "FooBar");
-        assertThat(def, hasToString(format("enum FooBar {%n}%n")));
+        final TypeDeclaration def = this.make(ENUM, "FooBar").addModifier(PUBLIC);
+        assertThat(def, hasToString(format("public enum FooBar {%n}%n")));
     }
 
 }
