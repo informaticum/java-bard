@@ -64,7 +64,7 @@ extends AbstractCode {
         public Builder(final String format, final Object... args)
         throws IllegalArgumentException {
             this.format = nonNull(format);
-            this.args = nonNull(args).clone();
+            this.args = nonNull(args).clone(); // defensive copy
         }
 
         public Builder setIndent(final int indent) {
