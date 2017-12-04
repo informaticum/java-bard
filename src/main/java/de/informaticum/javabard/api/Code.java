@@ -5,6 +5,7 @@ import static de.informaticum.javabard.util.Util.nonNull;
 import static java.lang.Math.max;
 import static java.util.Arrays.asList;
 import java.util.Locale;
+import de.informaticum.javabard.impl.MultiCode;
 import de.informaticum.javabard.impl.SingleCode;
 
 public abstract interface Code {
@@ -68,4 +69,29 @@ public abstract interface Code {
         return new SingleCode.Builder(format, args).setLocale(locale).get();
     }
 
+    public static Code combine(final Iterable<? extends Code> codes)
+    throws IllegalArgumentException {
+        allNonNull(codes);
+        return new MultiCode.Builder().add(codes).get();
+    }
+
+    public static Code combine(final Code... codes)
+    throws IllegalArgumentException {
+        allNonNull(codes);
+        return new MultiCode.Builder(codes).get();
+    }
+
+    public static Code combine(final Code code, final Iterable<? extends Code> codes)
+    throws IllegalArgumentException {
+        nonNull(code);
+        allNonNull(codes);
+        return new MultiCode.Builder(code).add(codes).get();
+    }
+
+    public static Code combine(final Code code, final Code[] codes)
+    throws IllegalArgumentException {
+        nonNull(code);
+        allNonNull(codes);
+        return new MultiCode.Builder(code).add(codes).get();
+    }
 }
