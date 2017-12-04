@@ -79,7 +79,7 @@ extends AbstractCode {
         public Builder(final String format, final Object... args)
         throws IllegalArgumentException {
             this.format = nonNull(format);
-            this.args = nonNull(args);
+            this.args = nonNull(args).clone();
         }
 
         public Builder setIndent(final int indent) {
@@ -101,8 +101,7 @@ extends AbstractCode {
 
         @Override
         public final Code get() {
-            final Object[] defCopy = this.args.clone();
-            final Supplier<String> code = this.locale == null ? () -> format(this.format, defCopy) : () -> format(this.locale, this.format, defCopy);
+            final Supplier<String> code = this.locale == null ? () -> format(this.format, this.args) : () -> format(this.locale, this.format, this.args);
             return new SingleCode(this.indent, code);
         }
 
