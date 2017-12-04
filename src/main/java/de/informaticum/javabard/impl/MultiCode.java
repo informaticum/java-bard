@@ -18,11 +18,6 @@ extends AbstractCodeSequence {
 
     private final List<Code> codes;
 
-    @Override
-    public List<? extends Code> getCodes() {
-        return this.codes;
-    }
-
     private MultiCode(final Stream<? extends Code> codes)
     throws IllegalArgumentException {
         assert codes != null;
@@ -35,6 +30,11 @@ extends AbstractCodeSequence {
     public Code indentBy(final int diff) {
         final int d = max(diff, -this.getIndent()); // negative indent (a.k.a. unindent) must be capped
         return new MultiCode(this.codes.stream().map(c -> c.indentBy(d)));
+    }
+
+    @Override
+    public List<? extends Code> getCodes() {
+        return this.codes;
     }
 
     public static final class Builder
