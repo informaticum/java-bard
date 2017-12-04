@@ -50,21 +50,6 @@ extends AbstractCode {
         return out.toString();
     }
 
-    public static final Code code(final String format, final Object... args)
-    throws IllegalArgumentException {
-        nonNull(format);
-        nonNull(args);
-        return new SingleCode.Builder(format, args).get();
-    }
-
-    public static final Code code(final Locale locale, final String format, final Object... args)
-    throws IllegalArgumentException {
-        nonNull(locale);
-        nonNull(format);
-        nonNull(args);
-        return new SingleCode.Builder(format, args).setLocale(locale).get();
-    }
-
     public static final class Builder
     implements Supplier<Code> {
 

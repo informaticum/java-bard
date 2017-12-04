@@ -1,9 +1,11 @@
 package de.informaticum.javabard.api;
 
 import static de.informaticum.javabard.util.Util.allNonNull;
+import static de.informaticum.javabard.util.Util.nonNull;
 import static java.lang.Math.max;
 import static java.util.Arrays.asList;
 import java.util.Locale;
+import de.informaticum.javabard.impl.SingleCode;
 
 public abstract interface Code {
 
@@ -50,5 +52,20 @@ public abstract interface Code {
 
     @Override
     public abstract String toString();
+
+    public static Code code(final Locale locale, final String format, final Object... args)
+    throws IllegalArgumentException {
+        nonNull(locale);
+        nonNull(format);
+        nonNull(args);
+        return new SingleCode.Builder(format, args).setLocale(locale).get();
+    }
+
+    public static Code code(final String format, final Object... args)
+    throws IllegalArgumentException {
+        nonNull(format);
+        nonNull(args);
+        return new SingleCode.Builder(format, args).get();
+    }
 
 }

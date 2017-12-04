@@ -10,7 +10,6 @@ import java.util.Locale;
 import java.util.function.Supplier;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
-import de.informaticum.javabard.impl.SingleCode;
 
 public class TypeDeclaration
 implements Supplier<Code> {
@@ -94,8 +93,8 @@ implements Supplier<Code> {
     public Code get() {
         String mods = this.modifiers.stream().map(Modifier::toString).collect(joining(" "));
         mods += mods.isEmpty() ? "" : " ";
-        return SingleCode.code("%s%s %s {", mods, this.kind, this.name) //
-                         .add("}");
+        return Code.code("%s%s %s {", mods, this.kind, this.name) //
+                   .add("}");
     }
 
     @Override
