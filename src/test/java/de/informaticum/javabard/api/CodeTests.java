@@ -36,13 +36,19 @@ public class CodeTests {
 
     @Parameters
     public static Iterable<BiFunction<String, Object[], Code>> codeFactories() {
-        final BiFunction<String, Object[], Code> scf = (s, a) -> code(s, a);
-        final BiFunction<String, Object[], Code> scb = (s, a) -> new SingleCode.Builder(s, a).get();
-        final BiFunction<String, Object[], Code> sca = (s, a) -> new SingleCode.Builder("").get().add(s, a);
-        final BiFunction<String, Object[], Code> mcf = (s, a) -> combine(code(s, a));
-        final BiFunction<String, Object[], Code> mcb = (s, a) -> new MultiCode.Builder(code(s, a)).get();
-        final BiFunction<String, Object[], Code> mca = (s, a) -> new MultiCode.Builder().get().add(s, a);
-        return asList(scf, scb, sca, mcf, mcb, mca);
+        final BiFunction<String, Object[], Code> code          = (s, a) -> code(s, a);
+        final BiFunction<String, Object[], Code> codeAdd       = (s, a) -> code("").add(s, a);
+        final BiFunction<String, Object[], Code> codeAddCode   = (s, a) -> code("").add(code(s, a));
+        final BiFunction<String, Object[], Code> single        = (s, a) -> new SingleCode.Builder(s, a).get();
+        final BiFunction<String, Object[], Code> singleAdd     = (s, a) -> new SingleCode.Builder("").get().add(s, a);
+        final BiFunction<String, Object[], Code> singleAddCode = (s, a) -> new SingleCode.Builder("").get().add(code(s, a));
+        final BiFunction<String, Object[], Code> combo         = (s, a) -> combine(code(s, a));
+        final BiFunction<String, Object[], Code> comboAdd      = (s, a) -> combine().add(s, a);
+        final BiFunction<String, Object[], Code> comboAddCode  = (s, a) -> combine().add(code(s, a));
+        final BiFunction<String, Object[], Code> multi         = (s, a) -> new MultiCode.Builder(code(s, a)).get();
+        final BiFunction<String, Object[], Code> multiAdd      = (s, a) -> new MultiCode.Builder().get().add(s, a);
+        final BiFunction<String, Object[], Code> multiAddCode  = (s, a) -> new MultiCode.Builder().get().add(code(s, a));
+        return asList(code, codeAdd, codeAddCode, single, singleAdd, singleAddCode, combo, comboAdd, comboAddCode, multi, multiAdd, multiAddCode);
     }
 
     @Parameter(0)
