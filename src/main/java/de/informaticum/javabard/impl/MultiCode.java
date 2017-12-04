@@ -23,7 +23,7 @@ extends AbstractCodeSequence {
         assert codes != null;
         this.codes = codes.collect(collectingAndThen(toList(), Collections::unmodifiableList));
         assert this.codes.size() > 0;
-        assert this.codes.stream().noneMatch(MultiCode.class::isInstance);
+        assert this.codes.stream().noneMatch(CodeSequence.class::isInstance);
     }
 
     @Override
