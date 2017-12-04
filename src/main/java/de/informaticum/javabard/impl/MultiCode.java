@@ -75,7 +75,7 @@ extends AbstractCodeSequence {
         private static enum InitializationOnDemandHolderIdiom {
             ;
 
-            private static final Code ZERO_INDENT_MARKER_CODE = Code.code("");
+            private static final Code ZERO_INDENT_MARKER_CODE = AbstractCode.code("");
         }
 
         @Override

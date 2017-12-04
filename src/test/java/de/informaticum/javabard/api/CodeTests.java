@@ -1,10 +1,10 @@
 package de.informaticum.javabard.api;
 
-import static de.informaticum.javabard.api.Code.code;
-import static de.informaticum.javabard.api.Code.combine;
 import static de.informaticum.javabard.api.FormattableEmitters.i;
 import static de.informaticum.javabard.api.FormattableEmitters.indent;
 import static de.informaticum.javabard.api.FormattableEmitters.t;
+import static de.informaticum.javabard.impl.AbstractCode.code;
+import static de.informaticum.javabard.impl.AbstractCode.combine;
 import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
