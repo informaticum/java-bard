@@ -23,6 +23,7 @@ extends AbstractCodeSequence {
         assert codes != null;
         this.codes = codes.collect(collectingAndThen(toList(), Collections::unmodifiableList));
         assert this.codes.size() > 0;
+        assert this.codes.stream().filter(c -> c == Builder.ZERO_INDENT_MARKER_CODE).count() <= 1;
         assert this.codes.stream().noneMatch(CodeSequence.class::isInstance);
     }
 
@@ -40,6 +41,8 @@ extends AbstractCodeSequence {
     public static final class Builder
     implements Supplier<Code> {
 
+        private static final Code ZERO_INDENT_MARKER_CODE = AbstractCode.code("");
+
         private final List<Code> codes = new ArrayList<>();
 
         public Builder(final Code... codes) {
@@ -50,7 +53,9 @@ extends AbstractCodeSequence {
         public final Builder add(final Code code)
         throws IllegalArgumentException {
             nonNull(code);
-            if (code instanceof CodeSequence) {
+            if (code == ZERO_INDENT_MARKER_CODE) {
+                // excrescent
+            } else if (code instanceof CodeSequence) {
                 ((CodeSequence) code).getCodes().forEach(this::add);
             } else {
                 this.codes.add(code);
@@ -71,16 +76,10 @@ extends AbstractCodeSequence {
             return this.add(asList(codes));
         }
 
-        private static enum InitializationOnDemandHolderIdiom {
-            ;
-
-            private static final Code ZERO_INDENT_MARKER_CODE = AbstractCode.code("");
-        }
-
         @Override
         public final Code get() {
             if (this.codes.isEmpty()) {
-                return InitializationOnDemandHolderIdiom.ZERO_INDENT_MARKER_CODE;
+                return ZERO_INDENT_MARKER_CODE;
             } else if (this.codes.size() == 1) {
                 return this.codes.get(0);
             } else {
