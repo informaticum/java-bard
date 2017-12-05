@@ -67,7 +67,7 @@ extends AbstractCode {
             this.args = nonNull(args).clone(); // defensive copy
         }
 
-        public Builder setIndent(final int indent) {
+        public final Builder setIndent(final int indent) {
             this.indent = max(0, indent);
             return this;
         }
