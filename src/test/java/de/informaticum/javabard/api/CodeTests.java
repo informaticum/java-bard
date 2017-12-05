@@ -48,7 +48,10 @@ public class CodeTests {
         final BiFunction<String, Object[], Code> multi         = (s, a) -> new MultiCode.Builder(code(s, a)).get();
         final BiFunction<String, Object[], Code> multiAdd      = (s, a) -> new MultiCode.Builder().get().add(s, a);
         final BiFunction<String, Object[], Code> multiAddCode  = (s, a) -> new MultiCode.Builder().get().add(code(s, a));
-        return asList(code, codeAdd, codeAddCode, single, singleAdd, singleAddCode, combo, comboAdd, comboAddCode, multi, multiAdd, multiAddCode);
+        return asList(code, codeAdd, codeAddCode, //
+                      single, singleAdd, singleAddCode, //
+                      combo, comboAdd, comboAddCode, //
+                      multi, multiAdd, multiAddCode);
     }
 
     @Parameter(0)
