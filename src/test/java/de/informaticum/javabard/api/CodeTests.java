@@ -339,7 +339,7 @@ public class CodeTests {
     public void rejectNullFormatWithValidArgs()
     throws Exception {
         final String format = null;
-        this.make(format, code("foo"), code("bar"));
+        this.make(format, this.make("foo"), this.make("bar"));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -363,7 +363,7 @@ public class CodeTests {
     throws Exception {
         final Code code = this.make("//whatever");
         final String format = null;
-        code.add(format, code("foo"), code("bar"));
+        code.add(format, this.make("foo"), this.make("bar"));
     }
 
     @Test(expected = IllegalArgumentException.class)
