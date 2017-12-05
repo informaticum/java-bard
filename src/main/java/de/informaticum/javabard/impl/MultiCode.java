@@ -18,7 +18,7 @@ extends AbstractCodeSequence {
 
     private final List<Code> codes;
 
-    private MultiCode(final Stream<? extends Code> codes)
+    protected MultiCode(final Stream<? extends Code> codes)
     throws IllegalArgumentException {
         assert codes != null;
         this.codes = codes.collect(collectingAndThen(toList(), Collections::unmodifiableList));
