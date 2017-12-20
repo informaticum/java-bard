@@ -551,6 +551,13 @@ public class CodeTests {
     }
 
     @Test
+    public void testOneIndent()
+    throws Exception {
+        final Code nothing = this.make("%s", i(1));
+        assertThat(nothing, hasToString(format("    %n")));
+    }
+
+    @Test
     public void testInfixEmptyLines()
     throws Exception {
         final Code code = this.make("//whatever").add("").add("//whatelse");
