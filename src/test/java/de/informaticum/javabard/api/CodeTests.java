@@ -48,11 +48,15 @@ public class CodeTests {
         final BiFunction<String, Object[], Code> multiAdd       = (s, a) -> new MultiCode.Builder().get().add(s, a);
         final BiFunction<String, Object[], Code> multiAddCode   = (s, a) -> new MultiCode.Builder().get().add(code(s, a));
         final BiFunction<String, Object[], Code> multiAddSingle = (s, a) -> new MultiCode.Builder().get().add(new SingleCode.Builder(s, a).get());
+        final BiFunction<String, Object[], Code> chainAdd       = (s, a) -> combine().addAll().add(s, a);
+        final BiFunction<String, Object[], Code> chainAddCode   = (s, a) -> combine().addAll().add(code(s, a));
+        final BiFunction<String, Object[], Code> chainAddSingle = (s, a) -> combine().addAll().add(new SingleCode.Builder(s, a).get());
         return asList(code, single, //
                       comboCode, comboSingle, //
                       comboAdd, comboAddCode, comboAddSingle, //
                       multiCode, multiSingle, //
-                      multiAdd, multiAddCode, multiAddSingle);
+                      multiAdd, multiAddCode, multiAddSingle, //
+                      chainAdd, chainAddCode, chainAddSingle);
     }
 
     @Parameter(0)
