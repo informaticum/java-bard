@@ -36,22 +36,23 @@ public class CodeTests {
 
     @Parameters
     public static Iterable<BiFunction<String, Object[], Code>> codeFactories() {
-        final BiFunction<String, Object[], Code> code          = (s, a) -> code(s, a);
-        final BiFunction<String, Object[], Code> codeAdd       = (s, a) -> code("").add(s, a);
-        final BiFunction<String, Object[], Code> codeAddCode   = (s, a) -> code("").add(code(s, a));
-        final BiFunction<String, Object[], Code> single        = (s, a) -> new SingleCode.Builder(s, a).get();
-        final BiFunction<String, Object[], Code> singleAdd     = (s, a) -> new SingleCode.Builder("").get().add(s, a);
-        final BiFunction<String, Object[], Code> singleAddCode = (s, a) -> new SingleCode.Builder("").get().add(code(s, a));
-        final BiFunction<String, Object[], Code> combo         = (s, a) -> combine(code(s, a));
-        final BiFunction<String, Object[], Code> comboAdd      = (s, a) -> combine().add(s, a);
-        final BiFunction<String, Object[], Code> comboAddCode  = (s, a) -> combine().add(code(s, a));
-        final BiFunction<String, Object[], Code> multi         = (s, a) -> new MultiCode.Builder(code(s, a)).get();
-        final BiFunction<String, Object[], Code> multiAdd      = (s, a) -> new MultiCode.Builder().get().add(s, a);
-        final BiFunction<String, Object[], Code> multiAddCode  = (s, a) -> new MultiCode.Builder().get().add(code(s, a));
-        return asList(code, codeAdd, codeAddCode, //
-                      single, singleAdd, singleAddCode, //
-                      combo, comboAdd, comboAddCode, //
-                      multi, multiAdd, multiAddCode);
+        final BiFunction<String, Object[], Code> code           = (s, a) -> code(s, a);
+        final BiFunction<String, Object[], Code> single         = (s, a) -> new SingleCode.Builder(s, a).get();
+        final BiFunction<String, Object[], Code> comboCode      = (s, a) -> combine(code(s, a));
+        final BiFunction<String, Object[], Code> comboSingle    = (s, a) -> combine(new SingleCode.Builder(s, a).get());
+        final BiFunction<String, Object[], Code> comboAdd       = (s, a) -> combine().add(s, a);
+        final BiFunction<String, Object[], Code> comboAddCode   = (s, a) -> combine().add(code(s, a));
+        final BiFunction<String, Object[], Code> comboAddSingle = (s, a) -> combine().add(new SingleCode.Builder(s, a).get());
+        final BiFunction<String, Object[], Code> multiCode      = (s, a) -> new MultiCode.Builder(code(s, a)).get();
+        final BiFunction<String, Object[], Code> multiSingle    = (s, a) -> new MultiCode.Builder(new SingleCode.Builder(s, a).get()).get();
+        final BiFunction<String, Object[], Code> multiAdd       = (s, a) -> new MultiCode.Builder().get().add(s, a);
+        final BiFunction<String, Object[], Code> multiAddCode   = (s, a) -> new MultiCode.Builder().get().add(code(s, a));
+        final BiFunction<String, Object[], Code> multiAddSingle = (s, a) -> new MultiCode.Builder().get().add(new SingleCode.Builder(s, a).get());
+        return asList(code, single, //
+                      comboCode, comboSingle, //
+                      comboAdd, comboAddCode, comboAddSingle, //
+                      multiCode, multiSingle, //
+                      multiAdd, multiAddCode, multiAddSingle);
     }
 
     @Parameter(0)
