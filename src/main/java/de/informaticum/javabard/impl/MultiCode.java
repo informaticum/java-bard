@@ -23,7 +23,7 @@ extends AbstractCodeSequence {
         assert codes != null;
         this.codes = codes.collect(collectingAndThen(toList(), Collections::unmodifiableList));
         assert this.codes.size() > 0;
-        assert this.codes.stream().filter(c -> c == Builder.ZERO_INDENT_MARKER_CODE).count() <= 1;
+        assert this.codes.stream().filter(Builder.ZERO_INDENT_MARKER_CODE::equals).count() <= 1;
         assert this.codes.stream().noneMatch(CodeSequence.class::isInstance);
     }
 
@@ -53,7 +53,7 @@ extends AbstractCodeSequence {
         public final Builder add(final Code code)
         throws IllegalArgumentException {
             nonNull(code);
-            if (code == ZERO_INDENT_MARKER_CODE) {
+            if (ZERO_INDENT_MARKER_CODE.equals(code)) {
                 // excrescent
             } else if (code instanceof CodeSequence) {
                 ((CodeSequence) code).getCodes().forEach(this::add);
