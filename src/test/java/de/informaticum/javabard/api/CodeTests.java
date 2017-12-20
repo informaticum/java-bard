@@ -10,6 +10,8 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static java.util.Locale.getDefault;
+import static java.util.Optional.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertEquals;
@@ -18,6 +20,7 @@ import java.util.BitSet;
 import java.util.Collection;
 import java.util.Formattable;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import javax.xml.ws.Holder;
@@ -37,26 +40,39 @@ public class CodeTests {
     @Parameters
     public static Iterable<BiFunction<String, Object[], Code>> codeFactories() {
         final BiFunction<String, Object[], Code> code           = (s, a) -> code(s, a);
+        final BiFunction<String, Object[], Code> codeLocale     = (s, a) -> code(Locale.getDefault(), s, a);
+        final BiFunction<String, Object[], Code> rePositioned   = (s, a) -> code(s, a).indent().unindent();
         final BiFunction<String, Object[], Code> single         = (s, a) -> new SingleCode.Builder(s, a).get();
+        final BiFunction<String, Object[], Code> nonIndented    = (s, a) -> new SingleCode.Builder(s, a).setIndent(0).get();
+        final BiFunction<String, Object[], Code> resetIndented  = (s, a) -> new SingleCode.Builder(s, a).setIndent(2).get().indentBy(-2);
+        final BiFunction<String, Object[], Code> skipped        = (s, a) -> new SingleCode.Builder(s, a).get().indentBy(-1);
+        final BiFunction<String, Object[], Code> nonLocalised   = (s, a) -> new SingleCode.Builder(s, a).setLocale(empty()).get();
+        final BiFunction<String, Object[], Code> localised      = (s, a) -> new SingleCode.Builder(s, a).setLocale(getDefault()).get();
+        final BiFunction<String, Object[], Code> deLocalised    = (s, a) -> new SingleCode.Builder(s, a).setLocale(getDefault()).setLocale(empty()).get();
         final BiFunction<String, Object[], Code> comboCode      = (s, a) -> combine(code(s, a));
         final BiFunction<String, Object[], Code> comboSingle    = (s, a) -> combine(new SingleCode.Builder(s, a).get());
         final BiFunction<String, Object[], Code> comboAdd       = (s, a) -> combine().add(s, a);
+        final BiFunction<String, Object[], Code> comboAddLocale = (s, a) -> combine().add(Locale.getDefault(), s, a);
         final BiFunction<String, Object[], Code> comboAddCode   = (s, a) -> combine().add(code(s, a));
         final BiFunction<String, Object[], Code> comboAddSingle = (s, a) -> combine().add(new SingleCode.Builder(s, a).get());
         final BiFunction<String, Object[], Code> multiCode      = (s, a) -> new MultiCode.Builder(code(s, a)).get();
         final BiFunction<String, Object[], Code> multiSingle    = (s, a) -> new MultiCode.Builder(new SingleCode.Builder(s, a).get()).get();
         final BiFunction<String, Object[], Code> multiAdd       = (s, a) -> new MultiCode.Builder().get().add(s, a);
+        final BiFunction<String, Object[], Code> multiAddLocale = (s, a) -> new MultiCode.Builder().get().add(Locale.getDefault(), s, a);
         final BiFunction<String, Object[], Code> multiAddCode   = (s, a) -> new MultiCode.Builder().get().add(code(s, a));
         final BiFunction<String, Object[], Code> multiAddSingle = (s, a) -> new MultiCode.Builder().get().add(new SingleCode.Builder(s, a).get());
         final BiFunction<String, Object[], Code> chainAdd       = (s, a) -> combine().addAll().add(s, a);
+        final BiFunction<String, Object[], Code> chainAddLocale = (s, a) -> combine().addAll().add(Locale.getDefault(), s, a);
         final BiFunction<String, Object[], Code> chainAddCode   = (s, a) -> combine().addAll().add(code(s, a));
         final BiFunction<String, Object[], Code> chainAddSingle = (s, a) -> combine().addAll().add(new SingleCode.Builder(s, a).get());
-        return asList(code, single, //
+        return asList(code, codeLocale, single, rePositioned, //
+                      nonIndented, resetIndented, skipped, //
+                      nonLocalised, localised, deLocalised, //
                       comboCode, comboSingle, //
-                      comboAdd, comboAddCode, comboAddSingle, //
+                      comboAdd, comboAddLocale, comboAddCode, comboAddSingle, //
                       multiCode, multiSingle, //
-                      multiAdd, multiAddCode, multiAddSingle, //
-                      chainAdd, chainAddCode, chainAddSingle);
+                      multiAdd, multiAddLocale, multiAddCode, multiAddSingle, //
+                      chainAdd, chainAddLocale, chainAddCode, chainAddSingle);
     }
 
     @Parameter(0)
