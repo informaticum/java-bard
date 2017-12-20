@@ -65,6 +65,8 @@ public class CodeTests {
         final BiFunction<String, Object[], Code> chainAddLocale = (s, a) -> combine().addAll().add(Locale.getDefault(), s, a);
         final BiFunction<String, Object[], Code> chainAddCode   = (s, a) -> combine().addAll().add(code(s, a));
         final BiFunction<String, Object[], Code> chainAddSingle = (s, a) -> combine().addAll().add(new SingleCode.Builder(s, a).get());
+        final BiFunction<String, Object[], Code> preReset       = (s, a) -> combine().indentBy(2).indentBy(-2).add(s, a);
+        final BiFunction<String, Object[], Code> postReset      = (s, a) -> combine().indentBy(2).add(s, a).indentBy(-2);
         return asList(code, codeLocale, single, rePositioned, //
                       nonIndented, resetIndented, skipped, //
                       nonLocalised, localised, deLocalised, //
@@ -72,7 +74,8 @@ public class CodeTests {
                       comboAdd, comboAddLocale, comboAddCode, comboAddSingle, //
                       multiCode, multiSingle, //
                       multiAdd, multiAddLocale, multiAddCode, multiAddSingle, //
-                      chainAdd, chainAddLocale, chainAddCode, chainAddSingle);
+                      chainAdd, chainAddLocale, chainAddCode, chainAddSingle, //
+                      preReset, postReset);
     }
 
     @Parameter(0)
