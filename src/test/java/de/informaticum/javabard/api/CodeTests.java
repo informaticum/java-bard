@@ -520,4 +520,37 @@ public class CodeTests {
         this.testAddWithEmptyIndented(4);
     }
 
+    @Test
+    public void testEmptyLines()
+    throws Exception {
+        final Code empty = this.make("");
+        assertThat(empty, hasToString(format("%n")));
+        final Code single = combine(empty);
+        assertThat(single, hasToString(format("%n")));
+        final Code twin = combine(empty, empty);
+        assertThat(twin, hasToString(format("%n%n")));
+    }
+
+    @Test
+    public void testSpace()
+    throws Exception {
+        final Code space = this.make(" ");
+        assertThat(space, hasToString(format(" %n")));
+    }
+
+    @Test
+    public void testZeroIndent()
+    throws Exception {
+        final Code nothing = this.make("%s", i(0));
+        assertThat(nothing, hasToString(format("%n")));
+    }
+
+    @Test
+    public void testInfixEmptyLines()
+    throws Exception {
+        final Code code = this.make("//whatever").add("").add("//whatelse");
+        assertEquals(0, code.getIndent());
+        assertThat(code, hasToString(format("//whatever%n%n//whatelse%n")));
+    }
+
 }
