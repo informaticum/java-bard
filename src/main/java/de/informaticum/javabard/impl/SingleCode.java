@@ -47,7 +47,7 @@ extends AbstractCode {
                 out.append(format("%s%s%n", i, scanner.nextLine()));
             }
         }
-        return out.toString();
+        return out.length() == 0 ? format("%n") : out.toString();
     }
 
     public static final class Builder
