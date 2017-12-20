@@ -41,7 +41,7 @@ extends AbstractCodeSequence {
     public static final class Builder
     implements Supplier<Code> {
 
-        private static final Code ZERO_INDENT_MARKER_CODE = new SingleCode(0, ""::toString);
+        private static final Code ZERO_INDENT_MARKER_CODE = new IndentionMarkerCode(0);
 
         private final List<Code> codes = new ArrayList<>();
 
