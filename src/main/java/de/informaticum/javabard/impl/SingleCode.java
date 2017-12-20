@@ -80,7 +80,7 @@ extends AbstractCode {
 
         public final Builder setLocale(final Optional<? extends Locale> locale)
         throws IllegalArgumentException {
-            this.locale = nonNull(locale).orElseGet(null);
+            this.locale = nonNull(locale).orElse(null);
             return this;
         }
 
