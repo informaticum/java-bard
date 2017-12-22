@@ -21,7 +21,21 @@ public class TypeDeclarationTests {
     public void testSimpleAnnotationDeclaration()
     throws Exception {
         final TypeDeclaration def = declare("Foobar").as(ANNOTATION_TYPE).with(PUBLIC).get();
-        assertThat(def, hasToString(format("public @interface Foobar {%n}%n")));
+        assertThat(def, hasToString(format("public abstract @interface Foobar {%n}%n")));
+    }
+
+    @Test
+    public void testPureInterfaceDeclaration()
+    throws Exception {
+        final TypeDeclaration def = declare("Foobar").as(INTERFACE).get();
+        assertThat(def, hasToString(format("abstract interface Foobar {%n}%n")));
+    }
+
+    @Test
+    public void testPureClassDeclaration()
+    throws Exception {
+        final TypeDeclaration def = declare("Foobar").as(CLASS).get();
+        assertThat(def, hasToString(format("class Foobar {%n}%n")));
     }
 
     @Test
@@ -43,6 +57,20 @@ public class TypeDeclarationTests {
     throws Exception {
         final TypeDeclaration def = declare("Foobar").as(ENUM).with(PUBLIC).get();
         assertThat(def, hasToString(format("public enum Foobar {%n}%n")));
+    }
+
+    @Test
+    public void testPackagedAnnotationDeclaration()
+    throws Exception {
+        final TypeDeclaration def = declare("Foobar").in(TypeDeclarationTests.class.getPackage()).as(ANNOTATION_TYPE).with(PUBLIC).get();
+        assertThat(def, hasToString(format("package de.informaticum.javabard.api;%n%npublic abstract @interface Foobar {%n}%n")));
+    }
+
+    @Test
+    public void testPackagedInterfaceDeclaration()
+    throws Exception {
+        final TypeDeclaration def = declare("Foobar").in("de.informaticum.javabard.api").as(INTERFACE).with(PROTECTED, STATIC, ABSTRACT).get();
+        assertThat(def, hasToString(format("package de.informaticum.javabard.api;%n%nprotected abstract static interface Foobar {%n}%n")));
     }
 
 }
