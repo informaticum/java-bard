@@ -1,5 +1,6 @@
 package de.informaticum.javabard.api;
 
+import static de.informaticum.javabard.impl.AbstractCode.combine;
 import static de.informaticum.javabard.util.Util.allNonNull;
 import static de.informaticum.javabard.util.Util.nonNull;
 import static java.util.Arrays.asList;
@@ -17,6 +18,8 @@ import de.informaticum.javabard.impl.AbstractCode;
 public class TypeDeclaration
 implements Supplier<Code> {
 
+    private final String pakkage;
+
     private final EnumSet<Modifier> modifiers = noneOf(Modifier.class);
 
     private final ElementKind kind;
@@ -24,23 +27,28 @@ implements Supplier<Code> {
     private final String name;
 
     public TypeDeclaration(final Builder blueprint) {
+        this.pakkage = blueprint.pakkage;
         this.name = blueprint.name;
         this.kind = blueprint.kind;
         this.modifiers.addAll(blueprint.modifiers);
     }
 
     public Builder asBuilder() {
-        return new Builder(this.name).as(this.kind).with(this.modifiers);
+        return new Builder(this.name).in(this.pakkage).as(this.kind).with(this.modifiers);
     }
-
-    private static final Function<? super Enum<?>, ? extends String> asKeyword = m -> m.name().toLowerCase(Locale.US);
 
     @Override
     public Code get() {
-        String m = this.modifiers.stream().map(asKeyword).collect(joining(" "));
-        m += m.isEmpty() ? "" : " ";
-        final String k = asKeyword.apply(this.kind).replace("annotation_type", "@interface");
-        return AbstractCode.code("%s%s %s {", m, k, this.name).add("}");
+        Code code = combine();
+        if (!isNull(this.pakkage) && !this.pakkage.isEmpty()) {
+            code = code.add("package %s;", this.pakkage);
+            code = code.add("");
+        }
+        final String m = this.modifiers.toString().replace("[]", "").replace("[", "").replace(",", "").replace("]", " ");
+        final String k = this.kind.name().toLowerCase(Locale.US).replace("annotation_type", "@interface");
+        code = code.add("%s%s %s {", m, k, this.name);
+        code = code.add("}");
+        return code;
     }
 
     @Override
@@ -50,6 +58,8 @@ implements Supplier<Code> {
 
     public static class Builder
     implements Supplier<TypeDeclaration> {
+
+        private String pakkage;
 
         private final EnumSet<Modifier> modifiers = noneOf(Modifier.class);
 
@@ -68,6 +78,15 @@ implements Supplier<Code> {
 
         public Builder as(final ElementKind kind) {
             this.kind = nonNull(kind);
+            return this;
+        }
+
+        public Builder in(final Package pakkage) {
+            return this.in(nonNull(pakkage.getName()));
+        }
+
+        public Builder in(final String pakkage) {
+            this.pakkage = nonNull(pakkage);
             return this;
         }
 
