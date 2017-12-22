@@ -17,6 +17,7 @@ import java.util.EnumSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
@@ -26,7 +27,13 @@ implements Supplier<Code> {
 
     private final String pakkage;
 
-    private final EnumSet<Modifier> modifiers = noneOf(Modifier.class);
+    private final Set<Modifier> modifiers = noneOf(Modifier.class);
+
+    private static final Function<Collection<Modifier>, String> MODIFIER_NAME = c -> c.toString() //
+                                                                                      .replace("[]", "") //
+                                                                                      .replace("[", "") //
+                                                                                      .replace(",", "") //
+                                                                                      .replace("]", " ");
 
     private final ElementKind kind;
 
@@ -34,9 +41,9 @@ implements Supplier<Code> {
 
     public TypeDeclaration(final Builder blueprint) {
         this.pakkage = blueprint.pakkage;
-        this.name = blueprint.name;
-        this.kind = blueprint.kind;
         this.modifiers.addAll(blueprint.modifiers);
+        this.kind = blueprint.kind;
+        this.name = blueprint.name;
     }
 
     public Builder asBuilder() {
@@ -50,7 +57,7 @@ implements Supplier<Code> {
             code = code.add("package %s;", this.pakkage);
             code = code.add("");
         }
-        final String m = this.modifiers.toString().replace("[]", "").replace("[", "").replace(",", "").replace("]", " ");
+        final String m = MODIFIER_NAME.apply(this.modifiers);
         final String k = this.kind.name().toLowerCase(Locale.US).replace("annotation_type", "@interface");
         code = code.add("%s%s %s {", m, k, this.name);
         code = code.add("}");
