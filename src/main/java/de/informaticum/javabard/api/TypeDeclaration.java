@@ -4,16 +4,22 @@ import static de.informaticum.javabard.impl.AbstractCode.combine;
 import static de.informaticum.javabard.util.Util.allNonNull;
 import static de.informaticum.javabard.util.Util.nonNull;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
+import static java.util.Collections.singleton;
 import static java.util.EnumSet.noneOf;
-import static java.util.stream.Collectors.joining;
+import static java.util.Objects.isNull;
+import static javax.lang.model.element.ElementKind.ANNOTATION_TYPE;
+import static javax.lang.model.element.ElementKind.INTERFACE;
+import static javax.lang.model.element.Modifier.ABSTRACT;
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Locale;
-import java.util.function.Function;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
-import de.informaticum.javabard.impl.AbstractCode;
 
 public class TypeDeclaration
 implements Supplier<Code> {
@@ -76,9 +82,15 @@ implements Supplier<Code> {
             return this;
         }
 
+        private static final Map<ElementKind, Set<Modifier>> IMPLICIT_MODIFIERS = new EnumMap<>(ElementKind.class);
+        static {
+            IMPLICIT_MODIFIERS.put(ANNOTATION_TYPE, singleton(ABSTRACT));
+            IMPLICIT_MODIFIERS.put(INTERFACE, singleton(ABSTRACT));
+        }
+
         public Builder as(final ElementKind kind) {
             this.kind = nonNull(kind);
-            return this;
+            return this.with(IMPLICIT_MODIFIERS.getOrDefault(kind, emptySet()));
         }
 
         public Builder in(final Package pakkage) {
