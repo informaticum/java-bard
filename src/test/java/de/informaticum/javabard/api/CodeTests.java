@@ -5,6 +5,7 @@ import static de.informaticum.javabard.api.FormattableEmitters.indent;
 import static de.informaticum.javabard.api.FormattableEmitters.t;
 import static de.informaticum.javabard.impl.AbstractCode.code;
 import static de.informaticum.javabard.impl.AbstractCode.combine;
+import static de.informaticum.javabard.impl.AbstractCode.emptyCode;
 import static de.informaticum.javabard.impl.IndentEmitter.INDENT_CHARS_PROPERTY;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -51,22 +52,22 @@ public class CodeTests {
         final BiFunction<String, Object[], Code> deLocalised    = (s, a) -> new SingleCode.Builder(s, a).setLocale(getDefault()).setLocale(empty()).get();
         final BiFunction<String, Object[], Code> comboCode      = (s, a) -> combine(code(s, a));
         final BiFunction<String, Object[], Code> comboSingle    = (s, a) -> combine(new SingleCode.Builder(s, a).get());
-        final BiFunction<String, Object[], Code> comboAdd       = (s, a) -> combine().add(s, a);
-        final BiFunction<String, Object[], Code> comboAddLocale = (s, a) -> combine().add(Locale.getDefault(), s, a);
-        final BiFunction<String, Object[], Code> comboAddCode   = (s, a) -> combine().add(code(s, a));
-        final BiFunction<String, Object[], Code> comboAddSingle = (s, a) -> combine().add(new SingleCode.Builder(s, a).get());
+        final BiFunction<String, Object[], Code> comboAdd       = (s, a) -> emptyCode().add(s, a);
+        final BiFunction<String, Object[], Code> comboAddLocale = (s, a) -> emptyCode().add(Locale.getDefault(), s, a);
+        final BiFunction<String, Object[], Code> comboAddCode   = (s, a) -> emptyCode().add(code(s, a));
+        final BiFunction<String, Object[], Code> comboAddSingle = (s, a) -> emptyCode().add(new SingleCode.Builder(s, a).get());
         final BiFunction<String, Object[], Code> multiCode      = (s, a) -> new MultiCode.Builder(code(s, a)).get();
         final BiFunction<String, Object[], Code> multiSingle    = (s, a) -> new MultiCode.Builder(new SingleCode.Builder(s, a).get()).get();
         final BiFunction<String, Object[], Code> multiAdd       = (s, a) -> new MultiCode.Builder().get().add(s, a);
         final BiFunction<String, Object[], Code> multiAddLocale = (s, a) -> new MultiCode.Builder().get().add(Locale.getDefault(), s, a);
         final BiFunction<String, Object[], Code> multiAddCode   = (s, a) -> new MultiCode.Builder().get().add(code(s, a));
         final BiFunction<String, Object[], Code> multiAddSingle = (s, a) -> new MultiCode.Builder().get().add(new SingleCode.Builder(s, a).get());
-        final BiFunction<String, Object[], Code> chainAdd       = (s, a) -> combine().addAll().add(s, a);
-        final BiFunction<String, Object[], Code> chainAddLocale = (s, a) -> combine().addAll().add(Locale.getDefault(), s, a);
-        final BiFunction<String, Object[], Code> chainAddCode   = (s, a) -> combine().addAll().add(code(s, a));
-        final BiFunction<String, Object[], Code> chainAddSingle = (s, a) -> combine().addAll().add(new SingleCode.Builder(s, a).get());
-        final BiFunction<String, Object[], Code> preReset       = (s, a) -> combine().indentBy(2).indentBy(-2).add(s, a);
-        final BiFunction<String, Object[], Code> postReset      = (s, a) -> combine().indentBy(2).add(s, a).indentBy(-2);
+        final BiFunction<String, Object[], Code> chainAdd       = (s, a) -> emptyCode().addAll().add(s, a);
+        final BiFunction<String, Object[], Code> chainAddLocale = (s, a) -> emptyCode().addAll().add(Locale.getDefault(), s, a);
+        final BiFunction<String, Object[], Code> chainAddCode   = (s, a) -> emptyCode().addAll().add(code(s, a));
+        final BiFunction<String, Object[], Code> chainAddSingle = (s, a) -> emptyCode().addAll().add(new SingleCode.Builder(s, a).get());
+        final BiFunction<String, Object[], Code> preReset       = (s, a) -> emptyCode().indentBy(2).indentBy(-2).add(s, a);
+        final BiFunction<String, Object[], Code> postReset      = (s, a) -> emptyCode().indentBy(2).add(s, a).indentBy(-2);
         return asList(code, codeLocale, single, rePositioned, //
                       nonIndented, resetIndented, skipped, //
                       nonLocalised, localised, deLocalised, //
@@ -328,7 +329,7 @@ public class CodeTests {
     @Test
     public void testIndentOfEmptyMultiCode()
     throws Exception {
-        final Code empty = combine();
+        final Code empty = emptyCode();
         assertEquals(0, empty.getIndent());
         assertThat(empty, hasToString(""));
 
@@ -436,7 +437,7 @@ public class CodeTests {
 
     private void testAddToEmptyIndented(final int i)
     throws Exception {
-        final Code emptyIndented = combine().indentBy(i);
+        final Code emptyIndented = emptyCode().indentBy(i);
         assert emptyIndented.getIndent() == i;
         assert emptyIndented.toString().equals("");
 
@@ -456,7 +457,7 @@ public class CodeTests {
 
     private void testAddToEmptyIndentedCascade(final int i)
     throws Exception {
-        final Code emptyIndented = combine().indentBy(i);
+        final Code emptyIndented = emptyCode().indentBy(i);
         assert emptyIndented.getIndent() == i;
         assert emptyIndented.toString().equals("");
 
@@ -480,7 +481,7 @@ public class CodeTests {
 
     private void testCombineWithEmptyIndented(final int i)
     throws Exception {
-        final Code emptyIndented = combine().indentBy(i);
+        final Code emptyIndented = emptyCode().indentBy(i);
         assert emptyIndented.getIndent() == i;
         assert emptyIndented.toString().equals("");
 
@@ -500,7 +501,7 @@ public class CodeTests {
 
     private void testCombineWithEmptyIndentedCascade(final int i)
     throws Exception {
-        final Code emptyIndented = combine().indentBy(i);
+        final Code emptyIndented = emptyCode().indentBy(i);
         assert emptyIndented.getIndent() == i;
         assert emptyIndented.toString().equals("");
 
@@ -528,7 +529,7 @@ public class CodeTests {
         assertEquals(0, code.getIndent());
         assertThat(code, hasToString(format("//whatever%n")));
 
-        final Code emptyIndented = combine().indentBy(i);
+        final Code emptyIndented = emptyCode().indentBy(i);
 
         final Code added = code.add(emptyIndented);
         assertEquals(0, added.getIndent());

@@ -1,6 +1,6 @@
 package de.informaticum.javabard.api;
 
-import static de.informaticum.javabard.impl.AbstractCode.combine;
+import static de.informaticum.javabard.impl.AbstractCode.emptyCode;
 import static de.informaticum.javabard.util.Util.allNonNull;
 import static de.informaticum.javabard.util.Util.nonNull;
 import static java.util.Arrays.asList;
@@ -52,7 +52,7 @@ implements Supplier<Code> {
 
     @Override
     public Code get() {
-        Code code = combine();
+        Code code = emptyCode();
         if (!isNull(this.pakkage) && !this.pakkage.isEmpty()) {
             code = code.add("package %s;", this.pakkage);
             code = code.add("");

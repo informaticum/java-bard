@@ -75,4 +75,8 @@ implements Code {
         return new MultiCode.Builder(code).add(codes).get();
     }
 
+    public static final Code emptyCode() {
+        return new MultiCode.Builder().get();
+    }
+
 }
