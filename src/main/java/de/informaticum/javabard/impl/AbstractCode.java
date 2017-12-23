@@ -34,14 +34,14 @@ implements Code {
 
     // fabric methods
 
-    public static Code code(final String format, final Object... args)
+    public static final Code code(final String format, final Object... args)
     throws IllegalArgumentException {
         nonNull(format);
         nonNull(args);
         return new SingleCode.Builder(format, args).get();
     }
 
-    public static Code code(final Locale locale, final String format, final Object... args)
+    public static final Code code(final Locale locale, final String format, final Object... args)
     throws IllegalArgumentException {
         nonNull(locale);
         nonNull(format);
@@ -49,26 +49,26 @@ implements Code {
         return new SingleCode.Builder(format, args).setLocale(locale).get();
     }
 
-    public static Code combine(final Iterable<? extends Code> codes)
+    public static final Code combine(final Iterable<? extends Code> codes)
     throws IllegalArgumentException {
         allNonNull(codes);
         return new MultiCode.Builder().add(codes).get();
     }
 
-    public static Code combine(final Code... codes)
+    public static final Code combine(final Code... codes)
     throws IllegalArgumentException {
         allNonNull(codes);
         return new MultiCode.Builder(codes).get();
     }
 
-    public static Code combine(final Code code, final Iterable<? extends Code> codes)
+    public static final Code combine(final Code code, final Iterable<? extends Code> codes)
     throws IllegalArgumentException {
         nonNull(code);
         allNonNull(codes);
         return new MultiCode.Builder(code).add(codes).get();
     }
 
-    public static Code combine(final Code code, final Code[] codes)
+    public static final Code combine(final Code code, final Code[] codes)
     throws IllegalArgumentException {
         nonNull(code);
         allNonNull(codes);
