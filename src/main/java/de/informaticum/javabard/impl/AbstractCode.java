@@ -34,6 +34,10 @@ implements Code {
 
     // fabric methods
 
+    public static final Code emptyCode() {
+        return new MultiCode.Builder().get();
+    }
+
     public static final Code code(final String format, final Object... args)
     throws IllegalArgumentException {
         nonNull(format);
@@ -73,10 +77,6 @@ implements Code {
         nonNull(code);
         allNonNull(codes);
         return new MultiCode.Builder(code).add(codes).get();
-    }
-
-    public static final Code emptyCode() {
-        return new MultiCode.Builder().get();
     }
 
 }
