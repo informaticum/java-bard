@@ -40,7 +40,7 @@ extends AbstractCodeSequence {
         return this.codes;
     }
 
-    public static final class Builder
+    public static class Builder
     implements Supplier<Code> {
 
         private static final Code ZERO_INDENT_MARKER_CODE = new IndentionMarkerCode();
@@ -52,7 +52,7 @@ extends AbstractCodeSequence {
             this.add(codes);
         }
 
-        public final Builder add(final Code code)
+        public Builder add(final Code code)
         throws IllegalArgumentException {
             nonNull(code);
             if (ZERO_INDENT_MARKER_CODE.equals(code)) {
@@ -65,21 +65,21 @@ extends AbstractCodeSequence {
             return this;
         }
 
-        public final Builder add(final Iterable<? extends Code> codes)
+        public Builder add(final Iterable<? extends Code> codes)
         throws IllegalArgumentException {
             allNonNull(codes);
             codes.forEach(this::add);
             return this;
         }
 
-        public final Builder add(final Code... codes)
+        public Builder add(final Code... codes)
         throws IllegalArgumentException {
             allNonNull(codes);
             return this.add(asList(codes));
         }
 
         @Override
-        public final Code get() {
+        public Code get() {
             if (this.codes.isEmpty()) {
                 return ZERO_INDENT_MARKER_CODE;
             } else if (this.codes.size() == 1) {

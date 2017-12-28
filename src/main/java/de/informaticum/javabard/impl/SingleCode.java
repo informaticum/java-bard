@@ -55,7 +55,7 @@ extends AbstractCode {
         return out.toString();
     }
 
-    public static final class Builder
+    public static class Builder
     implements Supplier<SingleCode> {
 
         private int indent = 0;
@@ -72,25 +72,25 @@ extends AbstractCode {
             this.args = nonNull(args).clone(); // defensive copy
         }
 
-        public final Builder setIndent(final int indent) {
+        public Builder setIndent(final int indent) {
             this.indent = max(0, indent);
             return this;
         }
 
-        public final Builder setLocale(final Locale locale)
+        public Builder setLocale(final Locale locale)
         throws IllegalArgumentException {
             this.locale = nonNull(locale);
             return this;
         }
 
-        public final Builder setLocale(final Optional<? extends Locale> locale)
+        public Builder setLocale(final Optional<? extends Locale> locale)
         throws IllegalArgumentException {
             this.locale = nonNull(locale).orElse(null);
             return this;
         }
 
         @Override
-        public final SingleCode get() {
+        public SingleCode get() {
             final Supplier<String> code = this.locale == null ? () -> format(this.format, this.args) : () -> format(this.locale, this.format, this.args);
             return new SingleCode(this.indent, code);
         }
