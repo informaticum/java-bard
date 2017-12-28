@@ -3,6 +3,7 @@ package de.informaticum.javabard.api;
 import static de.informaticum.javabard.util.Util.allNonNull;
 import static java.lang.Math.max;
 import static java.util.Arrays.asList;
+import java.util.IllegalFormatException;
 import java.util.Locale;
 
 public abstract interface Code {
@@ -49,6 +50,7 @@ public abstract interface Code {
     }
 
     @Override
-    public abstract String toString();
+    public abstract String toString()
+    throws IllegalFormatException;
 
 }
