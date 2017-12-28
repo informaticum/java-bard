@@ -28,7 +28,7 @@ extends AbstractCodeSequence {
     }
 
     @Override
-    public Code indentBy(final int diff) {
+    public MultiCode indentBy(final int diff) {
         final int d = max(diff, -this.getIndent()); // negative indent (a.k.a. unindent) must be capped
         return new MultiCode(this.codes.stream().map(c -> c.indentBy(d)));
     }

@@ -27,7 +27,7 @@ extends AbstractCode {
     }
 
     @Override
-    public Code indentBy(final int diff) {
+    public SingleCode indentBy(final int diff) {
         final int i = max(0, this.indent + diff); // negative indent (a.k.a. unindent) must be capped
         return new SingleCode(i, this.code);
     }
@@ -51,7 +51,7 @@ extends AbstractCode {
     }
 
     public static final class Builder
-    implements Supplier<Code> {
+    implements Supplier<SingleCode> {
 
         private int indent = 0;
 
@@ -85,7 +85,7 @@ extends AbstractCode {
         }
 
         @Override
-        public final Code get() {
+        public final SingleCode get() {
             final Supplier<String> code = this.locale == null ? () -> format(this.format, this.args) : () -> format(this.locale, this.format, this.args);
             return new SingleCode(this.indent, code);
         }
