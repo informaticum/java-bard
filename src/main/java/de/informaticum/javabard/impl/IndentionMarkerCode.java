@@ -16,13 +16,13 @@ extends SingleCode {
     }
 
     @Override
-    public IndentionMarkerCode indentBy(final int diff) {
+    public final IndentionMarkerCode indentBy(final int diff) {
         final int i = max(0, this.getIndent() + diff); // negative indent (a.k.a. unindent) must be capped
         return new IndentionMarkerCode(i);
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return EMPTY;
     }
 
