@@ -10,8 +10,10 @@ extends SingleCode {
         this(0);
     }
 
+    private static final String EMPTY = "";
+
     private IndentionMarkerCode(final int indent) {
-        super(indent, ""::toString);
+        super(indent, () -> EMPTY);
     }
 
     @Override
@@ -22,7 +24,7 @@ extends SingleCode {
 
     @Override
     public String toString() {
-        return "";
+        return EMPTY;
     }
 
 }
