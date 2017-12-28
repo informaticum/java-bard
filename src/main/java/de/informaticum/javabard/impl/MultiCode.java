@@ -35,6 +35,8 @@ extends AbstractCodeSequence {
 
     @Override
     public List<? extends Code> getCodes() {
+        // assert Collections.UnmodifiableList.class.isInstance(this.codes);
+        assert this.codes.getClass().getCanonicalName().startsWith("java.util.Collections.Unmodifiable");
         return this.codes;
     }
 
