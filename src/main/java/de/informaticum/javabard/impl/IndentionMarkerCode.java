@@ -1,7 +1,6 @@
 package de.informaticum.javabard.impl;
 
 import static java.lang.Math.max;
-import de.informaticum.javabard.api.Code;
 
 public final class IndentionMarkerCode
 extends SingleCode {
