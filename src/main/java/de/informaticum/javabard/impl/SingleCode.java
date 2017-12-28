@@ -42,12 +42,17 @@ extends AbstractCode {
     throws IllegalFormatException {
         final StringBuilder out = new StringBuilder();
         try (final Scanner scanner = new Scanner(this.code.get())) {
-            final Formattable i = FormattableEmitters.indent(this.indent);
-            while (scanner.hasNextLine()) {
-                out.append(format("%s%s%n", i, scanner.nextLine()));
+            if (scanner.hasNextLine()) {
+                final Formattable i = FormattableEmitters.indent(this.indent);
+                while (scanner.hasNextLine()) {
+                    out.append(format("%s%s%n", i, scanner.nextLine()));
+                }
+            } else {
+                // empty content shall be string'ed as a single new-line character
+                out.append(format("%n"));
             }
         }
-        return out.length() == 0 ? format("%n") : out.toString();
+        return out.toString();
     }
 
     public static final class Builder
