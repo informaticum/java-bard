@@ -15,6 +15,7 @@ import static java.util.Locale.getDefault;
 import static java.util.Optional.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import java.util.BitSet;
 import java.util.Collection;
@@ -24,6 +25,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import javax.xml.ws.Holder;
+import de.informaticum.javabard.impl.IndentionMarkerCode;
 import de.informaticum.javabard.impl.MultiCode;
 import de.informaticum.javabard.impl.SingleCode;
 import org.junit.After;
@@ -457,11 +459,11 @@ public class CodeTests {
     private void testAddToEmptyIndentedCascade(final int i)
     throws Exception {
         final Code emptyIndented = emptyCode().indentBy(i);
-        assert emptyIndented.getIndent() == i;
+        assert emptyIndented.getIndent() == i : format("%s != %s", emptyIndented.getIndent(), i);
         assert emptyIndented.toString().equals("");
 
         final Code emptyCascade = emptyIndented.add(emptyIndented);
-        assert emptyCascade.getIndent() == i;
+        assert emptyCascade.getIndent() == i : format("%s != %s", emptyCascade.getIndent(), i);
         assert emptyCascade.toString().equals("");
 
         final Code added = emptyCascade.add(this.make("//whatever"));
@@ -501,11 +503,11 @@ public class CodeTests {
     private void testCombineWithEmptyIndentedCascade(final int i)
     throws Exception {
         final Code emptyIndented = emptyCode().indentBy(i);
-        assert emptyIndented.getIndent() == i;
+        assert emptyIndented.getIndent() == i : format("%s != %s", emptyIndented.getIndent(), i);
         assert emptyIndented.toString().equals("");
 
         final Code emptyCascade = emptyIndented.add(emptyIndented);
-        assert emptyCascade.getIndent() == i;
+        assert emptyCascade.getIndent() == i : format("%s != %s", emptyCascade.getIndent(), i);
         assert emptyCascade.toString().equals("");
 
         final Code combined = combine(emptyCascade, this.make("//whatever"));
@@ -582,6 +584,58 @@ public class CodeTests {
         final Code code = this.make("//whatever").add("").add("//whatelse");
         assertThat(code.getIndent(), equalTo(0));
         assertThat(code, hasToString(format("//whatever%n%n//whatelse%n")));
+    }
+
+    @Test
+    public void testMultipleIndentionMarkersCombinations()
+    throws Exception {
+        final Code e1 = emptyCode();
+        assertThat(e1.getIndent(), equalTo(0));
+        assertThat(e1, hasToString(""));
+        assertThat(e1, instanceOf(IndentionMarkerCode.class));
+
+        final Code e2 = emptyCode();
+        assertThat(e2.getIndent(), equalTo(0));
+        assertThat(e2, hasToString(""));
+        assertThat(e2, instanceOf(IndentionMarkerCode.class));
+
+        final Code added = e1.add(e2);
+        assertThat(added.getIndent(), equalTo(0));
+        assertThat(added, hasToString(""));
+        assertThat(added, instanceOf(IndentionMarkerCode.class));
+
+        final Code combo = combine(e1, e2);
+        assertThat(combo.getIndent(), equalTo(0));
+        assertThat(combo, hasToString(""));
+        assertThat(combo, instanceOf(IndentionMarkerCode.class));
+
+        final Code indented = added.indent();
+        assertThat(indented.getIndent(), equalTo(1));
+        assertThat(indented, hasToString(""));
+        assertThat(indented, instanceOf(IndentionMarkerCode.class));
+
+        final Code comboAndIndented = added.add(indented);
+        assertThat(comboAndIndented.getIndent(), equalTo(0));
+        assertThat(comboAndIndented, hasToString(""));
+        assertThat(comboAndIndented, instanceOf(IndentionMarkerCode.class));
+
+        final Code indentedAndCombo = indented.add(added);
+        assertThat(indentedAndCombo.getIndent(), equalTo(1));
+        assertThat(indentedAndCombo, hasToString(""));
+        assertThat(indentedAndCombo, instanceOf(IndentionMarkerCode.class));
+
+        final Code mashup = combine(e1, e2, added, combo, indented, comboAndIndented, indentedAndCombo);
+        assertThat(mashup.getIndent(), equalTo(0));
+        assertThat(mashup, hasToString(""));
+        assertThat(mashup, instanceOf(IndentionMarkerCode.class));
+    }
+
+    @Test
+    public void testEmptyCodeIndentAdd()
+    throws Exception {
+        final Code added = emptyCode().indentBy(2).add("//foobar");
+        assertThat(added.getIndent(), equalTo(2));
+        assertThat(added, hasToString(format("        //foobar%n")));
     }
 
 }

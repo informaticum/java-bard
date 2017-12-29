@@ -23,7 +23,7 @@ extends AbstractCodeSequence {
         assert codes != null;
         this.codes = codes.collect(collectingAndThen(toList(), Collections::unmodifiableList));
         assert this.codes.size() > 0;
-        assert this.codes.stream().filter(Builder.ZERO_INDENT_MARKER_CODE::equals).count() <= 1;
+        assert this.codes.stream().filter(IndentionMarkerCode.class::isInstance).count() <= 1;
         assert this.codes.stream().noneMatch(CodeSequence.class::isInstance);
     }
 
