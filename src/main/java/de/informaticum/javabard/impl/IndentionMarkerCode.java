@@ -1,9 +1,11 @@
 package de.informaticum.javabard.impl;
 
+import static java.lang.Integer.compare;
 import static java.lang.Math.max;
 
 public final class IndentionMarkerCode
-extends SingleCode {
+extends SingleCode
+implements Comparable<IndentionMarkerCode> {
 
     public IndentionMarkerCode() {
         this(0);
@@ -24,6 +26,11 @@ extends SingleCode {
     @Override
     public final String toString() {
         return EMPTY;
+    }
+
+    @Override
+    public int compareTo(final IndentionMarkerCode that) {
+        return compare(this.getIndent(), that.getIndent());
     }
 
 }

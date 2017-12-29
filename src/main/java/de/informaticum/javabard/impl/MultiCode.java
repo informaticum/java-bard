@@ -9,6 +9,8 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import de.informaticum.javabard.api.Code;
@@ -45,6 +47,8 @@ extends AbstractCodeSequence {
 
         private static final Code ZERO_INDENT_MARKER_CODE = new IndentionMarkerCode();
 
+        private final SortedSet<IndentionMarkerCode> markers = new TreeSet<>();
+
         private final List<Code> codes = new ArrayList<>();
 
         public Builder(final Code... codes) {
@@ -55,11 +59,14 @@ extends AbstractCodeSequence {
         public Builder add(final Code code)
         throws IllegalArgumentException {
             nonNull(code);
-            if (ZERO_INDENT_MARKER_CODE.equals(code)) {
-                // excrescent
+            if (code instanceof IndentionMarkerCode) {
+                // memorise
+                this.markers.add((IndentionMarkerCode) code);
             } else if (code instanceof CodeSequence) {
+                // divide
                 ((CodeSequence) code).getCodes().forEach(this::add);
             } else {
+                // store
                 this.codes.add(code);
             }
             return this;
@@ -81,10 +88,13 @@ extends AbstractCodeSequence {
         @Override
         public Code get() {
             if (this.codes.isEmpty()) {
-                return ZERO_INDENT_MARKER_CODE;
+                // return lowest indention marker
+                return this.markers.isEmpty() ? ZERO_INDENT_MARKER_CODE : this.markers.first();
             } else if (this.codes.size() == 1) {
+                // return single code
                 return this.codes.get(0);
             } else {
+                // join codes
                 return new MultiCode(this.codes.stream());
             }
         }
