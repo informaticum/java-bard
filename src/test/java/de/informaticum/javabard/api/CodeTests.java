@@ -15,7 +15,6 @@ import static java.util.Locale.getDefault;
 import static java.util.Optional.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import java.util.BitSet;
 import java.util.Collection;
@@ -330,15 +329,15 @@ public class CodeTests {
     public void testIndentOfEmptyMultiCode()
     throws Exception {
         final Code empty = emptyCode();
-        assertEquals(0, empty.getIndent());
+        assertThat(empty.getIndent(), equalTo(0));
         assertThat(empty, hasToString(""));
 
         final Code indented = empty.indentBy(2);
-        assertEquals(2, indented.getIndent());
+        assertThat(indented.getIndent(), equalTo(2));
         assertThat(indented, hasToString(""));
 
         final Code added = indented.add(this.make("//foobar"));
-        assertEquals(2, added.getIndent());
+        assertThat(added.getIndent(), equalTo(2));
         assertThat(added, hasToString(format("        //foobar%n")));
     }
 
@@ -351,9 +350,9 @@ public class CodeTests {
             formatter.format("Hello world!");
         };
         final Code code = this.make("%s", verboseFormattable);
-        assertEquals(FALSE, hasBeenUsed.value);
+        assertThat(hasBeenUsed.value, equalTo(FALSE));
         code.toString();
-        assertEquals(TRUE, hasBeenUsed.value);
+        assertThat(hasBeenUsed.value, equalTo(TRUE));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -442,7 +441,7 @@ public class CodeTests {
         assert emptyIndented.toString().equals("");
 
         final Code added = emptyIndented.add(this.make("//whatever"));
-        assertEquals(i, added.getIndent());
+        assertThat(added.getIndent(), equalTo(i));
         assertThat(added, hasToString(format("%s//whatever%n", indent(i))));
     }
 
@@ -466,7 +465,7 @@ public class CodeTests {
         assert emptyCascade.toString().equals("");
 
         final Code added = emptyCascade.add(this.make("//whatever"));
-        assertEquals(i, added.getIndent());
+        assertThat(added.getIndent(), equalTo(i));
         assertThat(added, hasToString(format("%s//whatever%n", indent(i))));
     }
 
@@ -486,7 +485,7 @@ public class CodeTests {
         assert emptyIndented.toString().equals("");
 
         final Code combined = combine(emptyIndented, this.make("//whatever"));
-        assertEquals(0, combined.getIndent());
+        assertThat(combined.getIndent(), equalTo(0));
         assertThat(combined, hasToString(format("//whatever%n")));
     }
 
@@ -510,7 +509,7 @@ public class CodeTests {
         assert emptyCascade.toString().equals("");
 
         final Code combined = combine(emptyCascade, this.make("//whatever"));
-        assertEquals(0, combined.getIndent());
+        assertThat(combined.getIndent(), equalTo(0));
         assertThat(combined, hasToString(format("//whatever%n")));
     }
 
@@ -526,13 +525,13 @@ public class CodeTests {
     private void testAddWithEmptyIndented(final int i)
     throws Exception {
         final Code code = this.make("//whatever");
-        assertEquals(0, code.getIndent());
+        assertThat(code.getIndent(), equalTo(0));
         assertThat(code, hasToString(format("//whatever%n")));
 
         final Code emptyIndented = emptyCode().indentBy(i);
 
         final Code added = code.add(emptyIndented);
-        assertEquals(0, added.getIndent());
+        assertThat(added.getIndent(), equalTo(0));
         assertThat(added, hasToString(format("//whatever%n")));
     }
 
@@ -581,7 +580,7 @@ public class CodeTests {
     public void testInfixEmptyLines()
     throws Exception {
         final Code code = this.make("//whatever").add("").add("//whatelse");
-        assertEquals(0, code.getIndent());
+        assertThat(code.getIndent(), equalTo(0));
         assertThat(code, hasToString(format("//whatever%n%n//whatelse%n")));
     }
 
