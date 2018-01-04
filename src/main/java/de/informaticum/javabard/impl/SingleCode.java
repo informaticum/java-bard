@@ -9,10 +9,11 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Supplier;
+import de.informaticum.javabard.api.Code;
 import de.informaticum.javabard.api.FormattableEmitters;
 
 public class SingleCode
-extends AbstractCode {
+implements Code {
 
     private final int indent;
 

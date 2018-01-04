@@ -27,14 +27,26 @@ public abstract interface Code {
         return this.indentBy(-1);
     }
 
-    public abstract Code add(final String format, final Object... args)
-    throws IllegalArgumentException;
+    public default Code add(final String format, final Object... args)
+    throws IllegalArgumentException {
+        nonNull(format);
+        nonNull(args);
+        return this.add(new SingleCode.Builder(format, args).get());
+    }
 
-    public abstract Code add(final Locale locale, final String format, final Object... args)
-    throws IllegalArgumentException;
+    public default Code add(final Locale locale, final String format, final Object... args)
+    throws IllegalArgumentException {
+        nonNull(locale);
+        nonNull(format);
+        nonNull(args);
+        return this.add(new SingleCode.Builder(format, args).setLocale(locale).get());
+    }
 
-    public abstract Code add(final Code code)
-    throws IllegalArgumentException;
+    public default Code add(final Code code)
+    throws IllegalArgumentException {
+        nonNull(code);
+        return new MultiCode.Builder(this, code.indentBy(this.getIndent())).get();
+    }
 
     public default Code addAll(final Iterable<? extends Code> codes)
     throws IllegalArgumentException {
