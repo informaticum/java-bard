@@ -1,11 +1,15 @@
 package de.informaticum.javabard.api;
 
+import static de.informaticum.javabard.api.Comment.CommentPattern.BLOCKCOMMENT;
+import static de.informaticum.javabard.api.Comment.CommentPattern.COMMENT;
+import static de.informaticum.javabard.api.Comment.CommentPattern.JAVADOC;
 import static de.informaticum.javabard.util.Util.allNonNull;
 import static de.informaticum.javabard.util.Util.nonNull;
 import static java.lang.Math.max;
 import static java.util.Arrays.asList;
 import java.util.IllegalFormatException;
 import java.util.Locale;
+import de.informaticum.javabard.impl.WrapperCode;
 import de.informaticum.javabard.impl.MultiCode;
 import de.informaticum.javabard.impl.SingleCode;
 
@@ -62,6 +66,18 @@ public abstract interface Code {
     throws IllegalArgumentException {
         allNonNull(codes);
         return this.addAll(asList(codes));
+    }
+
+    public default WrapperCode asComment() {
+        return new Comment.Builder(this, COMMENT).get();
+    }
+
+    public default WrapperCode asBlockComment() {
+        return new Comment.Builder(this, BLOCKCOMMENT).get();
+    }
+
+    public default WrapperCode asJavadoc() {
+        return new Comment.Builder(this, JAVADOC).get();
     }
 
     @Override
