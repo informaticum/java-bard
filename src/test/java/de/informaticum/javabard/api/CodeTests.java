@@ -101,6 +101,14 @@ public class CodeTests {
         final Code code = this.make("final java.util.BitSet bs = null;");
         assertThat(code.getIndent(), equalTo(0));
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
+        // test comment formattings:
+        assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
+        assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
+                                                                 " * final java.util.BitSet bs = null;%n" + //
+                                                                 " */%n")));
+        assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
+                                                            " * final java.util.BitSet bs = null;%n" + //
+                                                            " */%n")));
     }
 
     @Test
@@ -110,6 +118,14 @@ public class CodeTests {
         final Code codeUnindent = code.unindent();
         assertThat(codeUnindent.getIndent(), equalTo(0));
         assertThat(codeUnindent, hasToString(format("final java.util.BitSet bs = null;%n")));
+        // test comment formattings:
+        assertThat(codeUnindent.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
+        assertThat(codeUnindent.asBlockComment(), hasToString(format("/*%n" + //
+                                                                         " * final java.util.BitSet bs = null;%n" + //
+                                                                         " */%n")));
+        assertThat(codeUnindent.asJavadoc(), hasToString(format("/**%n" + //
+                                                                    " * final java.util.BitSet bs = null;%n" + //
+                                                                    " */%n")));
     }
 
     @Test
@@ -119,6 +135,14 @@ public class CodeTests {
         final Code codeUnindent = code.setIndent(-1);
         assertThat(codeUnindent.getIndent(), equalTo(0));
         assertThat(codeUnindent, hasToString(format("final java.util.BitSet bs = null;%n")));
+        // test comment formattings:
+        assertThat(codeUnindent.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
+        assertThat(codeUnindent.asBlockComment(), hasToString(format("/*%n" + //
+                                                                         " * final java.util.BitSet bs = null;%n" + //
+                                                                         " */%n")));
+        assertThat(codeUnindent.asJavadoc(), hasToString(format("/**%n" + //
+                                                                    " * final java.util.BitSet bs = null;%n" + //
+                                                                    " */%n")));
     }
 
     @Test
@@ -128,6 +152,14 @@ public class CodeTests {
         final Code code = origin.indent().unindent();
         assertThat(code.getIndent(), equalTo(0));
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
+        // test comment formattings:
+        assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
+        assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
+                                                                 " * final java.util.BitSet bs = null;%n" + //
+                                                                 " */%n")));
+        assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
+                                                            " * final java.util.BitSet bs = null;%n" + //
+                                                            " */%n")));
     }
 
     @Test
@@ -137,6 +169,14 @@ public class CodeTests {
         final Code code = origin.unindent().indent();
         assertThat(code.getIndent(), equalTo(1));
         assertThat(code, hasToString(format("    final java.util.BitSet bs = null;%n")));
+        // test comment formattings:
+        assertThat(code.asComment(), hasToString(format("    // final java.util.BitSet bs = null;%n")));
+        assertThat(code.asBlockComment(), hasToString(format("    /*%n" + //
+                                                                 "     * final java.util.BitSet bs = null;%n" + //
+                                                                 "     */%n")));
+        assertThat(code.asJavadoc(), hasToString(format("    /**%n" + //
+                                                            "     * final java.util.BitSet bs = null;%n" + //
+                                                            "     */%n")));
     }
 
     @Test
@@ -145,6 +185,14 @@ public class CodeTests {
         final Code code = this.make("final %s bs = null;", t(BitSet.class));
         assertThat(code.getIndent(), equalTo(0));
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
+        // test comment formattings:
+        assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
+        assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
+                                                                 " * final java.util.BitSet bs = null;%n" + //
+                                                                 " */%n")));
+        assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
+                                                            " * final java.util.BitSet bs = null;%n" + //
+                                                            " */%n")));
     }
 
     @Test
@@ -153,6 +201,14 @@ public class CodeTests {
         final Code code = this.make("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code.getIndent(), equalTo(0));
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
+        // test comment formattings:
+        assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
+        assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
+                                                                 " * final java.util.BitSet bs = null;%n" + //
+                                                                 " */%n")));
+        assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
+                                                            " * final java.util.BitSet bs = null;%n" + //
+                                                            " */%n")));
     }
 
     @Test
@@ -163,6 +219,20 @@ public class CodeTests {
                               .add("}");
         assertThat(code.getIndent(), equalTo(0));
         assertThat(code, hasToString(format("if (true) {%nfinal java.util.BitSet bs = null;%n}%n")));
+        // test comment formattings:
+        assertThat(code.asComment(), hasToString(format("// if (true) {%n" + //
+                                                            "// final java.util.BitSet bs = null;%n" + //
+                                                            "// }%n")));
+        assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
+                                                                 " * if (true) {%n" + //
+                                                                 " * final java.util.BitSet bs = null;%n" + //
+                                                                 " * }%n" + //
+                                                                 " */%n")));
+        assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
+                                                            " * if (true) {%n" + //
+                                                            " * final java.util.BitSet bs = null;%n" + //
+                                                            " * }%n" + //
+                                                            " */%n")));
     }
 
     @Test
@@ -171,14 +241,34 @@ public class CodeTests {
         final Code code = this.make("final %s bs = %s;", t(BitSet.class), null);
         assertThat(code.getIndent(), equalTo(0));
         assertThat(code, hasToString(format("final java.util.BitSet bs = null;%n")));
+        // test comment formattings:
+        assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
+        assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
+                                                                 " * final java.util.BitSet bs = null;%n" + //
+                                                                 " */%n")));
+        assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
+                                                            " * final java.util.BitSet bs = null;%n" + //
+                                                            " */%n")));
 
         final Code codeIndent = code.indent();
         assertThat(codeIndent.getIndent(), equalTo(1));
         assertThat(codeIndent, hasToString(format("    final java.util.BitSet bs = null;%n")));
+        // test comment formattings:
+        assertThat(codeIndent.asComment(), hasToString(format("    // final java.util.BitSet bs = null;%n")));
+        assertThat(codeIndent.asBlockComment(), hasToString(format("    /*%n" + //
+                                                                       "     * final java.util.BitSet bs = null;%n" + //
+                                                                       "     */%n")));
+        assertThat(codeIndent.asJavadoc(), hasToString(format("    /**%n" + //
+                                                                  "     * final java.util.BitSet bs = null;%n" + //
+                                                                  "     */%n")));
 
         final Code codeUnindent = codeIndent.unindent();
         assertThat(codeUnindent.getIndent(), equalTo(0));
         assertThat(codeUnindent, hasToString(code.toString()));
+        // test comment formattings:
+        assertThat(codeUnindent.asComment(), hasToString(code.asComment().toString()));
+        assertThat(codeUnindent.asBlockComment(), hasToString(code.asBlockComment().toString()));
+        assertThat(codeUnindent.asJavadoc(), hasToString(code.asJavadoc().toString()));
     }
 
     @Test
@@ -638,6 +728,62 @@ public class CodeTests {
         final Code added = emptyCode().indentBy(2).add("//foobar");
         assertThat(added.getIndent(), equalTo(2));
         assertThat(added, hasToString(format("        //foobar%n")));
+    }
+
+    @Test
+    public void testAddingIndentZeroCode()
+    throws Exception {
+        final Code code = this.make("Object obj = null;").indentBy(2);
+        assertThat(code.getIndent(), equalTo(2));
+        assertThat(code, hasToString(format("        Object obj = null;%n")));
+
+        final Code additional = this.make("// some single comment").setIndent(0);
+        final Code added = code.add(additional);
+        assertThat(added.getIndent(), equalTo(2));
+        assertThat(added.getIndent(), equalTo(code.getIndent()));
+        assertThat(added, hasToString(format("        Object obj = null;%n        // some single comment%n")));
+    }
+
+    @Test
+    public void testAddingIndentOneCode()
+    throws Exception {
+        final Code code = this.make("Object obj = null;").indentBy(2);
+        assertThat(code.getIndent(), equalTo(2));
+        assertThat(code, hasToString(format("        Object obj = null;%n")));
+
+        final Code additional = this.make("// some single comment").setIndent(1);
+        final Code added = code.add(additional);
+        assertThat(added.getIndent(), equalTo(2));
+        assertThat(added.getIndent(), equalTo(code.getIndent()));
+        assertThat(added, hasToString(format("        Object obj = null;%n            // some single comment%n")));
+    }
+
+    @Test
+    public void testCombineIndentZeroCode()
+    throws Exception {
+        final Code code = this.make("Object obj = null;").indentBy(2);
+        assertThat(code.getIndent(), equalTo(2));
+        assertThat(code, hasToString(format("        Object obj = null;%n")));
+
+        final Code additional = this.make("// some single comment").setIndent(0);
+        final Code combo = combine(code, additional);
+        assertThat(combo.getIndent(), equalTo(0));
+        assertThat(combo.getIndent(), equalTo(additional.getIndent()));
+        assertThat(combo, hasToString(format("        Object obj = null;%n// some single comment%n")));
+    }
+
+    @Test
+    public void testCombineIndentOneCode()
+    throws Exception {
+        final Code code = this.make("Object obj = null;").indentBy(2);
+        assertThat(code.getIndent(), equalTo(2));
+        assertThat(code, hasToString(format("        Object obj = null;%n")));
+
+        final Code additional = this.make("// some single comment").setIndent(1);
+        final Code combo = combine(code, additional);
+        assertThat(combo.getIndent(), equalTo(1));
+        assertThat(combo.getIndent(), equalTo(additional.getIndent()));
+        assertThat(combo, hasToString(format("        Object obj = null;%n    // some single comment%n")));
     }
 
 }
