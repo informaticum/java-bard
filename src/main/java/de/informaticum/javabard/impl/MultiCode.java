@@ -14,6 +14,7 @@ import java.util.TreeSet;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import de.informaticum.javabard.api.Code;
+import de.informaticum.javabard.impl.CodeSequence.AbstractCodeSequence;
 
 public class MultiCode
 extends AbstractCodeSequence {
