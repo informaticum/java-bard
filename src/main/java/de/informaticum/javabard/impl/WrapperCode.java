@@ -1,5 +1,6 @@
 package de.informaticum.javabard.impl;
 
+import static de.informaticum.javabard.api.Code.combine;
 import static de.informaticum.javabard.api.Code.emptyCode;
 import static de.informaticum.javabard.api.Comment.CommentPattern.BLOCKCOMMENT;
 import static de.informaticum.javabard.api.Comment.CommentPattern.COMMENT;
@@ -64,13 +65,13 @@ extends Code {
 
         @Override
         public String toString() {
-            Code code = emptyCode().setIndent(this.getIndent()).add(this.prefix);
+            Code code = emptyCode();
             try (final Scanner scanner = new Scanner(this.getCode().setIndent(0).toString())) {
                 while (scanner.hasNextLine()) {
                     code = code.add(this.infixFormat, scanner.nextLine());
                 }
             }
-            return code.add(this.suffix).toString();
+            return combine(this.prefix, code, this.suffix).setIndent(this.getIndent()).toString();
         }
 
     }
