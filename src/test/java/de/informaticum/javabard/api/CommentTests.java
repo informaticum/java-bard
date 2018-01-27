@@ -112,4 +112,5 @@ public class CommentTests {
         assertThat(wc.getIndent(), equalTo(0));
         assertThat(wc, hasToString(format("/**%n * String s = \"Hello world!\";%n     */%n")));
     }
+
 }
