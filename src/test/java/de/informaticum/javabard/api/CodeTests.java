@@ -104,11 +104,11 @@ public class CodeTests {
         // test comment formattings:
         assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
         assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
-                                                                 " * final java.util.BitSet bs = null;%n" + //
-                                                                 " */%n")));
+                                                             " * final java.util.BitSet bs = null;%n" + //
+                                                             " */%n")));
         assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
-                                                            " * final java.util.BitSet bs = null;%n" + //
-                                                            " */%n")));
+                                                        " * final java.util.BitSet bs = null;%n" + //
+                                                        " */%n")));
     }
 
     @Test
@@ -121,11 +121,11 @@ public class CodeTests {
         // test comment formattings:
         assertThat(codeUnindent.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
         assertThat(codeUnindent.asBlockComment(), hasToString(format("/*%n" + //
-                                                                         " * final java.util.BitSet bs = null;%n" + //
-                                                                         " */%n")));
+                                                                     " * final java.util.BitSet bs = null;%n" + //
+                                                                     " */%n")));
         assertThat(codeUnindent.asJavadoc(), hasToString(format("/**%n" + //
-                                                                    " * final java.util.BitSet bs = null;%n" + //
-                                                                    " */%n")));
+                                                                " * final java.util.BitSet bs = null;%n" + //
+                                                                " */%n")));
     }
 
     @Test
@@ -138,11 +138,11 @@ public class CodeTests {
         // test comment formattings:
         assertThat(codeUnindent.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
         assertThat(codeUnindent.asBlockComment(), hasToString(format("/*%n" + //
-                                                                         " * final java.util.BitSet bs = null;%n" + //
-                                                                         " */%n")));
+                                                                     " * final java.util.BitSet bs = null;%n" + //
+                                                                     " */%n")));
         assertThat(codeUnindent.asJavadoc(), hasToString(format("/**%n" + //
-                                                                    " * final java.util.BitSet bs = null;%n" + //
-                                                                    " */%n")));
+                                                                " * final java.util.BitSet bs = null;%n" + //
+                                                                " */%n")));
     }
 
     @Test
@@ -155,11 +155,11 @@ public class CodeTests {
         // test comment formattings:
         assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
         assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
-                                                                 " * final java.util.BitSet bs = null;%n" + //
-                                                                 " */%n")));
+                                                             " * final java.util.BitSet bs = null;%n" + //
+                                                             " */%n")));
         assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
-                                                            " * final java.util.BitSet bs = null;%n" + //
-                                                            " */%n")));
+                                                        " * final java.util.BitSet bs = null;%n" + //
+                                                        " */%n")));
     }
 
     @Test
@@ -172,11 +172,11 @@ public class CodeTests {
         // test comment formattings:
         assertThat(code.asComment(), hasToString(format("    // final java.util.BitSet bs = null;%n")));
         assertThat(code.asBlockComment(), hasToString(format("    /*%n" + //
-                                                                 "     * final java.util.BitSet bs = null;%n" + //
-                                                                 "     */%n")));
+                                                             "     * final java.util.BitSet bs = null;%n" + //
+                                                             "     */%n")));
         assertThat(code.asJavadoc(), hasToString(format("    /**%n" + //
-                                                            "     * final java.util.BitSet bs = null;%n" + //
-                                                            "     */%n")));
+                                                        "     * final java.util.BitSet bs = null;%n" + //
+                                                        "     */%n")));
     }
 
     @Test
@@ -188,11 +188,11 @@ public class CodeTests {
         // test comment formattings:
         assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
         assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
-                                                                 " * final java.util.BitSet bs = null;%n" + //
-                                                                 " */%n")));
+                                                             " * final java.util.BitSet bs = null;%n" + //
+                                                             " */%n")));
         assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
-                                                            " * final java.util.BitSet bs = null;%n" + //
-                                                            " */%n")));
+                                                        " * final java.util.BitSet bs = null;%n" + //
+                                                        " */%n")));
     }
 
     @Test
@@ -204,11 +204,11 @@ public class CodeTests {
         // test comment formattings:
         assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
         assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
-                                                                 " * final java.util.BitSet bs = null;%n" + //
-                                                                 " */%n")));
+                                                             " * final java.util.BitSet bs = null;%n" + //
+                                                             " */%n")));
         assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
-                                                            " * final java.util.BitSet bs = null;%n" + //
-                                                            " */%n")));
+                                                        " * final java.util.BitSet bs = null;%n" + //
+                                                        " */%n")));
     }
 
     @Test
@@ -221,18 +221,18 @@ public class CodeTests {
         assertThat(code, hasToString(format("if (true) {%nfinal java.util.BitSet bs = null;%n}%n")));
         // test comment formattings:
         assertThat(code.asComment(), hasToString(format("// if (true) {%n" + //
-                                                            "// final java.util.BitSet bs = null;%n" + //
-                                                            "// }%n")));
+                                                        "// final java.util.BitSet bs = null;%n" + //
+                                                        "// }%n")));
         assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
-                                                                 " * if (true) {%n" + //
-                                                                 " * final java.util.BitSet bs = null;%n" + //
-                                                                 " * }%n" + //
-                                                                 " */%n")));
+                                                             " * if (true) {%n" + //
+                                                             " * final java.util.BitSet bs = null;%n" + //
+                                                             " * }%n" + //
+                                                             " */%n")));
         assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
-                                                            " * if (true) {%n" + //
-                                                            " * final java.util.BitSet bs = null;%n" + //
-                                                            " * }%n" + //
-                                                            " */%n")));
+                                                        " * if (true) {%n" + //
+                                                        " * final java.util.BitSet bs = null;%n" + //
+                                                        " * }%n" + //
+                                                        " */%n")));
     }
 
     @Test
@@ -244,11 +244,11 @@ public class CodeTests {
         // test comment formattings:
         assertThat(code.asComment(), hasToString(format("// final java.util.BitSet bs = null;%n")));
         assertThat(code.asBlockComment(), hasToString(format("/*%n" + //
-                                                                 " * final java.util.BitSet bs = null;%n" + //
-                                                                 " */%n")));
+                                                             " * final java.util.BitSet bs = null;%n" + //
+                                                             " */%n")));
         assertThat(code.asJavadoc(), hasToString(format("/**%n" + //
-                                                            " * final java.util.BitSet bs = null;%n" + //
-                                                            " */%n")));
+                                                        " * final java.util.BitSet bs = null;%n" + //
+                                                        " */%n")));
 
         final Code codeIndent = code.indent();
         assertThat(codeIndent.getIndent(), equalTo(1));
@@ -256,11 +256,11 @@ public class CodeTests {
         // test comment formattings:
         assertThat(codeIndent.asComment(), hasToString(format("    // final java.util.BitSet bs = null;%n")));
         assertThat(codeIndent.asBlockComment(), hasToString(format("    /*%n" + //
-                                                                       "     * final java.util.BitSet bs = null;%n" + //
-                                                                       "     */%n")));
+                                                                   "     * final java.util.BitSet bs = null;%n" + //
+                                                                   "     */%n")));
         assertThat(codeIndent.asJavadoc(), hasToString(format("    /**%n" + //
-                                                                  "     * final java.util.BitSet bs = null;%n" + //
-                                                                  "     */%n")));
+                                                              "     * final java.util.BitSet bs = null;%n" + //
+                                                              "     */%n")));
 
         final Code codeUnindent = codeIndent.unindent();
         assertThat(codeUnindent.getIndent(), equalTo(0));
